@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
+    "axios": "^1.4.0",
+    "discord.js": "^14.11.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "name": "aoi.canvas",
+  "version": "1.0.1-canva",
+  "description": "Aoi Canvas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Hi\""
+  },
+  "keywords": [
+    "aoi.js",
+    "canvas",
+    "aoi.canvas"
+  ],
+  "author": "Lordex",
+  "license": "ISC"
+}

@@ -19,7 +19,7 @@ const aoicanva = require("aoi.canvas");
 aoicanva.load({
   bot: bot, // Aoi.js Bot object.
   DownloadFolder: "./folder/", // Folder for $downloadCanvas, optional.
-  ErrorsType: "console" // AoiCanva errors type. (console/message/none)
+  ErrorsType: "console" // AoiCanva errors type, optional. (console/message/none)
 });
 ```
 

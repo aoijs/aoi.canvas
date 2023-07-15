@@ -1,4 +1,4 @@
-const canvaError = require(".../index.js").utils.canvaError;
+const canvaError = require("../../index.js").utils.canvaError;
 const path = require("path");
 const indexPath = path.join(__dirname, ".../index.js")
 const fs = require("fs");

@@ -1,4 +1,4 @@
-const canvaError = require(".../index.js").utils.canvaError;
+const canvaError = require("../../index.js").utils.canvaError;
 const { loadImage } = require('@napi-rs/canvas')
 
 module.exports = {

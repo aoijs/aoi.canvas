@@ -1,4 +1,4 @@
-const canvaError = require(".../index.js").utils.canvaError;
+const canvaError = require("../../index.js").utils.canvaError;
 let { AttachmentBuilder} = require("discord.js")
 
 module.exports = {

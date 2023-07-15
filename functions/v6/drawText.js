@@ -2,7 +2,7 @@ module.exports = {
     name: "$drawText",
     type: "djs",
     code: async (d) => {
-        const canvaError = require(".../index.js").utils.canvaError;
+        const canvaError = require("../../index.js").utils.canvaError;
         const data = d.util.aoiFunc(d);
         const [name = "canvas", text = "Text", x = "1", y = "1"] = data.inside.splits;
 

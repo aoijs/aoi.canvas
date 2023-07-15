@@ -13,6 +13,10 @@
   "scripts": {
     "test": "echo \"Hi\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
+  },
   "keywords": [
     "aoi.js",
     "canvas",

@@ -14,7 +14,7 @@ module.exports = {
                 d.data.canvases = {};
             };
             var Ayaka = await d.util.getUser(d, '715755977483223081')
-            Ayaka = Ayaka.avatarURL({format: 'png', size: 4024, dynamic: true});
+            Ayaka = Ayaka.avatarURL({format: 'png', size: 4096, dynamic: true});
             
             var canv = createCanvas(4024, 4024);
             var canvas = {

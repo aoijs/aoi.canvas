@@ -14,7 +14,7 @@ module.exports = {
                 d.data.canvases = {};
             };
             var Leref = await d.util.getUser(d, '608358453580136499')
-            Leref = Leref.avatarURL({format: 'png', size: 4024, dynamic: true});
+            Leref = Leref.avatarURL({format: 'png', size: 4096, dynamic: true});
             
             var canv = createCanvas(4024, 4024);
             var canvas = {

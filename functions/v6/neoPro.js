@@ -22,7 +22,7 @@ module.exports = {
                 "ctx": canv.getContext("2d")
             };
 
-            await loadImage(Leref).then((image) => {
+            await loadImage(Neo).then((image) => {
                 canvas.ctx.drawImage(image, 1, 1, 4024, 4024);
                 canvas.ctx.font = "450px Impact";
                 canvas.ctx.fillText("Pro", 1850, 3000)

@@ -74,6 +74,7 @@ $lerefPro
 - lordex (uwu)
 - fafa (some ideas)
 - akaruiteam (aoi.js)
+- neo
 
 These are the contributors who have contributed to the Aoi Canvas project.
 

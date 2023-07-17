@@ -18,4 +18,4 @@ module.exports = {
             data: d.data
         };
     }
-}
+};

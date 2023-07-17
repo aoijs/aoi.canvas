@@ -15,7 +15,7 @@ module.exports = {
             } else if (arg == "height") {
                 data.result = measureText.height;
             } else {
-                return canvaError.newError(d, 'Unknown arg.');
+                return canvaError.newError(d, 'Unknown argument.');
             }
         } else {
             return canvaError.newError(d, 'Canvas with this name not found.');

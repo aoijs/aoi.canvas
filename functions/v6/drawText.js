@@ -6,13 +6,17 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         const [name = "canvas", text = "Text", x = "1", y = "1"] = data.inside.splits;
 
-        if (d.data.canvases[name]) {
-            if (Number(x), Number(y)) {
-                const ctx = d.data.canvases[name].ctx;
-                ctx.fillText(text, Number(x), Number(y));
-            } else {
-                return canvaError.newError(d, 'Position arguments.');
+        function convertToInt(str) {
+            const number = parseInt(str);
+            if (isNaN(number)) {
+                return 0;
             }
+            return number;
+        }
+
+        if (d.data.canvases[name]) {
+            const ctx = d.data.canvases[name].ctx;
+            ctx.fillText(text, convertToInt(x), convertToInt(y));
         } else {
             return canvaError.newError(d, 'Canvas with this name not found.');
         };

@@ -11,12 +11,12 @@ module.exports = {
         function convertToInt(str) {
             const number = parseInt(str);
             if (isNaN(number)) {
-                return false;
+                return 0;
             }
             return number;
         }
 
-        if (convertToInt(w) !== false || convertToInt(h) !== false) {
+        if (convertToInt(w) && convertToInt(h)) {
             let canv = await createCanvas(convertToInt(w), convertToInt(h));
             if (!d.data.canvases) {
                 d.data.canvases = {};

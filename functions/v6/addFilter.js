@@ -7,7 +7,7 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         let [name = "canvas", filter = "", value] = data.inside.splits;
 
-        const val = Number(value);
+        const val = Number(value) || 0;
 
         if (!name || !filter || !value) {
             return canvaError.newError(d, "One or some required parameters are missing.");

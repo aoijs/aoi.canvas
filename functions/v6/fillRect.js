@@ -5,11 +5,19 @@ module.exports = {
     type: "djs",
     code: async (d) => {
         const data = d.util.aoiFunc(d);
-        const [name = "canvas", x, y, w, h, radius = 1] = data.inside.splits;
+        const [name = "canvas", x, y, w, h, radius = 0] = data.inside.splits;
 
-        const step = Math.min(Number(w), Number(h)) * 0.1;
+        function convertToInt(str) {
+            const number = parseInt(str);
+            if (isNaN(number)) {
+                return 0;
+            }
+            return number;
+        }
 
-        if (isNaN(Number(x)) || isNaN(Number(y)) || isNaN(Number(w)) || isNaN(Number(h)) || isNaN(Number(radius))) {
+        const step = Math.min(convertToInt(w), convertToInt(h)) * 0.1;
+
+        if (isNaN(convertToInt(x)) || isNaN(convertToInt(y)) || isNaN(convertToInt(w)) || isNaN(convertToInt(h)) || isNaN(convertToInt(radius))) {
             return canvaError.newError(d, 'Invalid parameter. All parameters must be numbers.');
         }
 
@@ -17,19 +25,19 @@ module.exports = {
             const canvas = d.data.canvases[name];
             const ctx = canvas.ctx;
 
-            if (Number(radius) === 0) {
-                ctx.fillRect(Number(x), Number(y), Number(w), Number(h));
+            if (convertToInt(radius) === 0) {
+                ctx.fillRect(convertToInt(x), convertToInt(y), convertToInt(w), convertToInt(h));
             } else {
                 ctx.beginPath();
-                ctx.moveTo(Number(x) + Number(radius), Number(y));
-                ctx.lineTo(Number(x) + Number(w) - Number(radius), Number(y));
-                ctx.quadraticCurveTo(Number(x) + Number(w), Number(y), Number(x) + Number(w), Number(y) + Number(radius));
-                ctx.lineTo(Number(x) + Number(w), Number(y) + Number(h) - Number(radius));
-                ctx.quadraticCurveTo(Number(x) + Number(w), Number(y) + Number(h), Number(x) + Number(w) - Number(radius), Number(y) + Number(h));
-                ctx.lineTo(Number(x) + Number(radius), Number(y) + Number(h));
-                ctx.quadraticCurveTo(Number(x), Number(y) + Number(h), Number(x), Number(y) + Number(h) - Number(radius));
-                ctx.lineTo(Number(x), Number(y) + Number(radius));
-                ctx.quadraticCurveTo(Number(x), Number(y), Number(x) + Number(radius), Number(y));
+                ctx.moveTo(convertToInt(x) + convertToInt(radius), convertToInt(y));
+                ctx.lineTo(convertToInt(x) + convertToInt(w) - convertToInt(radius), convertToInt(y));
+                ctx.quadraticCurveTo(convertToInt(x) + convertToInt(w), convertToInt(y), convertToInt(x) + convertToInt(w), convertToInt(y) + convertToInt(radius));
+                ctx.lineTo(convertToInt(x) + convertToInt(w), convertToInt(y) + convertToInt(h) - convertToInt(radius));
+                ctx.quadraticCurveTo(convertToInt(x) + convertToInt(w), convertToInt(y) + convertToInt(h), convertToInt(x) + convertToInt(w) - convertToInt(radius), convertToInt(y) + convertToInt(h));
+                ctx.lineTo(convertToInt(x) + convertToInt(radius), convertToInt(y) + convertToInt(h));
+                ctx.quadraticCurveTo(convertToInt(x), convertToInt(y) + convertToInt(h), convertToInt(x), convertToInt(y) + convertToInt(h) - convertToInt(radius));
+                ctx.lineTo(convertToInt(x), convertToInt(y) + convertToInt(radius));
+                ctx.quadraticCurveTo(convertToInt(x), convertToInt(y), convertToInt(x) + convertToInt(radius), convertToInt(y));
                 ctx.closePath();
                 ctx.fill();
             }

@@ -1,5 +1,8 @@
 const canvaError = require("../../index.js").utils.canvaError;
-const { createCanvas } = require('@napi-rs/canvas')
+const { createCanvas } = require('@napi-rs/canvas');
+const { Utils } = require("../../util/utils.js");
+const { convertToInt } = Utils;
+
 
 module.exports = {
     name: "$createCanvas",
@@ -7,25 +10,10 @@ module.exports = {
     code: async (d) => {
         const data = d.util.aoiFunc(d);
         const [name = "canvas", w = "512", h = "512"] = data.inside.splits;
-        
-        function convertToInt(str) {
-            const number = parseInt(str);
-            if (isNaN(number)) {
-                return 0;
-            }
-            return number;
-        }
-
-        if (convertToInt(w) && convertToInt(h)) {
-            let canv = await createCanvas(convertToInt(w), convertToInt(h));
-            if (!d.data.canvases) {
-                d.data.canvases = {};
-            }
-            d.data.canvases[name] = {canvas: canv, ctx: canv.getContext("2d")};
-        } else {
-            canvaError.newError(d, "One or Two size parameters are not number.")
-        }
-
+        if (isNaN(convertToInt(w)) || isNaN(convertToInt(h)))
+            return canvaError.newError(d, "One or Two size parameters are not number.");
+        let canv = await createCanvas(convertToInt(w), convertToInt(h));
+        (d.data.canvases??={})[name] = {canvas: canv, ctx: canv.getContext("2d")};
         return {
             code: d.util.setCode(data),
             data: d.data

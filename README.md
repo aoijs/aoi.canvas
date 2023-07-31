@@ -67,6 +67,18 @@ $sendCanvas[lerefPro;msg]
 $lerefPro
 `
 });
+
+// Semi round avatar
+bot.command({
+    name: "test",
+    code: `
+        $title[CANVAS OWO]
+        $sendCanvas[test;image]
+        $drawImage[test;pon;1;1;512;512;280]
+        $loadImage[test;pon;url;$nonEscape[$userAvatar[$authorID]]]
+        $createCanvas[test]
+    `
+});
 ```
 
 ## Credits

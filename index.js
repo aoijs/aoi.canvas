@@ -18,21 +18,16 @@ module.exports = {
             "version": vers
         };
 
-        if (vers && vers.toLowerCase() === "v6") {
-            for (const file of fs.readdirSync(path.join(__dirname, "./functions/v6")).filter(file => file.endsWith(".js"))) {
-                var thefunction = require("./functions/v6/"+file);
-                bot.functionManager.createFunction(
-                    thefunction
-                );
-            };
-            console.log(`\x1b[96m|---------------|\n|---\x1b[97mAoiCanvas\x1b[96m---|\n|----\x1b[97mLoaded.\x1b[96m----|\n|-----\x1b[97maoiv6\x1b[96m-----|\n|---------------|\x1b[0m`);
-        } else {
-            canvaError.newWarn("Version '"+vers+"' not found!!!!! please set version to \"v6\". If you dont change it to supported version aoi.canvas will not work!")
+        if (vers && vers.toLowerCase() !== "v6") 
+            return canvaError.newWarn("Version '"+vers+"' not found! Please set version to \"v6\". If you dont change it to supported version aoi.canvas will not work!");
+        if (!["console", "msg", "message", "none"].includes(et))
+            return canvaWarn.newWarn(`Unknown 'ErrorsType' option type. AoiCanvas Errors would not be shown.`);
+        const functions = fs.readdirSync(path.join(__dirname, "./functions/v6")).filter(file => file.endsWith(".js"));
+        for (const file of functions) {
+            const thefunction = require("./functions/v6/"+file);
+            bot.functionManager.createFunction(thefunction);
         };
-
-        if (et !== "console" && et !== "msg" && et !== "message" && et !== "none") {
-            canvaWarn.newWarn(`Unknown 'ErrorsType' option type. AoiCanvas Errors would not be shown.`);
-        };
+        console.log(`\x1b[96m|---------------|\n|---\x1b[97mAoiCanvas\x1b[96m---|\n|----\x1b[97mLoaded.\x1b[96m----|\n|-----\x1b[97maoiv6\x1b[96m-----|\n|---------------|\x1b[0m`);
     },
 
     getData: () => {
@@ -44,3 +39,8 @@ module.exports = {
         canvaWarn: require("./util/canvaWarn.js")
     }
 };
+
+/** 
+* @typedef {"console" | "msg" | "message" | "none"} ErrorTypes
+* @typedef {"v6"} Versions
+*/

@@ -23,5 +23,8 @@
     "aoi.canvas"
   ],
   "author": "Lordex",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "aoi.js": "^6.4.0"
+  }
 }

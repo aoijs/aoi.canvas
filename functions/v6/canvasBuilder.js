@@ -173,7 +173,7 @@ let fishes = {
         if (convertToInt(strokesize) <= 1) {
             ctx.fillText(text.addBrackets().unescape(), convertToInt(x), convertToInt(y));
         } else {
-            ctx.addStrokeText(text.addBrackets().unescape(), convertToInt(x), convertToInt(y));
+            ctx.strokeText(text.addBrackets().unescape(), convertToInt(x), convertToInt(y));
         };
 
         ctx.textAlign = oldalign;

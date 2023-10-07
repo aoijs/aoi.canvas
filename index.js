@@ -6,7 +6,6 @@ const canvaWarn = require("./util/canvaWarn.js");
 
 module.exports = {
     load: (Lobj) => {
-        console.log(GlobalFonts.families)
         const canvaWarn = require("./util/canvaWarn.js");
 
         const bot = Lobj.bot;

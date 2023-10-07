@@ -32,8 +32,11 @@ module.exports = {
                 ctx.textBaseline = "middle";
                 y = canvas.height / 2;
             };
+
+            ctx.strokeStyle = strokecolor;
+            ctx.lineWidth = strokesize;
             
-            ctx.addStrokeText(text.addBrackets(), convertToInt(x), convertToInt(y));
+            ctx.strokeText(text.addBrackets(), convertToInt(x), convertToInt(y))
             ctx.textAlign = oldalign;
             ctx.textBaseline = oldbaseline;
             ctx.strokeStyle = oldstrokecolor;

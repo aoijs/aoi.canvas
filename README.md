@@ -1,3 +1,4 @@
+
 # Aoi Canvas
 
 Aoi Canvas is a package that allows you to utilize canvas functions with Aoi.js Bot.
@@ -11,13 +12,14 @@ npm install aoi.canvas
 
 2. Import the `aoi.canvas` library into your project:
 ```javascript
-const aoicanva = require("aoi.canvas");
+const aoicanvas = require("aoi.canvas");
 ```
 
 3. Load Aoi Canvas with the required parameters:
 ```javascript
-aoicanva.load({
+aoicanvas.load({
   bot: bot, // Aoi.js Bot object.
+  Util: Util, // To make aoi.canvas parser work. ($sendMessage, $channelSendMessage, $interactionReply, etc)
   DownloadFolder: "./folder/", // Folder for $downloadCanvas, optional.
   ErrorsType: "console" // AoiCanva errors type, optional. (console/message/none)
 });
@@ -28,8 +30,8 @@ aoicanva.load({
 ## Example
 
 ```javascript
-const { AoiClient } = require("aoi.js");
-const aoicanva = require("aoi.canvas");
+const { AoiClient, Util } = require("aoi.js");
+const aoicanvas = require("aoi.canvas");
 
 const bot = new AoiClient({
     token: "BOT TOKEN",
@@ -47,8 +49,9 @@ const bot = new AoiClient({
     }
 });
 
-aoicanva.load({
+aoicanvas.load({
     bot: bot,
+    Util: Util,
     DownloadFolder: "./canvasdownloads/",
     ErrorsType: "console"
 });
@@ -59,7 +62,22 @@ bot.command({
     code: `Pong! $pingms`
 });
 
-// Leref Command Example
+// Pro Avatar Command Example
+bot.command({
+    name: "pro",
+    code: `
+    $sendCanvas[pro]
+    $drawText[pro;Pro;225;450]
+    $setShadow[pro;20;#FFFFFF]
+    $font[pro;50px Arial]
+    $canvasColor[pro;#000000]
+    $drawImage[pro;avatar;0;0;512;512]
+    $loadImage[pro;avatar;url;$nonEscape[$authorAvatar]]
+    $createCanvas[pro;512;512]
+    `
+});
+
+// Leref Command Example (Best command ever)
 bot.command({
     name: "leref",
     code: `
@@ -72,15 +90,13 @@ $lerefPro
 ## Credits
 
 - lordex (uwu)
-- fafa (some ideas)
 - akaruiteam (aoi.js)
-- neo
 
 These are the contributors who have contributed to the Aoi Canvas project.
 
 ---
 
-Remember to install the required dependencies and follow the setup steps mentioned above to start using Aoi Canvas in your Aoi.js Bot.
+Remember to follow the setup steps mentioned above to start using Aoi Canvas in your aoi.js Bot.
 
 Feel free to reach out if you have any questions or need further assistance.
 

@@ -33,7 +33,7 @@ module.exports = {
                 y = canvas.height / 2;
             };
             
-            ctx.addStrokeText(text.addBrackets().unescape(), convertToInt(x), convertToInt(y));
+            ctx.addStrokeText(text.addBrackets(), convertToInt(x), convertToInt(y));
             ctx.textAlign = oldalign;
             ctx.textBaseline = oldbaseline;
             ctx.strokeStyle = oldstrokecolor;

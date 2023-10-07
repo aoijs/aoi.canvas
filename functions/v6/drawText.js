@@ -31,7 +31,7 @@ module.exports = {
                 y = canvas.height / 2;
             };
             
-            ctx.fillText(text.addBrackets().unescape(), convertToInt(x), convertToInt(y));
+            ctx.fillText(text.addBrackets(), convertToInt(x), convertToInt(y));
             ctx.textAlign = oldalign;
             ctx.textBaseline = oldbaseline;
         } else {

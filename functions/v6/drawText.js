@@ -4,7 +4,7 @@ module.exports = {
     code: async (d) => {
         const canvaError = require("../../index.js").utils.canvaError;
         const data = d.util.aoiFunc(d);
-        const [name = "canvas", text = "Text", x = "1", y = "1"] = data.inside.splits;
+        let [name = "canvas", text = "Text", x = "1", y = "1"] = data.inside.splits;
 
         function convertToInt(str) {
             const number = parseInt(str);
@@ -15,8 +15,25 @@ module.exports = {
         }
 
         if (d.data.canvases[name]) {
-            const ctx = d.data.canvases[name].ctx;
-            ctx.fillText(text, convertToInt(x), convertToInt(y));
+            var canvas = d.data.canvases[name].canvas;
+            var ctx = d.data.canvases[name].ctx;
+
+            const oldalign = ctx.textAlign;
+            const oldbaseline = ctx.textBaseline;
+
+            if (x && x === "center") {
+                ctx.textAlign = "center";
+                x = canvas.width / 2;
+            }; 
+
+            if (y && y === "center") {
+                ctx.textBaseline = "middle";
+                y = canvas.height / 2;
+            };
+            
+            ctx.fillText(text.addBrackets().unescape(), convertToInt(x), convertToInt(y));
+            ctx.textAlign = oldalign;
+            ctx.textBaseline = oldbaseline;
         } else {
             return canvaError.newError(d, 'Canvas with this name not found.');
         };

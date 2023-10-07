@@ -11,8 +11,8 @@ module.exports = {
                 d.channel.send(`
 ${"```js"}\n
 CanvaError: ${msg}
-In: ${data.function}
-Code: \`${data.code}\`
+In: "${data.function}"
+Where in code: \`${data.code}\`
 \n${"```"}`);
             }
         } catch (err) {

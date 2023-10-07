@@ -1,5 +1,7 @@
 const canvaError = require("../../index.js").utils.canvaError;
-const { createCanvas } = require('@napi-rs/canvas')
+const { createCanvas, GlobalFonts } = require('@napi-rs/canvas')
+const getData = require("../../index.js").getData;
+const fs = require("fs")
 
 module.exports = {
     name: "$createCanvas",
@@ -22,6 +24,13 @@ module.exports = {
                 d.data.canvases = {};
             }
             d.data.canvases[name] = {canvas: canv, ctx: canv.getContext("2d")};
+            
+            require("../../index.js").canvasData({
+                "method": "set",
+                "where": "canvases",
+                "what": name,
+                "value": d.data.canvases[name]
+            });
         } else {
             canvaError.newError(d, "One or Two size parameters are not number.")
         }

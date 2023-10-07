@@ -15,6 +15,9 @@ module.exports = {
             return number;
         }
 
+        if (radius && radius.toLowerCase() === "%circle%")
+            radius = convertToInt(w) / 2;
+
         const step = Math.min(convertToInt(w), convertToInt(h)) * 0.1;
 
         if (isNaN(convertToInt(x)) || isNaN(convertToInt(y)) || isNaN(convertToInt(w)) || isNaN(convertToInt(h)) || isNaN(convertToInt(radius))) {

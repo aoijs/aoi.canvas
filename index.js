@@ -8,7 +8,7 @@ module.exports = {
     load: (Lobj) => {
         const canvaWarn = require("./util/canvaWarn.js");
 
-        const bot = Lobj.bot;
+        const bot = Lobj.bot || Lobj.client;
         const df = Lobj.DownloadFolder || "./canvas/";
         const et = Lobj.ErrorsType || "message";
         const vers = Lobj.version || "v6";
@@ -24,8 +24,10 @@ module.exports = {
             "Data": {
                 "canvases": {},
                 "gifs": {}
-            }
+            },
         };
+
+        global.loadedFonts_canvas_aoi_cat_uwu = this.data["loadedFonts"];
 
         if (util && util !== "none") {
             util.parsers.ErrorHandler = require("./util/parser.js").AllParser;
@@ -75,5 +77,5 @@ module.exports = {
         canvaError: require("./util/canvaError.js"),
         canvaWarn: require("./util/canvaWarn.js"),
         parser: require("./util/parser.js")
-    }
+    },
 };

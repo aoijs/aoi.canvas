@@ -5,9 +5,9 @@ module.exports = {
     type: "djs",
     code: async (d) => {
         const data = d.util.aoiFunc(d);
-        let [name = "canvas", effect = "", value] = data.inside.splits;
+        let [name = "canvas", effect = "none", value = "none"] = data.inside.splits;
 
-        const val = Number(value) || 0;
+        const val = Number(value) || "none";
 
         if (!name || !effect || !value) {
             return canvaError.newError(d, "One or some required parameters are missing.");
@@ -23,7 +23,8 @@ module.exports = {
                 "brightness": `brightness(${val})`,
                 "contrast": `contrast(${val})`,
                 "invert": `invert(${val})`,
-                "saturate": `saturate(${val})`
+                "saturate": `saturate(${val})`,
+                "none": "none"
             };
 
             if (effects[effect]) {

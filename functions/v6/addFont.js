@@ -1,7 +1,7 @@
 const canvaError = require("../../index.js").utils.canvaError;
 const { GlobalFonts } = require("@napi-rs/canvas");
 
-let loadedFonts = [];
+let loadedFonts = require("../../util/parser.js").loadedFonts;
 
 module.exports = {
     name: "$addFont",
@@ -16,7 +16,11 @@ module.exports = {
 
             if (loadedFonts.find(tfont => tfont.name === font) && loadedFonts.find(tfont => tfont.data === data)) return;
 
-            GlobalFonts.register(data, font)
+            GlobalFonts.register(data, font);
+            loadedFonts.push({
+	name: font,
+	data: data
+            });
         } else {
             return canvaError.newError(d, 'Canvas with this name not found.');
         };

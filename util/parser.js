@@ -7,6 +7,49 @@ const SlashOption = require("./slashOption.js");
 const { Time } = require("./TimeParser.js");
 const { CreateObjectAST } = require("./functions.js");
 const { newError } = require("./canvaError.js");
+const canvaError = require("./canvaError.js");
+
+const { loadImage, GlobalFonts} = require("@napi-rs/canvas");
+
+function convertToInt(str) {
+    const number = parseFloat(str);qg
+    if (isNaN(number)) {
+        return 0;
+    }
+    return number;
+};
+
+let loadedFonts = [];
+
+String.prototype.onEmpty = function (ifempty) {
+    if (this.trim().length === 0) {
+        return ifempty;
+    } else {
+        return this.toString();
+    }
+};
+
+String.prototype.unescape = function () {
+    if (this.trim().length === 0) return "";
+
+    var result = this
+        .replace(/&COLON&/g, ":")
+        .replace(/&BR&/g, "{")
+        .replace(/&BL&/g, "}");
+
+    return result;
+};
+
+String.prototype.escape = function () {
+    if (this.trim().length === 0) return "";
+
+    var result = this
+        .replace(/:/g, "&COLON&")
+        .replace(/{/g, "&BR&")
+        .replace(/}/g, "&BL&");
+
+    return result;
+};
 
 function mustEscape (msg) {
     return msg
@@ -26,8 +69,631 @@ function mustEscape (msg) {
         .replaceAll("\\||", "#OR#");
 };
 
+const ColorLinearGradientMaker = async (ctx, color) => {
+	let [ cx, cy, endx, endy, ...gstops ] = color.split("=").slice(1).join("=").split("/");
+
+	let thisgradient = ctx.createLinearGradient(parseFloat(cx), parseFloat(cy), parseFloat(endx), parseFloat(endy));
+
+	for (let i = 0; i < gstops.length; i += 2) {
+    		let pos = gstops[i];
+    		let color = gstops[i + 1];
+
+    		await thisgradient.addColorStop(parseFloat(pos), color);
+  	};
+
+	return thisgradient;
+};
+
+const ColorRadialGradientMaker = async (ctx, color) => {
+	let [ cx, cy, cradius, endx, endy, endradius, ...gstops ] = color.split("=").slice(1).join("=").split("/");
+
+	let thisgradient = ctx.createRadialGradient(parseFloat(cx), parseFloat(cy), parseFloat(cradius), parseFloat(endx), parseFloat(endy), parseFloat(endradius));
+
+	for (let i = 0; i < gstops.length; i += 2) {
+    		let pos = gstops[i];
+    		let color = gstops[i + 1];
+
+    		await thisgradient.addColorStop(parseFloat(pos), color);
+  	};
+
+	color = thisgradient;
+};
+
+const CanvasBuilderParserFishes = {
+    lineargradient: async function (duck) {
+	let ctx = duck.canv.ctx;
+	let [ gname = "gradient", cx = "0", cy = "0", endx = "0", endy = "0",  ...gstops] = duck.fish.params;
+
+	gname = gname.onEmpty("gradient");
+	cx = parseFloat(cx.onEmpty("0"));
+	cy = parseFloat(cy.onEmpty("0"));
+	endx = parseFloat(endx.onEmpty("15"));
+	endy = parseFloat(endy.onEmpty("0"));
+	
+	if (!duck.canv.gradients) duck.canv.gradients = {};
+	
+	let thisgradient = ctx.createLinearGradient(cx, cy, endx, endy);
+
+	if (duck.canv.gradients[gname]) thisgradient = duck.canv.gradients[gname];
+
+	for (let i = 0; i < gstops.length; i += 2) {
+    		let pos = gstops[i];
+    		let color = gstops[i + 1];
+
+		
+
+    		await thisgradient.addColorStop(parseFloat(pos), color);
+  	};
+
+	duck.canv.gradients[gname] = thisgradient;
+    },
+    radialgradient: async function (duck) {
+	let ctx = duck.canv.ctx;
+	let [ gname = "gradient", cx = "0", cy = "0", cradius = "15", endx = "0", endy = "0", endradius = "15", ...gstops] = duck.fish.params;
+
+	gname = gname.onEmpty("gradient");
+	cx = cx.onEmpty("0");
+	cy = cy.onEmpty("0");
+	cradius = cradius.onEmpty("15");
+	endx = endx.onEmpty("0");
+	endy = endy.onEmpty("0");
+	endradius = endradius.onEmpty("15");
+	
+	if (!duck.canv.gradients) duck.canv.gradients = {};
+	
+	let thisgradient = ctx.createRadialGradient(parseFloat(cx), parseFloat(cy), parseFloat(cradius), parseFloat(endx), parseFloat(endy), parseFloat(endradius));
+
+	if (duck.canv.gradients[gname]) thisgradient = duck.canv.gradients[gname];
+
+	for (let i = 0; i < gstops.length; i += 2) {
+    		let pos = gstops[i];
+    		let color = gstops[i + 1];
+
+    		await thisgradient.addColorStop(parseFloat(pos), color);
+  	};
+
+	duck.canv.gradients[gname] = thisgradient;
+    },
+    image: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ type = "url", path, x = "0", y = "0", w = duck.canv.canvas.width.toString(), h = duck.canv.canvas.height.toString(), radius = "0" ] = duck.fish.params
+
+        type = type.onEmpty("url") || undefined; x = x.onEmpty("0"); y = y.onEmpty("0"); w = w.onEmpty(duck.canv.canvas.width.toString()); h = h.onEmpty(duck.canv.canvas.height.toString()); radius = radius.onEmpty("0");
+
+        if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%"))
+            x = (duck.canv.canvas.width - parseFloat(w)) / 2;
+
+        if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%"))
+            y = (duck.canv.canvas.height - parseFloat(h)) / 2;
+
+        if (radius && (radius.toLowerCase() === "%circle%" || radius.toLowerCase() === "circle"))
+            radius = parseFloat(w) / 2;
+
+        if (!path) return canvaError.newError(duck.d, `Please provide (path/link) parameter.`);
+        
+        if (type && (
+            type.toLowerCase() === "link" 
+            || 
+            type.toLowerCase() === "url"
+        ) === true) {
+            let image;
+
+            await loadImage(path.addBrackets().unescape()).then((img) => {
+                image = img;
+            });
+
+            if (!duck.d.data.canvases[duck.settings.params[0]].images) {
+                duck.d.data.canvases[duck.settings.params[0]].images = {};
+            }
+            duck.d.data.canvases[duck.settings.params[0]].images[(duck.d.data.canvases[duck.settings.params[0]].images.length + 1).toString()] = image
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(parseFloat(x) + parseInt(radius), parseFloat(y));
+            ctx.arcTo(parseFloat(x) + parseFloat(w), parseFloat(y), parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(h), parseInt(radius));
+            ctx.arcTo(parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(h), parseFloat(x), parseFloat(y) + parseFloat(h), parseInt(radius));
+            ctx.arcTo(parseFloat(x), parseFloat(y) + parseFloat(h), parseFloat(x), parseFloat(y), parseInt(radius));
+            ctx.arcTo(parseFloat(x), parseFloat(y), parseFloat(x) + parseFloat(w), parseFloat(y), parseInt(radius));
+            ctx.closePath();
+            ctx.clip();
+            await ctx.drawImage(image, parseFloat(x), parseFloat(y), parseFloat(w), parseFloat(h));
+            ctx.restore();
+        } else if (type && (
+            type.toLowerCase() === "file"
+            ||
+            type.toLowerCase() === "path"
+            ||
+            type.toLowerCase() === "local"
+        ) === true) {
+            let image;
+
+            await loadImage(nodepath.join(__dirname, path.addBrackets().replace(/&COLON&/g, ":"))).then((img) => {
+                image = img;
+            });
+
+            if (!duck.d.data.canvases[duck.settings.params[0]].images) {
+                duck.d.data.canvases[duck.settings.params[0]].images = {};
+            }
+            duck.d.data.canvases[duck.settings.params[0]].images[(duck.d.data.canvases[duck.settings.params[0]].images.length + 1).toString()] = image
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(parseFloat(x) + parseInt(radius), parseFloat(y));
+            ctx.arcTo(parseFloat(x) + parseFloat(w), parseFloat(y), parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(h), parseInt(radius));
+            ctx.arcTo(parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(h), parseFloat(x), parseFloat(y) + parseFloat(h), parseInt(radius));
+            ctx.arcTo(parseFloat(x), parseFloat(y) + parseFloat(h), parseFloat(x), parseFloat(y), parseInt(radius));
+            ctx.arcTo(parseFloat(x), parseFloat(y), parseFloat(x) + parseFloat(w), parseFloat(y), parseInt(radius));
+            ctx.closePath();
+            ctx.clip();
+            await ctx.drawImage(image, parseFloat(x), parseFloat(y), parseFloat(w), parseFloat(h));
+            ctx.restore();
+        } else {
+            duck.fish.params[0] = ">"+duck.fish.params[0]+"<"
+            return canvaError.newError(duck.d, `Invalid type. {${duck.fish.name}:${duck.fish.params.join(":")}}`)
+        }
+    },
+    font: async function (duck) {
+        let [ font = "10px Arial" ] = duck.fish.params;
+        font = font.onEmpty("10px Arial");
+
+        duck.canv.ctx.font = font;
+    },
+    addfont: async function (duck) {
+        let [ font = "MyFont", path ] = duck.fish.params;
+        font = font.onEmpty("MyFont");
+        
+        if (!path) return canvaError.newError(duck.d, `No Path parameter. ({${duck.fish.name}:${duck.params.join(":")}})`);
+
+        const data = fs.readFileSync(nodepath.join(getData().dirname, path));
+
+        if (loadedFonts.find(tfont => tfont.name === font) && loadedFonts.find(tfont => tfont.data === data)) return;
+
+        GlobalFonts.register(data, font.addBrackets().unescape());
+        loadedFonts.push({
+	name: font,
+	data: data
+        });
+    },
+    textalign: async function (duck) {
+      let ctx = duck.canv.ctx;
+      let [ align = "start" ] = duck.fish.params;
+      
+      align = align.onEmpty("start");
+
+      ctx.textAlign = align;
+    },
+    stroketext: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ text = "Text", font = "30px Arial", strokecolor = "#000000", x = "center", y = "center", strokesize = "1"] = duck.fish.params;
+        
+        text = text.onEmpty("Text")
+        font = font.onEmpty("30px Arial")
+        x = x.onEmpty("center")
+        y = y.onEmpty("center")
+        strokecolor = strokecolor.onEmpty("#000000")
+        strokesize = strokesize.onEmpty("0")
+
+        ctx.font = font;
+
+        const oldstrokecolor = ctx.strokeStyle;
+        const oldstrokesize = ctx.lineWidth;
+
+	if (strokecolor.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = strokecolor.split("=");
+			if (gradients[gradientname])
+			strokecolor = gradients[gradientname.join()];
+		};
+	} else if (strokecolor.toLowerCase().startsWith("lineargradient=")) {
+		strokecolor = await ColorLinearGradientMaker(duck.canv.ctx, strokecolor);
+	}  else if (strokecolor.toLowerCase().startsWith("radialgradient=")) {
+		strokecolor = await ColorRadialGradientMaker(duck.canv.ctx, strokecolor);
+	};
+
+        ctx.strokeStyle = strokecolor;
+        ctx.lineWidth = strokesize;
+
+        const oldalign = ctx.textAlign;
+        const oldbaseline = ctx.textBaseline;
+
+        if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%")) {
+            ctx.textAlign = "center"
+            x = duck.canv.canvas.width / 2;
+        };
+
+        if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%")) {
+            ctx.textBaseline = "middle"
+            y = duck.canv.canvas.height / 2;
+        };
+        
+        ctx.strokeText(text.addBrackets().unescape(), parseFloat(x), parseFloat(y));
+
+        ctx.textAlign = oldalign;
+        ctx.textBaseline = oldbaseline;
+        ctx.strokeStyle = oldstrokecolor;
+        ctx.lineWidth = oldstrokesize;
+    },
+    text: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ text = "Text", font = "30px Arial", color = "#000000", x = "center", y = "center"] = duck.fish.params;
+        
+        text = text.onEmpty("Text")
+        font = font.onEmpty("30px Arial")
+        color = color.onEmpty("000000")
+        x = x.onEmpty("center")
+        y = y.onEmpty("center")
+
+        const oldalign = ctx.textAlign;
+        const oldbaseline = ctx.textBaseline;
+
+	if (color.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = color.split("=");
+			if (gradients[gradientname])
+			color = gradients[gradientname.join()];
+		};
+	} else if (color.toLowerCase().startsWith("lineargradient=")) {
+		color = await ColorLinearGradientMaker(duck.canv.ctx, strokecolor);
+	}  else if (color.toLowerCase().startsWith("radialgradient=")) {
+		color = await ColorRadialGradientMaker(duck.canv.ctx, strokecolor);
+	};
+
+        ctx.font = font;
+        ctx.fillStyle = color;
+
+        if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%")) {
+            ctx.textAlign = "center"
+            x = duck.canv.canvas.width / 2;
+        };
+
+        if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%")) {
+            ctx.textBaseline = "middle"
+            y = duck.canv.canvas.height / 2;
+        };
+            
+         ctx.fillText(text.addBrackets().unescape(), parseFloat(x), parseFloat(y));
+        
+        ctx.textAlign = oldalign;
+        ctx.textBaseline = oldbaseline;
+    },
+    color: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ color = "none" ] = duck.fish.params;
+
+        color = color.onEmpty("none")
+
+	if (color.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = color.split("=");
+			if (gradients[gradientname])
+			color = gradients[gradientname.join()];
+		};
+	} else if (color.toLowerCase().startsWith("lineargradient=")) {
+		color = await ColorLinearGradientMaker(duck.canv.ctx, strokecolor);
+	}  else if (color.toLowerCase().startsWith("radialgradient=")) {
+		color = await ColorRadialGradientMaker(duck.canv.ctx, strokecolor);
+	};
+
+        if (color !== "none") {
+	ctx.fillStyle = color;
+        } else {
+	ctx.fillStyle = "#000";
+        };
+    },
+    strokecolor: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ color = "none" ] = duck.fish.params;
+
+        color = color.onEmpty("none")
+
+	if (color.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = color.split("=");
+			if (gradients[gradientname])
+			color = gradients[gradientname.join()];
+		};
+	} else if (color.toLowerCase().startsWith("lineargradient=")) {
+		color = await ColorLinearGradientMaker(duck.canv.ctx, color);
+	}  else if (color.toLowerCase().startsWith("radialgradient=")) {
+		color = await ColorRadialGradientMaker(duck.canv.ctx, color);
+	};
+
+        if (color !== "none") {
+	ctx.strokeStyle = color;
+        } else {
+	ctx.strokeStyle = "#000";
+        };
+    },
+    rect: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ color = "black", x = "center", y = "center", w = duck.canv.canvas.width.toString(), h = duck.canv.canvas.height.toString(), radius = "0" ] = duck.fish.params;
+
+        color = color.onEmpty("black")
+        x = x.onEmpty("center");
+        y = y.onEmpty("center");
+        w = w.onEmpty(duck.canv.canvas.width.toString());
+        h = h.onEmpty(duck.canv.canvas.height.toString());
+        radius = radius.onEmpty("0");
+
+	if (color.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = color.split("=");
+			if (gradients[gradientname])
+			color = gradients[gradientname.join()];
+		};
+	} else if (color.toLowerCase().startsWith("lineargradient=")) {
+		color = await ColorLinearGradientMaker(duck.canv.ctx, color);
+	}  else if (color.toLowerCase().startsWith("radialgradient=")) {
+		color = await ColorRadialGradientMaker(duck.canv.ctx, color);
+	};
+
+        if (w < 1 || h < 1) {
+            if (duck.fish.params[3]) duck.fish.params[3] = (w < 1) ? ">"+duck.fish.params[3]+"<" : duck.fish.params[3];
+            if (duck.fish.params[4]) duck.fish.params[4] = (h < 1) ? ">"+duck.fish.params[4]+"<" : duck.fish.params[4];
+
+            return canvaError.newError(duck.d, `Width/Height needs to be greater than 0. ({${duck.fish.name}:${duck.fish.params.join(":")}})`)
+        };
+
+        if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%"))
+            x = (duck.canv.canvas.width - parseFloat(w)) / 2;
+
+        if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%"))
+            y = (duck.canv.canvas.height - parseFloat(h)) / 2;
+
+        if (radius && (radius.toLowerCase() === "%circle%" || radius.toLowerCase() === "circle"))
+            radius = parseFloat(w) / 2;
+
+        const step = Math.min(parseFloat(w), parseFloat(h)) * 0.1;
+
+        const oldcolor = ctx.fillStyle;
+
+        if (parseFloat(radius) === 0) {
+            ctx.fillStyle = color;
+            ctx.fillRect(parseFloat(x), parseFloat(y), parseFloat(w), parseFloat(h));
+            ctx.fillStyle = oldcolor;
+        } else {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(parseFloat(x) + parseFloat(radius), parseFloat(y));
+            ctx.lineTo(parseFloat(x) + parseFloat(w) - parseFloat(radius), parseFloat(y));
+            ctx.quadraticCurveTo(parseFloat(x) + parseFloat(w), parseFloat(y), parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(radius));
+            ctx.lineTo(parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(h) - parseFloat(radius));
+            ctx.quadraticCurveTo(parseFloat(x) + parseFloat(w), parseFloat(y) + parseFloat(h), parseFloat(x) + parseFloat(w) - parseFloat(radius), parseFloat(y) + parseFloat(h));
+            ctx.lineTo(parseFloat(x) + parseFloat(radius), parseFloat(y) + parseFloat(h));
+            ctx.quadraticCurveTo(parseFloat(x), parseFloat(y) + parseFloat(h), parseFloat(x), parseFloat(y) + parseFloat(h) - parseFloat(radius));
+            ctx.lineTo(parseFloat(x), parseFloat(y) + parseFloat(radius));
+            ctx.quadraticCurveTo(parseFloat(x), parseFloat(y), parseFloat(x) + parseFloat(radius), parseFloat(y));
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = oldcolor;
+        }
+    },
+    shadow: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ size = "0", color = "#000000" ] = duck.fish.params;
+
+        size = size.onEmpty("0");
+        color = color.onEmpty("#000000");
+
+	if (color.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = color.split("=");
+			if (gradients[gradientname])
+			color = gradients[gradientname.join()];
+		};
+	} else if (color.toLowerCase().startsWith("lineargradient=")) {
+		color = await ColorLinearGradientMaker(duck.canv.ctx, color);
+	}  else if (color.toLowerCase().startsWith("radialgradient=")) {
+		strokecolor = await ColorRadialGradientMaker(duck.canv.ctx, color);
+	};
+         
+        ctx.shadowColor = color;
+        ctx.shadowBlur = parseFloat(size);
+         
+    },
+    effect: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ effect = "none", value = "none" ] = duck.fish.params;
+
+        effect = effect.onEmpty("blur");
+        value = value.onEmpty("5");
+
+        const val = parseFloat(value);
+
+        let effects = {
+            "grayscale": `grayscale(${val}%)`,
+            "blur": `blur(${val}px)`,
+            "sepia": `sepia(${val}%)`,
+            "brightness": `brightness(${val})`,
+            "contrast": `contrast(${val})`,
+            "invert": `invert(${val})`,
+            "saturate": `saturate(${val})`,
+            "none": "none"
+        };
+
+        if (effects[effect]) {
+            ctx.filter = effects[effect]
+        } else {
+            return canvaError.newError(duck.d, `Effect '${effect}' not found.`);
+        };
+    },
+    addeffect: async function (duck) {
+        let ctx = duck.canv.ctx;
+        let [ effect = "blur", value = "5" ] = duck.fish.params;
+
+        effect = effect.onEmpty("blur");
+        value = value.onEmpty("5");
+
+        const val = parseFloat(value);
+
+        let effects = {
+            "grayscale": `grayscale(${val}%)`,
+            "blur": `blur(${val}px)`,
+            "sepia": `sepia(${val}%)`,
+            "brightness": `brightness(${val})`,
+            "contrast": `contrast(${val})`,
+            "invert": `invert(${val})`,
+            "saturate": `saturate(${val})`
+        };
+
+        if (effects[effect]) {
+            if (ctx.filter === "none") {
+                ctx.filter = effects[effect];
+            } else {
+	ctx.filter += " "+effects[effect];
+            };
+        } else {
+            return canvaError.newError(duck.d, `Effect '${effect}' not found.`);
+        };
+    },
+    rotate: async function (duck) {
+        let [ angle = "0" ] = duck.fish.params;
+        angle = angle.onEmpty("0");
+
+        const canvas = duck.canv.canvas;
+        const ctx = duck.canv.ctx;
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        ctx.translate(centerX, centerY);
+        ctx.rotate((angl * Math.PI) / 180);
+        ctx.translate(-centerX, -centerY);
+    },
+    stroke: async function (duck) {
+        let ctx = duck.canv.ctx
+        let [ color = "#000000", size = "1"] = duck.fish.params;
+    
+        color = color.onEmpty("#000000");
+        size = size.onEmpty("0");
+
+	if (color.toLowerCase().startsWith("gradientid=")) {
+		let gradients = duck.canv.gradients;
+		if (gradients) {
+			let [gradientnaefrnirognrieorngeioirngoirnoeriognrigoernio, ...gradientname] = color.split("=");
+			if (gradients[gradientname])
+			color = gradients[gradientname.join()];
+		};
+	} else if (color.toLowerCase().startsWith("lineargradient=")) {
+		let [ cx, cy, endx, endy, ...gstops ] = color.split("=").slice(1).join("=").split("/");
+
+		let thisgradient = ctx.createLinearGradient(cx, cy, endx, endy);
+
+		for (let i = 0; i < gstops.length; i += 2) {
+    			let pos = gstops[i];
+    			let color = gstops[i + 1];
+
+			
+
+    			await thisgradient.addColorStop(parseFloat(pos), color);
+  		};
+
+		color = thisgradient;
+	}  else if (color.toLowerCase().startsWith("radialgradient=")) {
+		let [ cx, cy, cradius, endx, endy, endradius, ...gstops ] = color.split("=").slice(1).join("=").split("/");
+
+		let thisgradient = ctx.createRadialGradient(cx, cy, cradius, endx, endy, endradius);
+
+		for (let i = 0; i < gstops.length; i += 2) {
+    			let pos = gstops[i];
+    			let color = gstops[i + 1];
+
+    			await thisgradient.addColorStop(parseFloat(pos), color);
+  		};
+
+		color = thisgradient;
+	};
+         
+        ctx.strokeStyle = color;
+        ctx.lineWidth = parseFloat(size);
+        await ctx.stroke();
+    },
+};
+
+let GradientParserFishes = {
+	colorstop: async function (duck) {
+		let gradient = duck.gradient;
+		let [ pos = "1", color = "#000000" ] = duck.fish.params;
+		
+		pos = pos.onEmpty("1");
+		color = color.onEmpty("#000000");
+
+		gradient.addColorStop(pos, color);
+	}
+};
+
+async function catParser (cat) {
+        let obj = [];
+
+        for (var kitty of cat.split("{")) {
+            let object = { };
+
+            var inside = kitty.split("}")[0]
+            var [ name, ...params ] = inside.split(":")
+
+            object.name = name || "undefined"
+            object.params = params || []
+
+            obj.push(object)
+        }
+
+        return obj;
+};
+
 const AllParser = async (messg, d, returnMsg = false, channel, client) => {
     let message = {};
+
+    const CanvasBuilderParser = async (msg) => {
+                let cat = msg.split("{newCanvas:").slice(1);
+	let parsed = await catParser(cat[0]);
+
+                 if (!parsed) return;
+            let settings = parsed.find(fish => fish.name === "settings")
+            if (!settings) return canvaError.newError(d, `No settings option.`);
+            if (!d.data.canvases) d.data.canvases = {};
+
+            let [cname = "canvas", w = "512", h = "512"] = settings.params || ["canvas", "512", "512"];
+
+            if (cname === "") cname = "canvas";
+            if (w === "") w = "512";
+            if (h === "") h = "512";
+
+            cname = cname.trim();
+            w = w.trim();
+            h = h.trim();
+            
+            if (!Number(w) || !Number(h)) return canvaError.newError(d, `Invalid size parameter`);
+
+            let canvas = await createCanvas(Number(w), Number(h))
+            let canv = {
+                canvas: canvas,
+                ctx: canvas.getContext("2d")
+            };
+            
+            if (d.data.canvases[cname]) canv = d.data.canvases[cname];
+            d.data.canvases[cname] = canv;
+
+            for (var fish of parsed) {
+                if (fish && fish.name && typeof fish.name === "string")
+                if (CanvasBuilderParserFishes[fish.name.toLowerCase()])
+
+                await CanvasBuilderParserFishes[fish.name.toLowerCase()]({
+                    canv: (d.data.canvases[cname]),
+                    d,
+                    fish: fish,
+                    fishes: CanvasBuilderParserFishes,
+                    cat,
+                    parsed,
+                    settings,
+                });
+            };
+    };
 
     const EmbedParser = async (msg) => {
         msg = mustEscape(msg);
@@ -519,6 +1185,8 @@ const AllParser = async (messg, d, returnMsg = false, channel, client) => {
         if (Checker(part,"newEmbed")) await EmbedParser(part);
         else if (Checker(part, "actionRow"))
             await ComponentParser(part);
+        else if (Checker(part, "newCanvas"))
+            await CanvasBuilderParser(part);
         else if (Checker(part, "attachment") || Checker("file"))
             FileParser(part);
         else if (Checker(part, "edit")) edits = await EditParser(part);
@@ -616,22 +1284,10 @@ const AllParser = async (messg, d, returnMsg = false, channel, client) => {
 };
 
 module.exports = {
-    catParser: async function (cat) {
-        let obj = [];
-
-        for (var kitty of cat.split("{")) {
-            let object = { };
-
-            var inside = kitty.split("}")[0]
-            var [ name, ...params ] = inside.split(":")
-
-            object.name = name || "undefined"
-            object.params = params || []
-
-            obj.push(object)
-        }
-
-        return obj;
-    },
-    AllParser
+    catParser,
+    AllParser,
+    CanvasBuilderParserFishes,
+    loadedFonts,
+    ColorLinearGradientMaker,
+    ColorRadialGradientMaker
 };

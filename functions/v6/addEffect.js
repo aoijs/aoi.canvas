@@ -5,7 +5,7 @@ module.exports = {
     type: "djs",
     code: async (d) => {
         const data = d.util.aoiFunc(d);
-        let [name = "canvas", effect = "", value] = data.inside.splits;
+        let [name = "canvas", effect = "none", value] = data.inside.splits;
 
         const val = Number(value) || 0;
 
@@ -28,7 +28,11 @@ module.exports = {
 
             if (effects[effect]) {
                 if (val) {
-                    ctx.filter += " " + effects[effect]
+                    if (ctx.filter === "none") {
+                	ctx.filter = effects[effect];
+            	    } else {
+		ctx.filter += " "+effects[effect];
+                    };
                 } else {
                     return canvaError.newError(d, `Value is not a number.`);
                 };

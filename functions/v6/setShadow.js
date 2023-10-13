@@ -5,12 +5,11 @@ module.exports = {
     type: "djs",
     code: async (d) => {
         const data = d.util.aoiFunc(d);
-        const [name = "canvas", blur, color] = data.inside.splits;
+        const [name = "canvas", blur] = data.inside.splits;
 
         if (d.data.canvases[name]) {
             let ctx = d.data.canvases[name].ctx;
 
-            if (color) ctx.shadowColor = color;
             ctx.shadowBlur = Number(blur) || 0;
         } else {
             return canvaError.newError(d, 'Canvas with this name not found.');

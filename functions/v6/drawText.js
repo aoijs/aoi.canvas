@@ -1,3 +1,5 @@
+const canvaError = require("../../index.js").utils.canvaError;
+
 module.exports = {
     name: "$drawText",
     type: "djs",

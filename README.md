@@ -3,6 +3,8 @@
 
 Aoi Canvas is a package that allows you to utilize canvas functions with Aoi.js Bot.
 
+Docs: [link](https://aoicanvas.vercel.app/)
+
 ## Setup
 
 1. Install `aoi.canvas` package:
@@ -33,26 +35,26 @@ aoicanvas.load({
 const { AoiClient, Util } = require("aoi.js");
 const aoicanvas = require("aoi.canvas");
 
-const bot = new AoiClient({
-    token: "BOT TOKEN",
-    prefix: "BOT PREFIX",
-    intents: ["MessageContent", "Guilds", "GuildMessages"],
-    events: ["onMessage", "onInteractionCreate"],
-    database: {
-        type: "aoi.db",
-        db: require("@akarui/aoi.db"),
-        tables: ["main"],
-        path: "./database/",
-        extraOptions: {
-            dbType: "KeyValue"
-        }
-    }
+const client = new AoiClient({
+  token: "Discord Bot Token",
+  prefix: "Discord Bot Prefix",
+  intents: ["MessageContent", "Guilds", "GuildMessages"],
+  events: ["onMessage", "onInteractionCreate"],
+  database: {
+    type: "aoi.db",
+    db: require("@akarui/aoi.db"),
+    tables: ["main"],
+    path: "./database/",
+    extraOptions: {
+      dbType: "KeyValue",
+    },
+  },
 });
 
 aoicanvas.load({
-    bot: bot,
+    client: client,
     Util: Util,
-    DownloadFolder: "./canvasdownloads/",
+    DownloadFolder: "./aoicanvas/",
     ErrorsType: "console"
 });
 
@@ -68,7 +70,8 @@ bot.command({
     code: `
     $sendCanvas[pro]
     $drawText[pro;Pro;225;450]
-    $setShadow[pro;20;#FFFFFF]
+    $setShadow[pro;20]
+    $canvasColor[pro;#FFFFFF;shadow]
     $font[pro;50px Arial]
     $canvasColor[pro;#000000]
     $drawImage[pro;avatar;0;0;512;512]
@@ -76,14 +79,14 @@ bot.command({
     $createCanvas[pro;512;512]
     `
 });
-
-// Leref Command Example (Best command ever)
+ 
+// Leref Pro Command Example
 bot.command({
-    name: "leref",
-    code: `
-$sendCanvas[lerefPro;msg]
-$lerefPro
-`
+  name: "leref",
+  code: `
+  $sendCanvas[lerefPro;msg]
+  $lerefPro
+  `
 });
 ```
 

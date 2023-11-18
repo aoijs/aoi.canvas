@@ -6,12 +6,20 @@ const fs = require("fs");
 const nodepath = require("path");
 
 function convertToInt(str) {
-    const number = parseInt(str);
+    const number = parseFloat(str);
     if (isNaN(number)) {
         return 0;
     }
     return number;
 };
+
+function onEmpty(somestr, ifempty) {
+    if (somestr.length === 0) {
+        return ifempty;
+    } else {
+        return this.toString();
+    }
+}
 
 let loadedFonts = parser.loadedFonts;
 
@@ -64,19 +72,20 @@ module.exports = {
             if (!settings) return canvaError.newError(d, `No settings option.`);
             if (!d.data.canvases) d.data.canvases = {};
 
-            let [cname, w, h] = settings.params || ["canvas", "512", "512"];
+            let [cname = "canvas", w = "512", h = "512"] = settings.params;
 
-            if (cname === "") cname = "canvas";
-            if (w === "") w = "512";
-            if (h === "") h = "512";
+            if (!cname || typeof cname !== 'string' || cname.trim().length === 0) cname = "canvas";
+            if (!w || typeof w !== 'string' || w.trim().length === 0) w = "512";
+            if (!h || typeof h !== 'string' || h.trim().length === 0) h = "512";
 
-            cname = cname.trim();
-            w = w.trim();
-            h = h.trim();
-            
-            if (!Number(w) || !Number(h)) return canvaError.newError(d, `Invalid size parameter`);
+            /*
+            cname = onEmpty(cname, "canvas");
+            w = onEmpty(w, "512");
+            h = onEmpty(h, "512");
+            */
+            if (!parseFloat(w) || !parseFloat(h)) return canvaError.newError(d, `Invalid size parameter`);
 
-            let canvas = await createCanvas(Number(w), Number(h))
+            let canvas = await createCanvas(parseFloat(w), parseFloat(h))
             let canv = {
                 canvas: canvas,
                 ctx: canvas.getContext("2d")

@@ -8,12 +8,14 @@ module.exports = {
         const [name = "canvas", id, x = "1", y = "1", w, h, radius = "1"] = data.inside.splits;
 
         function convertToInt(str) {
-            const number = parseInt(str);
+            const number = parseFloat(str);
             if (isNaN(number)) {
                 return 0;
             }
             return number;
         }
+
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
 
         if (name && id && x && y && w && h) {
                 if (d.data.canvases[name]) {

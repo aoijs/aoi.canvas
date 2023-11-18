@@ -9,12 +9,14 @@ module.exports = {
         let [name = "canvas", text = "Text", x = "1", y = "1"] = data.inside.splits;
 
         function convertToInt(str) {
-            const number = parseInt(str);
+            const number = parseFloat(str);
             if (isNaN(number)) {
                 return 0;
             }
             return number;
         }
+
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
 
         if (d.data.canvases[name]) {
             var canvas = d.data.canvases[name].canvas;

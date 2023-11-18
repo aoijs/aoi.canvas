@@ -10,6 +10,8 @@ module.exports = {
         const [name = "gif", type = "msg", index = "1"] = data.inside.splits;
 
         if (!d.data.gifs) return canvaError.newError(d, "No GIFs found, please create at least one to send.");
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+        
         if (d.data.gifs[name]) {
             if (type === "msg") {
                 const e = await d.data.gifs[name].gif.out.getData();

@@ -328,7 +328,7 @@ module.exports = {
     },
     CreateObjectAST(parser) {
         let left = 0,
-            right = 0;
+             right = 0;
         let ans = [];
         let part = "";
         let i = 0;
@@ -357,6 +357,7 @@ module.exports = {
         }
         return ans;
     },
+
     // createFuncAST: createFuncAST,
     // Block: Block,
 };

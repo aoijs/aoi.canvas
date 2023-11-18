@@ -10,7 +10,7 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         let [name = "canvas", type = "msg", code = "1"] = data.inside.splits;
 
-        if (!d.data.canvases) return canvaError.newError(d, "There is no canvases.");
+        if (!d.data.canvases) return newError(d, `There is no canvases ever created.`);
 
         type = type.toLowerCase();
 

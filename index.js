@@ -27,8 +27,6 @@ module.exports = {
             },
         };
 
-        global.loadedFonts_canvas_aoi_cat_uwu = this.data["loadedFonts"];
-
         if (util && util !== "none") {
             util.parsers.ErrorHandler = require("./util/parser.js").AllParser;
         };

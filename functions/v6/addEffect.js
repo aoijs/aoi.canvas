@@ -7,6 +7,8 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         let [name = "canvas", effect = "none", value] = data.inside.splits;
 
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+
         const val = Number(value) || 0;
 
         if (!name || !effect || !value) {

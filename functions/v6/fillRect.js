@@ -8,12 +8,14 @@ module.exports = {
         const [name = "canvas", x, y, w, h, radius = 0] = data.inside.splits;
 
         function convertToInt(str) {
-            const number = parseInt(str);
+            const number = parseFloat(str);
             if (isNaN(number)) {
                 return 0;
             }
             return number;
         }
+
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
 
         if (radius && radius.toLowerCase() === "%circle%")
             radius = convertToInt(w) / 2;
@@ -27,6 +29,12 @@ module.exports = {
         if (d.data.canvases[name]) {
             const canvas = d.data.canvases[name];
             const ctx = canvas.ctx;
+
+            if (x && (x === "center" || x === "%center%"))
+                x = canvas.width / 2;
+
+            if (y && (y === "center" || y === "%center%"))
+                y = canvas.height / 2;
 
             if (convertToInt(radius) === 0) {
                 ctx.fillRect(convertToInt(x), convertToInt(y), convertToInt(w), convertToInt(h));

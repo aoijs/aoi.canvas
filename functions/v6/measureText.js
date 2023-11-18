@@ -7,6 +7,8 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         const [name = "canvas", text, prop] = data.inside.splits;
 
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+
         if (!text) return canvaError.newError(d, "Please provide text parameter.");
         if (!prop) return canvaError.newError(d, "Please provide property parameter.");
 

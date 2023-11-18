@@ -20,7 +20,7 @@ const aoicanvas = require("aoi.canvas");
 3. Load Aoi Canvas with the required parameters:
 ```javascript
 aoicanvas.load({
-  bot: bot, // Aoi.js Bot object.
+  cient: cient, // Aoi.js Bot object.
   Util: Util, // To make aoi.canvas parser work. ($sendMessage, $channelSendMessage, $interactionReply, etc)
   DownloadFolder: "./folder/", // Folder for $downloadCanvas, optional.
   ErrorsType: "console" // AoiCanva errors type, optional. (console/message/none)
@@ -59,13 +59,13 @@ aoicanvas.load({
 });
 
 // Ping Command Example
-bot.command({
+client.command({
     name: "ping",
     code: `Pong! $pingms`
 });
 
 // Pro Avatar Command Example
-bot.command({
+client.command({
     name: "pro",
     code: `
     $sendCanvas[pro]
@@ -81,7 +81,7 @@ bot.command({
 });
  
 // Leref Pro Command Example
-bot.command({
+client.command({
   name: "leref",
   code: `
   $sendCanvas[lerefPro;msg]
@@ -90,17 +90,10 @@ bot.command({
 });
 ```
 
-## Credits
-
-- lordex (uwu)
-- akaruiteam (aoi.js)
-
-These are the contributors who have contributed to the Aoi Canvas project.
-
 ---
 
 Remember to follow the setup steps mentioned above to start using Aoi Canvas in your aoi.js Bot.
 
-Feel free to reach out if you have any questions or need further assistance.
+Feel free to dm me in discord (devlordduck2) if you have any questions or need further assistance.
 
 Enjoy coding with Aoi Canvas!

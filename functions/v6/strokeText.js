@@ -6,6 +6,8 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         let [name = "canvas", text = "Text", x = "1", y = "1", size = "0"] = data.inside.splits;
 
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+
         function convertToInt(str) {
             const number = parseFloat(str);
             if (isNaN(number)) {

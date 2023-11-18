@@ -8,6 +8,9 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         const [name = "gif", canvas = "canvas"] = data.inside.splits;
 
+        if (!d.data.gifs) return canvaError.newError(d, `There is no gifs ever created.`);
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+
         if (name && canvas) {
             if (d.data.gifs[name]) {
                 let gif = d.data.gifs[name].gif;

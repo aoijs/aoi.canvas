@@ -7,6 +7,8 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         const [name = "canvas", size] = data.inside.splits;
 
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+
         if (d.data.canvases[name]) {
             d.data.canvases[name].ctx.lineWidth = Number(size) || 5;
             await d.data.canvases[name].ctx.stroke();

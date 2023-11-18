@@ -8,7 +8,7 @@
     "path": "^0.12.7"
   },
   "name": "aoi.canvas",
-  "version": "1.2.0",
+  "version": "1.2.5",
   "description": "Aoi.canvas - Brings canvas to aoi.js",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,8 @@
     "aoi",
     "dbd",
     "dbd.js",
-    "gif"
+    "gif",
+    "image"
   ],
   "author": "Lordex",
   "license": "ISC"

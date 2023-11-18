@@ -7,7 +7,9 @@ module.exports = {
         const data = d.util.aoiFunc(d);
         const [name = "canvas", angle = 0] = data.inside.splits;
 
-        const angl = Number(angle) || 0;
+        if (!d.data.canvases) return canvaError.newError(d, `There is no canvases ever created.`);
+
+        const angl = parseFloat(angle) || 0;
 
         if (isNaN(angl)) {
             return canvaError.newError(d, 'Invalid angle. The angle must be a number.');

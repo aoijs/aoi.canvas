@@ -100,61 +100,61 @@ const ColorRadialGradientMaker = async (ctx, color) => {
 };
 
 const CanvasBuilderParserFishes = {
-    lineargradient: async function (duck) {
-	let ctx = duck.canv.ctx;
-	let [ gname = "gradient", cx = "0", cy = "0", endx = "0", endy = "0",  ...gstops] = duck.fish.params;
+    lineargradient: async (duck) => {
+        let ctx = duck.canv.ctx;
+        let [ gname = "gradient", cx = "0", cy = "0", endx = "0", endy = "0",  ...gstops] = duck.fish.params;
 
-	gname = gname.onEmpty("gradient");
-	cx = parseFloat(cx.onEmpty("0"));
-	cy = parseFloat(cy.onEmpty("0"));
-	endx = parseFloat(endx.onEmpty("15"));
-	endy = parseFloat(endy.onEmpty("0"));
-	
-	if (!duck.canv.gradients) duck.canv.gradients = {};
-	
-	let thisgradient = ctx.createLinearGradient(cx, cy, endx, endy);
+        gname = gname.onEmpty("gradient");
+        cx = parseFloat(cx.onEmpty("0"));
+        cy = parseFloat(cy.onEmpty("0"));
+        endx = parseFloat(endx.onEmpty("15"));
+        endy = parseFloat(endy.onEmpty("0"));
+        
+        if (!duck.canv.gradients) duck.canv.gradients = {};
+        
+        let thisgradient = ctx.createLinearGradient(cx, cy, endx, endy);
 
-	if (duck.canv.gradients[gname]) thisgradient = duck.canv.gradients[gname];
+        if (duck.canv.gradients[gname]) thisgradient = duck.canv.gradients[gname];
 
-	for (let i = 0; i < gstops.length; i += 2) {
-    		let pos = gstops[i];
-    		let color = gstops[i + 1];
+        for (let i = 0; i < gstops.length; i += 2) {
+                let pos = gstops[i];
+                let color = gstops[i + 1];
 
-		
+            
 
-    		await thisgradient.addColorStop(parseFloat(pos), color);
-  	};
+                await thisgradient.addColorStop(parseFloat(pos), color);
+        };
 
-	duck.canv.gradients[gname] = thisgradient;
+        duck.canv.gradients[gname] = thisgradient;
     },
-    radialgradient: async function (duck) {
-	let ctx = duck.canv.ctx;
-	let [ gname = "gradient", cx = "0", cy = "0", cradius = "15", endx = "0", endy = "0", endradius = "15", ...gstops] = duck.fish.params;
+    radialgradient: async (duck) => {
+        let ctx = duck.canv.ctx;
+        let [ gname = "gradient", cx = "0", cy = "0", cradius = "15", endx = "0", endy = "0", endradius = "15", ...gstops] = duck.fish.params;
 
-	gname = gname.onEmpty("gradient");
-	cx = cx.onEmpty("0");
-	cy = cy.onEmpty("0");
-	cradius = cradius.onEmpty("15");
-	endx = endx.onEmpty("0");
-	endy = endy.onEmpty("0");
-	endradius = endradius.onEmpty("15");
-	
-	if (!duck.canv.gradients) duck.canv.gradients = {};
-	
-	let thisgradient = ctx.createRadialGradient(parseFloat(cx), parseFloat(cy), parseFloat(cradius), parseFloat(endx), parseFloat(endy), parseFloat(endradius));
+        gname = gname.onEmpty("gradient");
+        cx = cx.onEmpty("0");
+        cy = cy.onEmpty("0");
+        cradius = cradius.onEmpty("15");
+        endx = endx.onEmpty("0");
+        endy = endy.onEmpty("0");
+        endradius = endradius.onEmpty("15");
+        
+        if (!duck.canv.gradients) duck.canv.gradients = {};
+        
+        let thisgradient = ctx.createRadialGradient(parseFloat(cx), parseFloat(cy), parseFloat(cradius), parseFloat(endx), parseFloat(endy), parseFloat(endradius));
 
-	if (duck.canv.gradients[gname]) thisgradient = duck.canv.gradients[gname];
+        if (duck.canv.gradients[gname]) thisgradient = duck.canv.gradients[gname];
 
-	for (let i = 0; i < gstops.length; i += 2) {
-    		let pos = gstops[i];
-    		let color = gstops[i + 1];
+        for (let i = 0; i < gstops.length; i += 2) {
+                let pos = gstops[i];
+                let color = gstops[i + 1];
 
-    		await thisgradient.addColorStop(parseFloat(pos), color);
-  	};
+                await thisgradient.addColorStop(parseFloat(pos), color);
+        };
 
-	duck.canv.gradients[gname] = thisgradient;
+        duck.canv.gradients[gname] = thisgradient;
     },
-    image: async function (duck) {
+    image: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ type = "url", path, x = "0", y = "0", w = duck.canv.canvas.width.toString(), h = duck.canv.canvas.height.toString(), radius = "0" ] = duck.fish.params
 
@@ -232,13 +232,13 @@ const CanvasBuilderParserFishes = {
             return canvaError.newError(duck.d, `Invalid type. {${duck.fish.name}:${duck.fish.params.join(":")}}`)
         }
     },
-    font: async function (duck) {
+    font: async (duck) => {
         let [ font = "10px Arial" ] = duck.fish.params;
         font = font.onEmpty("10px Arial");
 
         duck.canv.ctx.font = font;
     },
-    addfont: async function (duck) {
+    addfont: async (duck) => {
         let [ font = "MyFont", path ] = duck.fish.params;
         font = font.onEmpty("MyFont");
         
@@ -254,7 +254,7 @@ const CanvasBuilderParserFishes = {
 	data: data
         });
     },
-    textalign: async function (duck) {
+    textalign: async (duck) => {
       let ctx = duck.canv.ctx;
       let [ align = "start" ] = duck.fish.params;
       
@@ -262,7 +262,7 @@ const CanvasBuilderParserFishes = {
 
       ctx.textAlign = align;
     },
-    stroketext: async function (duck) {
+    stroketext: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ text = "Text", font = "30px Arial", strokecolor = "#000000", x = "center", y = "center", strokesize = "1"] = duck.fish.params;
         
@@ -314,7 +314,7 @@ const CanvasBuilderParserFishes = {
         ctx.strokeStyle = oldstrokecolor;
         ctx.lineWidth = oldstrokesize;
     },
-    text: async function (duck) {
+    text: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ text = "Text", font = "30px Arial", color = "#000000", x = "center", y = "center"] = duck.fish.params;
         
@@ -358,7 +358,7 @@ const CanvasBuilderParserFishes = {
         ctx.textAlign = oldalign;
         ctx.textBaseline = oldbaseline;
     },
-    color: async function (duck) {
+    color: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ color = "none" ] = duck.fish.params;
 
@@ -383,7 +383,7 @@ const CanvasBuilderParserFishes = {
 	ctx.fillStyle = "#000";
         };
     },
-    strokecolor: async function (duck) {
+    strokecolor: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ color = "none" ] = duck.fish.params;
 
@@ -408,7 +408,7 @@ const CanvasBuilderParserFishes = {
 	ctx.strokeStyle = "#000";
         };
     },
-    rect: async function (duck) {
+    rect: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ color = "black", x = "center", y = "center", w = duck.canv.canvas.width.toString(), h = duck.canv.canvas.height.toString(), radius = "0" ] = duck.fish.params;
 
@@ -432,21 +432,21 @@ const CanvasBuilderParserFishes = {
 		color = await ColorRadialGradientMaker(duck.canv.ctx, color);
 	};
 
+    if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%"))
+        x = (duck.canv.canvas.width - parseFloat(w)) / 2;
+
+    if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%"))
+        y = (duck.canv.canvas.height - parseFloat(h)) / 2;
+
+    if (radius && (radius.toLowerCase() === "%circle%" || radius.toLowerCase() === "circle"))
+        radius = parseFloat(w) / 2;
+
         if (w < 1 || h < 1) {
             if (duck.fish.params[3]) duck.fish.params[3] = (w < 1) ? ">"+duck.fish.params[3]+"<" : duck.fish.params[3];
             if (duck.fish.params[4]) duck.fish.params[4] = (h < 1) ? ">"+duck.fish.params[4]+"<" : duck.fish.params[4];
 
             return canvaError.newError(duck.d, `Width/Height needs to be greater than 0. ({${duck.fish.name}:${duck.fish.params.join(":")}})`)
         };
-
-        if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%"))
-            x = (duck.canv.canvas.width - parseFloat(w)) / 2;
-
-        if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%"))
-            y = (duck.canv.canvas.height - parseFloat(h)) / 2;
-
-        if (radius && (radius.toLowerCase() === "%circle%" || radius.toLowerCase() === "circle"))
-            radius = parseFloat(w) / 2;
 
         const step = Math.min(parseFloat(w), parseFloat(h)) * 0.1;
 
@@ -473,7 +473,24 @@ const CanvasBuilderParserFishes = {
             ctx.fillStyle = oldcolor;
         }
     },
-    shadow: async function (duck) {
+    void: async (duck) => {
+        let ctx = duck.canv.ctx;
+        let [x = "center", y = "center", w = duck.canv.canvas.width.toString(), h = duck.canv.canvas.height.toString()] = duck.fish.params;
+
+        x = x.onEmpty("center");
+        y = y.onEmpty("center");
+        w = w.onEmpty(duck.canv.canvas.width.toString());
+        y = y.onEmpty(duck.canv.canvas.height.toString());
+
+        if (x && (x.toLowerCase() === "center" || x.toLowerCase() === "%center%"))
+            x = (duck.canv.canvas.width - parseFloat(w)) / 2;
+
+        if (y && (y.toLowerCase() === "center" || y.toLowerCase() === "%center%"))
+            y = (duck.canv.canvas.height - parseFloat(h)) / 2;
+
+        ctx.clearRect(parseFloat(x), parseFloat(y), parseFloat(w), parseFloat(h));
+    },
+    shadow: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ size = "0", color = "#000000" ] = duck.fish.params;
 
@@ -497,7 +514,7 @@ const CanvasBuilderParserFishes = {
         ctx.shadowBlur = parseFloat(size);
          
     },
-    effect: async function (duck) {
+    effect: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ effect = "none", value = "none" ] = duck.fish.params;
 
@@ -523,7 +540,7 @@ const CanvasBuilderParserFishes = {
             return canvaError.newError(duck.d, `Effect '${effect}' not found.`);
         };
     },
-    addeffect: async function (duck) {
+    addeffect: async (duck) => {
         let ctx = duck.canv.ctx;
         let [ effect = "blur", value = "5" ] = duck.fish.params;
 
@@ -552,7 +569,7 @@ const CanvasBuilderParserFishes = {
             return canvaError.newError(duck.d, `Effect '${effect}' not found.`);
         };
     },
-    rotate: async function (duck) {
+    rotate: async (duck) => {
         let [ angle = "0" ] = duck.fish.params;
         angle = angle.onEmpty("0");
 
@@ -566,7 +583,7 @@ const CanvasBuilderParserFishes = {
         ctx.rotate((angl * Math.PI) / 180);
         ctx.translate(-centerX, -centerY);
     },
-    stroke: async function (duck) {
+    stroke: async (duck) => {
         let ctx = duck.canv.ctx
         let [ color = "#000000", size = "1"] = duck.fish.params;
     
@@ -616,18 +633,6 @@ const CanvasBuilderParserFishes = {
     },
 };
 
-let GradientParserFishes = {
-	colorstop: async function (duck) {
-		let gradient = duck.gradient;
-		let [ pos = "1", color = "#000000" ] = duck.fish.params;
-		
-		pos = pos.onEmpty("1");
-		color = color.onEmpty("#000000");
-
-		gradient.addColorStop(pos, color);
-	}
-};
-
 async function catParser (cat) {
         let obj = [];
 
@@ -660,17 +665,11 @@ const AllParser = async (messg, d, returnMsg = false, channel, client) => {
 
             let [cname = "canvas", w = "512", h = "512"] = settings.params || ["canvas", "512", "512"];
 
-            if (cname === "") cname = "canvas";
-            if (w === "") w = "512";
-            if (h === "") h = "512";
+            cname = cname.onEmpty("canvas").trim();
+            w = w.onEmpty("512").trim();
+            h = h.onEmpty("512").trim();
 
-            cname = cname.trim();
-            w = w.trim();
-            h = h.trim();
-            
-            if (!Number(w) || !Number(h)) return canvaError.newError(d, `Invalid size parameter`);
-
-            let canvas = await createCanvas(Number(w), Number(h))
+            let canvas = await createCanvas(parseFloat(w), parseFloat(h))
             let canv = {
                 canvas: canvas,
                 ctx: canvas.getContext("2d")
@@ -895,274 +894,11 @@ const AllParser = async (messg, d, returnMsg = false, channel, client) => {
             embeds.push(embed);
         }
     };
-    const ComponentParser = async (msg) => {
-        msg = mustEscape(msg);
-        let msgs = msg.split("{actionRow:").slice(1);
-        if (!message.components) message.components = [];
-        const actionRows = message.components;
-        for (let nya of msgs) {
-            const index = nya.lastIndexOf("}");
-            nya = nya.slice(0, index);
-    
-            const buttonPart = [];
-            const Checker = (neko) => nya.includes("{" + neko + ":");
-            if (Checker("button")) {
-                const inside = nya.split("{button:").slice(1);
-                for (let button of inside) {
-                    button = button?.split("}")[0];
-                    button = button?.split(":").map((x) => x.trim());
-    
-                    const label = button.shift().addBrackets();
-                    const btype = 2;
-                    let style = isNaN(button[0])
-                        ? button.shift()
-                        : Number(button.shift());
-                    style = ButtonStyleOptions[style] || style;
-                    const cus = button.shift().addBrackets();
-                    const disable =
-                        button
-                            .shift()
-                            ?.replace("yes", true)
-                            ?.replace("no", false)
-                            ?.replace("true", true)
-                            ?.replace("false", false) || false;
-                    const emoji = button.length
-                        ? (button || []).join(":").trim().startsWith("<")
-                            ? client.emojis.cache.find(
-                                  (x) => x.toString() === button.join(":"),
-                              )
-                            : {
-                                  name: button.join(":").split(",")[0],
-                                  id: button.join(":").split(",")[1] || 0,
-                                  animated: button.join(":").split(",")[2] || false,
-                              }
-                        : undefined;
-                    const d =
-                        Number(style) === 5
-                            ? {
-                                  label: label,
-                                  type: btype,
-                                  style: style,
-                                  url: cus,
-                                  disabled: disable,
-                              }
-                            : {
-                                  label: label,
-                                  type: btype,
-                                  style: style,
-                                  custom_id: cus,
-                                  disabled: disable,
-                              };
-                    if (emoji) {
-                        const en = emoji?.name;
-                        const eid = emoji?.id;
-                        const ea = emoji?.animated;
-                        d.emoji = { name: en, id: eid, animated: ea };
-                    }
-                    buttonPart.push(d);
-                }
-            }
-            if (Checker("selectMenu")) {
-                let inside = nya.split("{selectMenu:").slice(1).join("");
-                inside = inside.split(":").map((c) => c.trim());
-                const customID = inside.shift();
-                const placeholder = inside.shift();
-                const minVal = inside[0] === "" ? 0 : Number(inside.shift());
-                const maxVal = inside[0] === "" ? 1 : Number(inside.shift());
-                const disabled = inside.shift() === "true";
-                const options = inside.join(":").trim();
-    
-                let optArray = [];
-                if (options.includes("{selectMenuOptions:")) {
-                    const opts = options.split("{selectMenuOptions:").slice(1);
-    
-                    for (let opt of opts) {
-                        opt = opt.split("}")[0].split(":");
-                        const label = opt.shift();
-                        const value = opt.shift();
-                        const desc = opt.shift();
-                        const def = opt.shift() === "true";
-                        const emoji = opt.length
-                            ? (opt || "").join(":").trim().startsWith("<")
-                                ? client.emojis.cache.find(
-                                      (x) => x.toString() === opt.join(":"),
-                                  )
-                                : {
-                                      name: opt.join(":").split(",")[0].trim(),
-                                      id: opt.join(":").split(",")[1]?.trim() || 0,
-                                      animated:
-                                          opt.join(":").split(",")[2]?.trim() ||
-                                          false,
-                                  }
-                            : undefined;
-                        const ind = {
-                            label: label,
-                            value: value,
-                            description: desc,
-                            default: def,
-                        };
-                        if (emoji) {
-                            const en = emoji?.name;
-                            const eid = emoji?.id;
-                            const ea = emoji?.animated;
-                            ind.emoji = { name: en, id: eid, animated: ea };
-                        }
-    
-                        optArray.push(ind);
-                    }
-                }
-                buttonPart.push({
-                    type: 3,
-                    custom_id: customID,
-                    placeholder: placeholder,
-                    min_values: minVal,
-                    max_values: maxVal,
-                    disabled,
-                    options: optArray,
-                });
-            }
-            if (Checker("textInput")) {
-                let inside = nya.split("{textInput:").slice(1);
-                for (let textInput of inside) {
-                    textInput = textInput.split("}")[0].split(":");
-                    const label = textInput.shift().addBrackets().trim();
-                    let style = textInput.shift().addBrackets().trim();
-                    style = isNaN(style) ? style : Number(style);
-                    const custom_id = textInput.shift().addBrackets().trim();
-                    const required =
-                        textInput.shift()?.addBrackets().trim() === "true";
-                    const placeholder = textInput.shift()?.addBrackets().trim();
-                    const min_length = textInput.shift()?.addBrackets().trim();
-                    const max_length = textInput.shift()?.addBrackets().trim();
-                    const value = textInput.shift()?.addBrackets().trim();
-                    // console.log({
-                    //   type: 4,
-                    //   label,
-                    //   style,
-                    //   custom_id,
-                    //   required,
-                    //   placeholder,
-                    //   min_length,
-                    //   max_length,
-                    //   value,
-                    // });
-                    buttonPart.push({
-                        type: 4,
-                        label,
-                        style,
-                        custom_id,
-                        required,
-                        placeholder,
-                        min_length,
-                        max_length,
-                        value,
-                    });
-                }
-            }
-            actionRows.push({ type: 1, components: buttonPart });
-        }
-    };
-    const EditParser = async (msg) => {
-        msg = msg.split("{edit:").slice(1).join("").split("}");
-        msg.pop();
-        msg = msg.join("}");
-        const time = msg.split(":")[0].trim();
-        msg = msg.split(":").slice(1).join(":").trim();
-        const msgs = CreateObjectAST(msg);
-        const ans = {
-            time,
-            messages: [],
-        };
-        for (let p of msgs) {
-            p = p.slice(1, -1);
-            const pps = CreateObjectAST(p);
-            const mmsg = {
-                content: " ",
-                embeds: [],
-                components: [],
-                files: [],
-            };
-            for (const pp of pps) {
-                p = p.replace(pp, "");
-                if (Checker("newEmbed")) mmsg.embeds.push(...await EmbedParser(part));
-                else if (Checker("actionRow"))
-                    mmsg.components.push(...await ComponentParser(part));
-                else if (Checker("attachment") || Checker("file"))
-                    mmsg.files.push(...FileParser(part));
-            }
-            mmsg.content = p.trim() === "" ? " " : p.trim();
-            ans.messages.push(mmsg);
-        }
-        return ans;
-    };
-    const FileParser = (msg) => {
-        if (!msg) return;
-        msg = mustEscape(msg);
-        const Checker = (ayaya) => msg.includes("{" + ayaya + ":");
-        if(!message.files) message.files = [];
-        const att = message.files;
-        if (Checker("attachment")) {
-            const e = msg
-                ?.split("{attachment:")
-                ?.slice(1)
-                .map((x) => x.trim());
-            for (let o of e) {
-                o = o.split("}")[0];
-                o = o.split(":");
-                const name = o.pop().addBrackets();
-                const url = o.join(":").addBrackets();
-                const attachment = new Discord.AttachmentBuilder(url, name);
-                att.push(attachment);
-            }
-        }
-        if (Checker("file")) {
-            const i = msg
-                .split("{file:")
-                ?.slice(1)
-                .map((x) => x.trim());
-            for (let u of i) {
-                u = u.split("}")[0];
-                u = u.split(":");
-                const name = u.pop().addBrackets();
-                const text = u.join(":").addBrackets();
-                const attachment = new Discord.AttachmentBuilder(
-                    Buffer.from(text),
-                    name || "txt.txt",
-                );
-                att.push(attachment);
-            }
-        }
-    };
-    const OptionParser = async (options, d) => {
-        const Checker = (msg) => options.includes(msg);
-        const optionData = {};
-        if (Checker("{edit:")) {
-            const editPart = options.split("{edit:")[1].split("}}")[0];
-            const dur = editPart.split(":")[0];
-            const msgs = editPart.split(":{").slice(1).join(":{").split("}:{");
-            const messages = [];
-            for (const msg of msgs) {
-                messages.push(await errorHandler(msg.split("}:{")[0], d));
-            }
-            optionData.edits = { time: dur, messages };
-        }
-        if (Checker("{reactions:")) {
-            const react = options.split("{reactions:")[1].split("}")[0];
-            optionData.reactions = react.split(",").map((x) => x.trim());
-        }
-        if (Checker("{delete:")) {
-            optionData.deleteIn = Time.parse(
-                options.split("{delete:")[1].split("}")[0].trim(),
-            )?.ms;
-        }
-        if (Checker("deletecommand")) {
-            optionData.deleteCommand = true;
-        }
-        if (Checker("interaction")) {
-            optionData.interaction = true;
-        }
-        return optionData;
-    };
+
+    const ComponentParser = d.util.parsers.ComponentParser;
+    const EditParser = d.util.parsers.EditParser;
+    const FileParser = d.util.parsers.FileParser;
+    const OptionParser = d.util.parsers.OptionParser;
 
     let errorMessage = messg;
     errorMessage = errorMessage.trim();
@@ -1184,11 +920,11 @@ const AllParser = async (messg, d, returnMsg = false, channel, client) => {
       errorMessage = errorMessage.replace( part, "" );
         if (Checker(part,"newEmbed")) await EmbedParser(part);
         else if (Checker(part, "actionRow"))
-            await ComponentParser(part);
+            message["components"] = await ComponentParser(part);
         else if (Checker(part, "newCanvas"))
             await CanvasBuilderParser(part);
         else if (Checker(part, "attachment") || Checker("file"))
-            FileParser(part);
+            message["files"] = FileParser(part);
         else if (Checker(part, "edit")) edits = await EditParser(part);
         else if (Checker(part, "suppress")) suppress = true;
         else if (Checker(part,"deleteCommand")) deleteCommand = true;

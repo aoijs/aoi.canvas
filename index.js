@@ -13,7 +13,7 @@ module.exports = {
         const bot = Lobj.bot || Lobj.client;
         const df = Lobj.DownloadFolder || "./canvas/";
         const et = Lobj.ErrorsType || "message";
-        const vers = Lobj.version || "v6-napi";
+        const vers = Lobj.version || "v6";
         const util = Lobj.Util || "none"
 
         this.data = {

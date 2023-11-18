@@ -4,6 +4,8 @@ let path = require("path");
 const canvaError = require("./util/canvaError.js");
 const canvaWarn = require("./util/canvaWarn.js");
 
+// Hi from lordex
+
 module.exports = {
     load: (Lobj) => {
         const canvaWarn = require("./util/canvaWarn.js");

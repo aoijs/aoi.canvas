@@ -7,10 +7,7 @@
   "version": "2.0.0-dev",
   "description": "Aoi.canvas - Brings canvas to aoi.js",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Hi\""
-  },
-  "homepage": "https://aoicanvas.vercel.app/",
+  "homepage": "https://aoicanvas.aoijs.org/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
@@ -22,7 +19,6 @@
     "aoi",
     "dbd",
     "dbd.js",
-    "gif",
     "image"
   ],
   "author": "Lordex",

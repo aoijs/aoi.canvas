@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
+    "discord.js": "^14.11.0"
+  },
+  "name": "aoi.canvas",
+  "version": "2.0.0-dev",
+  "description": "Aoi.canvas - Brings canvas to aoi.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Hi\""
+  },
+  "homepage": "https://aoicanvas.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
+  },
+  "keywords": [
+    "aoi.js",
+    "canvas",
+    "aoi.canvas",
+    "aoi",
+    "dbd",
+    "dbd.js",
+    "gif",
+    "image"
+  ],
+  "author": "Lordex",
+  "license": "ISC"
+}

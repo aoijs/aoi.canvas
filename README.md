@@ -20,7 +20,7 @@ const aoicanvas = require("aoi.canvas");
 3. Load Aoi Canvas with the required parameters:
 ```javascript
 aoicanvas.load({
-  cient: cient, // Aoi.js Bot object.
+  client: client, // Aoi.js Bot object.
   Util: Util, // To make aoi.canvas parser work. ($sendMessage, $channelSendMessage, $interactionReply, etc)
   DownloadFolder: "./folder/", // Folder for $downloadCanvas, optional.
   ErrorsType: "console" // AoiCanva errors type, optional. (console/message/none)

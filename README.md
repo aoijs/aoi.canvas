@@ -79,15 +79,6 @@ client.command({
     $createCanvas[pro;512;512]
     `
 });
- 
-// Leref Pro Command Example
-client.command({
-  name: "leref",
-  code: `
-  $sendCanvas[lerefPro;msg]
-  $lerefPro
-  `
-});
 ```
 
 ---

@@ -1,7 +1,7 @@
 {
   "name": "aoi.canvas",
   "version": "2.0.0",
-  "description": "Aoi.canvas - create and edit images in aoi.js with ease.",
+  "description": "Aoi.canvas - Create and edit images in aoi.js with ease.",
   "main": "dist/index.js",
   "keywords": [
     "canvas",

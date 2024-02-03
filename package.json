@@ -1,26 +1,33 @@
 {
-  "dependencies": {
-    "@napi-rs/canvas": "^0.1.41",
-    "discord.js": "^14.11.0"
-  },
   "name": "aoi.canvas",
-  "version": "2.0.0-dev",
-  "description": "Aoi.canvas - Brings canvas to aoi.js",
-  "main": "index.js",
-  "homepage": "https://aoicanvas.aoijs.org/",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
-  },
+  "version": "2.0.0",
+  "description": "Aoi.canvas - create and edit images in aoi.js with ease.",
+  "main": "dist/index.js",
   "keywords": [
-    "aoi.js",
     "canvas",
-    "aoi.canvas",
     "aoi",
+    "aoi.js",
+    "bdfd",
     "dbd",
     "dbd.js",
+    "dbd.ts",
+    "bdfd.js",
+    "@napi-rs/canvas",
     "image"
   ],
-  "author": "Lordex",
-  "license": "ISC"
+  "author": "lordex",
+  "homepage": "https://canvas.aoijs.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git#v2"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.44"
+  },
+  "devDependencies": {
+    "aoi.js": "^6.6.1",
+    "discord.js": "^14.14.1",
+    "typescript": "^5.3.3"
+  }
 }

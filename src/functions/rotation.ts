@@ -2,9 +2,9 @@ import { CanvasBuilder, CanvasManager } from "../classes";
 import { AoiD } from "../index"
 
 export default {
-    name: "$measureText",
+    name: "$rotation",
     info: {
-        description: "Measure some text.",
+        description: "Sets canvas rotation.",
         parameters: [
             {
                 name: "canvas",
@@ -13,49 +13,29 @@ export default {
                 required: true
             },
             {
-                name: "text",
-                description: "The text to measure.",
-                type: "string",
+                name: "angle",
+                description: "The rotation angle.",
+                type: "number",
                 required: true
-            },
-            {
-                name: "font",
-                description: "The text font.",
-                type: "font",
-                required: false
-            },
-            {
-                name: "property",
-                description: "Property.",
-                type: "string",
-                required: false
-            },
+            }
         ],
         examples: [
-            {
+            /*{
                 description: "This will make a canvas and then measure text.",
                 code: `$measureText[mycanvas;Hello;15px Arial]
                        $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
                 images: []
-            }
+            }*/
         ]
     },
     code: async (d: AoiD) => {
         let data = d.util.aoiFunc(d);
-        let [ canvas = "canvas", text = "Text", font = "15px Arial", property = "json" ] = data.inside.splits;
+        let [ canvas = "canvas", angle = "0" ] = data.inside.splits;
 
         if (!d.data.canvases || !(d.data.canvases instanceof CanvasManager) || !d.data.canvases.get(canvas) || !(d.data.canvases.get(canvas) instanceof CanvasBuilder))
             return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
 
-        if (!d.data.canvases?.get(canvas)?.util.isValidFont(font))
-            return d.aoiError.fnError(d, "custom", {}, `Invalid font.`)
-
-        const metrics = d.data.canvases?.get(canvas)?.measureText(text, font) as Record<string, any>;
-
-        if (property?.trim() === "json")
-            data.result = JSON.stringify(metrics);
-        else
-            data.result = metrics[property];
+        d.data.canvases?.get(canvas)?.rotate(parseFloat(angle))
 
         return {
             code: d.util.setCode(data),

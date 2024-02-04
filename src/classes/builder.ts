@@ -391,27 +391,6 @@ export class CanvasBuilder {
     return;
   }
 
-  public stroke = (color: string | CanvasGradient, size?: number) => {
-    const ctx = CanvasBuilder.ctx
-    size??= 5
-
-    const oldcolor = ctx.strokeStyle
-    const oldsize = ctx.lineWidth
-
-    if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-      color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
-
-    ctx.strokeStyle = color
-    ctx.lineWidth = size
-
-    ctx.stroke()
-
-    ctx.strokeStyle = oldcolor
-    ctx.lineWidth = oldsize
-
-    return;
-  }
-
   public setShadow = (blur: number, color: string, offset?: number | number[]) => {
     const ctx = CanvasBuilder.ctx
 
@@ -427,6 +406,19 @@ export class CanvasBuilder {
       ctx.shadowOffsetX = x
       ctx.shadowOffsetY = y
     };
+
+    return;
+  }
+
+  public rotate = (angle: number) => {
+    const ctx = CanvasBuilder.ctx
+
+    const centerX = ctx.canvas.width / 2;
+    const centerY = ctx.canvas.height / 2;
+
+    ctx.translate(centerX, centerY);
+    ctx.rotate((angle * Math.PI) / 180);
+    ctx.translate(-centerX, -centerY);
 
     return;
   }

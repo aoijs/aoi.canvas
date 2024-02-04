@@ -23,8 +23,8 @@ export declare class CanvasBuilder {
     }[] | undefined;
     createGradient: (name: string, type: number, options: number[]) => void;
     addColorStop: (gradient: string, offset: number, color: string) => void;
-    stroke: (color: string | CanvasGradient, size?: number) => void;
     setShadow: (blur: number, color: string, offset?: number | number[]) => void;
+    rotate: (angle: number) => void;
     getContext: () => SKRSContext2D;
     getGradient: (name: string) => CanvasGradient | undefined;
     render: () => Buffer;

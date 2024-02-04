@@ -292,20 +292,6 @@ class CanvasBuilder {
         CanvasBuilder.gradients.get(gradient)?.addColorStop(offset, color);
         return;
     };
-    stroke = (color, size) => {
-        const ctx = CanvasBuilder.ctx;
-        size ??= 5;
-        const oldcolor = ctx.strokeStyle;
-        const oldsize = ctx.lineWidth;
-        if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-            color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
-        ctx.strokeStyle = color;
-        ctx.lineWidth = size;
-        ctx.stroke();
-        ctx.strokeStyle = oldcolor;
-        ctx.lineWidth = oldsize;
-        return;
-    };
     setShadow = (blur, color, offset) => {
         const ctx = CanvasBuilder.ctx;
         ctx.shadowBlur = blur;
@@ -320,6 +306,15 @@ class CanvasBuilder {
             ctx.shadowOffsetY = y;
         }
         ;
+        return;
+    };
+    rotate = (angle) => {
+        const ctx = CanvasBuilder.ctx;
+        const centerX = ctx.canvas.width / 2;
+        const centerY = ctx.canvas.height / 2;
+        ctx.translate(centerX, centerY);
+        ctx.rotate((angle * Math.PI) / 180);
+        ctx.translate(-centerX, -centerY);
         return;
     };
     getContext = () => CanvasBuilder.ctx;

@@ -25,6 +25,7 @@ export declare class CanvasBuilder {
     addColorStop: (gradient: string, offset: number, color: string) => void;
     setShadow: (blur: number, color: string, offset?: number | number[]) => void;
     rotate: (angle: number) => void;
+    trim: () => void;
     getContext: () => SKRSContext2D;
     getGradient: (name: string) => CanvasGradient | undefined;
     render: () => Buffer;

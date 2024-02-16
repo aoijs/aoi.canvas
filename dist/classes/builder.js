@@ -176,7 +176,7 @@ class CanvasBuilder {
                 if (line?.startsWith("move:"))
                     ctx.moveTo(split[1], split[2]);
                 else if (line?.startsWith("bezier:"))
-                    ctx.bezierCurveTo(0, 0, split[1], split[2], split[3], split[4]);
+                    ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]);
                 else if (line?.startsWith("quadric:"))
                     ctx.quadraticCurveTo(split[1], split[2], split[3], split[4]);
                 else
@@ -316,6 +316,34 @@ class CanvasBuilder {
         ctx.rotate((angle * Math.PI) / 180);
         ctx.translate(-centerX, -centerY);
         return;
+    };
+    trim = () => {
+        let ctx = CanvasBuilder.ctx, canvas = ctx.canvas, pixels = ctx.getImageData(0, 0, canvas.width, canvas.height), l = pixels.data.length, i, bound = {
+            top: canvas.height,
+            left: canvas.width,
+            right: 0,
+            bottom: 0
+        }, x, y;
+        for (i = 0; i < l; i += 4) {
+            if (pixels.data[i + 3] === 0)
+                continue;
+            x = (i / 4) % canvas.width;
+            y = Math.floor((i / 4) / canvas.width);
+            if (x < bound.left)
+                bound.left = x;
+            if (y < bound.top)
+                bound.top = y;
+            if (y > bound.bottom)
+                bound.bottom = y;
+            if (x > bound.right)
+                bound.right = x;
+        }
+        const height = bound.bottom - bound.top + 1;
+        const width = bound.right - bound.left + 1;
+        const trimmed = ctx.getImageData(bound.left, bound.top, width, height);
+        canvas.width = width;
+        canvas.height = height;
+        ctx.putImageData(trimmed, 0, 0);
     };
     getContext = () => CanvasBuilder.ctx;
     getGradient = (name) => CanvasBuilder.gradients.get(name);

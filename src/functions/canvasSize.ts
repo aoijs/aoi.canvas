@@ -1,12 +1,10 @@
 import { CanvasBuilder, CanvasManager } from "../classes";
-import { writeFileSync, mkdirSync } from "node:fs"
-import { join } from "node:path"
 import { AoiD } from "../index"
 
 export default {
-    name: "$downloadCanvas",
+    name: "$canvasSize",
     info: {
-        description: "Downloads the canvas.",
+        description: "Returns canvas size.",
         parameters: [
             {
                 name: "canvas",
@@ -15,8 +13,8 @@ export default {
                 required: true
             },
             {
-                name: "path",
-                description: "The download path. (file name and extension too)",
+                name: "property",
+                description: "The canvas size property.",
                 type: "string",
                 required: true
             }
@@ -32,15 +30,23 @@ export default {
     },
     code: async (d: AoiD) => {
         let data = d.util.aoiFunc(d);
-        let [ canvas = "canvas", path = "./{canvas}.png" ] = data.inside.splits;
+        let [ canvas = "canvas", property = "width" ] = data.inside.splits;
 
-        if (!d.data.canvases || !(d.data.canvases instanceof CanvasManager) || !d.data.canvases.get(canvas) || !(d.data.canvases.get(canvas) instanceof CanvasBuilder))
+        if (!d.data.canvases || !(d.data.canvases instanceof CanvasManager))
             return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
 
-        const buffer = d.data.canvases?.get(canvas)?.render();
+        let canvs: any = d.data.canvases.get(canvas);
 
-        if (buffer)
-            writeFileSync(join(process.cwd(), path?.replace(/{canvas}/g, canvas)), buffer);
+        if (!canvs || !(canvs instanceof CanvasBuilder))
+            return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
+        canvs = canvs.getContext()?.canvas;
+
+        if (property?.trim()?.toLowerCase() === "width")
+            data.result = canvs.width;
+        else if (property?.trim()?.toLowerCase() === "height")
+            data.result = canvs.height;
+        else
+            return d.aoiError.fnError(d, "custom", {}, `Invalid property.`);
 
         return {
             code: d.util.setCode(data),

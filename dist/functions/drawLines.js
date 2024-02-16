@@ -44,19 +44,32 @@ exports.default = {
             },
             {
                 name: "...lines",
-                description: "The lines. (x:y / move:x:y / bezier:controlX:controlY:endX:endY)",
+                description: "The lines. (x:y / move:x:y / bezier:controlX:controlY:centerX2:centerY2:endX:endY / quadric:controlX:controlY:endX:endY)",
                 type: "string",
                 required: true
             }
         ],
         examples: [
             {
-                description: "This will create new 300x320 canvas with house.",
+                description: "This will create new 300x320 canvas with a house.",
                 code: `$attachCanvas[mycanvas;house.png]
                        $drawLines[mycanvas;draw;#03a9f4;10;50;140;150:60;250:140]
                        $fillRect[mycanvas;#03a9f4;130;190;40;60]
                        $strokeRect[mycanvas;#03a9f4;75;140;150;110]
                        $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
+                images: []
+            },
+            {
+                description: "This will create a 150x150 canvas with a heart using bezier lines.",
+                code: `$attachCanvas[a] 
+                       $drawLines[a;0;#FF0000;10;75;40;
+                       bezier: 75: 37: 70: 25: 50: 25;
+                       bezier: 20: 25: 20: 62.5: 20: 62.5;
+                       bezier: 20: 80: 40: 102: 75: 120;
+                       bezier: 110: 102: 130: 80: 130: 62.5;
+                       bezier: 130: 62.5: 130: 25: 100 : 25;
+                       bezier: 85: 25: 75: 37: 75: 40]
+                       $createCanvas[a;150;150]`?.split("\n").map(x => x?.trim()).join("\n"),
                 images: []
             }
         ]

@@ -34,16 +34,6 @@ const loadFuncs = (client: AoiClient, path: string) => {
 
     return "loaded";
 }
-
-export interface AoiD {
-    aoiError: typeof AoiError;
-    data: {
-        canvases: CanvasManager;
-    },
-    files: AttachmentBuilder[],
-    util: typeof Util
-}
-
 const registerFont = (font: { src: Buffer | string, name?: string }) => {
     if (typeof font.src === "string" && existsSync(font.src))
         if (statSync(font.src).isDirectory())
@@ -56,6 +46,15 @@ const registerFont = (font: { src: Buffer | string, name?: string }) => {
         GlobalFonts.register(font?.src, font?.name);
     else
         console.error("[aoi.canvas]: Invalid font source.");
+}
+
+export interface AoiD {
+    aoiError: typeof AoiError;
+    data: {
+        canvases: CanvasManager;
+    },
+    files: AttachmentBuilder[],
+    util: typeof Util
 }
 
 export class AoiCanvas {

@@ -1,3 +1,4 @@
+// i march through this darkened maze
 import { SKRSContext2D, createCanvas, loadImage } from "@napi-rs/canvas";
 import { CanvasUtil } from "./util";
 
@@ -113,17 +114,17 @@ export class CanvasBuilder {
     return;
   }
 
-  public fillRect = (color: string | CanvasGradient, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => {
+  public fillRect = (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => {
     const ctx = CanvasBuilder.ctx
     width??= ctx.canvas.width
     height??= ctx.canvas.height
     
-    const oldcolor = ctx.fillStyle
+    const oldstyle = ctx.fillStyle
 
-    if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-      color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
+    if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
+      style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
 
-    ctx.fillStyle = color
+    ctx.fillStyle = style
    
     if (radius) {
       ctx.beginPath();
@@ -133,23 +134,23 @@ export class CanvasBuilder {
     } else
       ctx.fillRect(x, y, width, height);
 
-    ctx.fillStyle = oldcolor
+    ctx.fillStyle = oldstyle
 
     return;
   }
 
-  public strokeRect = (color: string | CanvasGradient, x: number, y: number, width?: number, height?: number, strokeWidth?: number, radius?: number | number[]) => {
+  public strokeRect = (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, strokeWidth?: number, radius?: number | number[]) => {
     const ctx = CanvasBuilder.ctx
     width??= ctx.canvas.width
     height??= ctx.canvas.height
     
-    const oldcolor = ctx.strokeStyle
+    const oldstyle = ctx.strokeStyle
     const oldwidth = ctx.lineWidth
 
-    if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-      color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
+    if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
+      style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
 
-    ctx.strokeStyle = color
+    ctx.strokeStyle = style
     ctx.lineWidth = strokeWidth ?? 10
     
     if (radius) {
@@ -160,7 +161,7 @@ export class CanvasBuilder {
     } else
       ctx.strokeRect(x, y, width, height);
 
-    ctx.strokeStyle = oldcolor
+    ctx.strokeStyle = oldstyle
     ctx.lineWidth = oldwidth
 
     return;
@@ -217,12 +218,18 @@ export class CanvasBuilder {
         line = line?.trim();
         const split = line?.split(":")?.map(x => !isNaN(parseFloat(x)) ? parseFloat(x) : 0)
 
-        if (line?.startsWith("move:")) 
-          ctx.moveTo(split[1], split[2]);
-        else if (line?.startsWith("bezier:"))
-          ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]);
-        else if (line?.startsWith("quadric:"))
-          ctx.quadraticCurveTo(split[1], split[2], split[3], split[4])
+        const actions: Record<string, Function> = {
+          "move": () => ctx.moveTo(split[1], split[2]),
+          "bezier": () => ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]),
+          "quadric": () => ctx.quadraticCurveTo(split[1], split[2], split[3], split[4]),
+          "setdash": () => {
+            const segments = line?.split(":")[1];
+            ctx.setLineDash(JSON.parse(segments));
+          }
+        };
+
+        if (actions[line?.trim()?.toLowerCase()?.split(":")[0]])
+          actions[line?.trim()?.toLowerCase()?.split(":")[0]]();
         else
           ctx.lineTo(split[0], split[1]);
       }
@@ -233,10 +240,12 @@ export class CanvasBuilder {
       const oldcolor = ctx.strokeStyle
 
       ctx.fillStyle = color
+      ctx.setLineDash([])
 
       drawlines()
       ctx.fill()
-
+      
+      ctx.setLineDash([])
       ctx.fillStyle = oldcolor
     }
     else if (type === 1) {
@@ -245,10 +254,12 @@ export class CanvasBuilder {
 
       ctx.strokeStyle = color
       ctx.lineWidth = strokeWidth ?? 10
+      ctx.setLineDash([])
 
       drawlines()
       ctx.stroke()
 
+      ctx.setLineDash([])
       ctx.strokeStyle = oldcolor
       ctx.lineWidth = oldwidth
     }

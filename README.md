@@ -5,7 +5,7 @@ aoi.canvas is a aoi.js extension that allows you to utilize canvas functions wit
 ## Installation
 
 ```sh
-npm install https://github.com/LordexDuck3990/aoi.canvas.git#v2
+npm install aoi.canvas
 ```
 
 ## Setup
@@ -37,6 +37,6 @@ client.command({
 });
 ```
 
-Feel free to dm me in discord (devlordduck2) if you have any questions or need help.
+Feel free to dm me in discord (devlordduck2) if you have any questions or need help, or just ask in the official aoi.js [server](https://discord.com/invite/HMUfMXDQsV).
 
 Enjoy coding with aoi.canvas! ❤

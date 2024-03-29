@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasBuilder = exports.Filters = void 0;
+// i march through this darkened maze
 const canvas_1 = require("@napi-rs/canvas");
 const util_1 = require("./util");
 // Stuff
@@ -91,14 +92,14 @@ class CanvasBuilder {
         ctx.textBaseline = oldbaseline;
         return;
     };
-    fillRect = (color, x, y, width, height, radius) => {
+    fillRect = (style, x, y, width, height, radius) => {
         const ctx = CanvasBuilder.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
-        const oldcolor = ctx.fillStyle;
-        if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-            color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
-        ctx.fillStyle = color;
+        const oldstyle = ctx.fillStyle;
+        if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
+            style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
+        ctx.fillStyle = style;
         if (radius) {
             ctx.beginPath();
             ctx.roundRect(x, y, width, height, radius);
@@ -107,18 +108,18 @@ class CanvasBuilder {
         }
         else
             ctx.fillRect(x, y, width, height);
-        ctx.fillStyle = oldcolor;
+        ctx.fillStyle = oldstyle;
         return;
     };
-    strokeRect = (color, x, y, width, height, strokeWidth, radius) => {
+    strokeRect = (style, x, y, width, height, strokeWidth, radius) => {
         const ctx = CanvasBuilder.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
-        const oldcolor = ctx.strokeStyle;
+        const oldstyle = ctx.strokeStyle;
         const oldwidth = ctx.lineWidth;
-        if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-            color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
-        ctx.strokeStyle = color;
+        if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
+            style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
+        ctx.strokeStyle = style;
         ctx.lineWidth = strokeWidth ?? 10;
         if (radius) {
             ctx.beginPath();
@@ -128,7 +129,7 @@ class CanvasBuilder {
         }
         else
             ctx.strokeRect(x, y, width, height);
-        ctx.strokeStyle = oldcolor;
+        ctx.strokeStyle = oldstyle;
         ctx.lineWidth = oldwidth;
         return;
     };
@@ -173,12 +174,17 @@ class CanvasBuilder {
             for (var line of lines) {
                 line = line?.trim();
                 const split = line?.split(":")?.map(x => !isNaN(parseFloat(x)) ? parseFloat(x) : 0);
-                if (line?.startsWith("move:"))
-                    ctx.moveTo(split[1], split[2]);
-                else if (line?.startsWith("bezier:"))
-                    ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]);
-                else if (line?.startsWith("quadric:"))
-                    ctx.quadraticCurveTo(split[1], split[2], split[3], split[4]);
+                const actions = {
+                    "move": () => ctx.moveTo(split[1], split[2]),
+                    "bezier": () => ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]),
+                    "quadric": () => ctx.quadraticCurveTo(split[1], split[2], split[3], split[4]),
+                    "setdash": () => {
+                        const segments = line?.split(":")[1];
+                        ctx.setLineDash(JSON.parse(segments));
+                    }
+                };
+                if (actions[line?.trim()?.toLowerCase()?.split(":")[0]])
+                    actions[line?.trim()?.toLowerCase()?.split(":")[0]]();
                 else
                     ctx.lineTo(split[0], split[1]);
             }
@@ -187,8 +193,10 @@ class CanvasBuilder {
         if (type === 0) {
             const oldcolor = ctx.strokeStyle;
             ctx.fillStyle = color;
+            ctx.setLineDash([]);
             drawlines();
             ctx.fill();
+            ctx.setLineDash([]);
             ctx.fillStyle = oldcolor;
         }
         else if (type === 1) {
@@ -196,8 +204,10 @@ class CanvasBuilder {
             const oldwidth = ctx.lineWidth;
             ctx.strokeStyle = color;
             ctx.lineWidth = strokeWidth ?? 10;
+            ctx.setLineDash([]);
             drawlines();
             ctx.stroke();
+            ctx.setLineDash([]);
             ctx.strokeStyle = oldcolor;
             ctx.lineWidth = oldwidth;
         }

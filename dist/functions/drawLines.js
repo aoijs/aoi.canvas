@@ -44,7 +44,7 @@ exports.default = {
             },
             {
                 name: "...lines",
-                description: "The lines. (x:y / move:x:y / bezier:controlX:controlY:centerX2:centerY2:endX:endY / quadric:controlX:controlY:endX:endY)",
+                description: "The lines. (x:y / move:x:y / setdash:segments / bezier:controlX:controlY:centerX2:centerY2:endX:endY / quadric:controlX:controlY:endX:endY)",
                 type: "string",
                 required: true
             }

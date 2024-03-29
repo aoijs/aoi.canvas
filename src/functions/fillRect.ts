@@ -13,8 +13,8 @@ export default {
                 required: true
             },
             {
-                name: "color",
-                description: "The rect color.",
+                name: "style",
+                description: "The rect style.",
                 type: "color",
                 required: true
             },

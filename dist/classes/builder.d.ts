@@ -10,8 +10,8 @@ export declare class CanvasBuilder {
     drawImage: (image: any, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => Promise<void>;
     fillText: (text: string, x: number, y: number, font: string, color: string | CanvasGradient, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
     strokeText: (text: string, x: number, y: number, font: string, color: string | CanvasGradient, lineWidth?: number, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
-    fillRect: (color: string | CanvasGradient, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => void;
-    strokeRect: (color: string | CanvasGradient, x: number, y: number, width?: number, height?: number, strokeWidth?: number, radius?: number | number[]) => void;
+    fillRect: (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => void;
+    strokeRect: (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, strokeWidth?: number, radius?: number | number[]) => void;
     clearRect: (x: number, y: number, width?: number, height?: number, radius?: number[]) => void;
     drawLines: (type: number, color: string | CanvasGradient, startX: number, startY: number, lines: string[], strokeWidth?: number) => void;
     measureText: (text: string, font: string) => TextMetrics;

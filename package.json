@@ -19,7 +19,7 @@
   "homepage": "https://canvas.aoijs.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git#v2"
+    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
   },
   "license": "MIT",
   "dependencies": {

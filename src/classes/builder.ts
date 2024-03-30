@@ -4,6 +4,7 @@ import { CanvasUtil } from "./util";
 
 // Stuff
 export const Filters: string[] = [ "none", "blur", "sepia", "grayscale", "brightness", "contrast", "invert", "saturate" ];
+export type RepeatType = "repeat" | "repeat-x" | "repeat-y" | "no-repeat" | null;
 
 // Builder
 export class CanvasBuilder {

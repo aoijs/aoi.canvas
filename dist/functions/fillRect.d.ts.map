@@ -1,1 +1,1 @@
-{"version":3,"file":"fillRect.d.ts","sourceRoot":"","sources":["../../src/functions/fillRect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,aAAa,EAAE,MAAM,YAAY,CAAC;AAC1D,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;;;;;cA4DX,IAAI;;;;;;;AA1DxB,wBA+EE"}
+{"version":3,"file":"fillRect.d.ts","sourceRoot":"","sources":["../../src/functions/fillRect.ts"],"names":[],"mappings":"AACA,OAAO,EAAiB,aAAa,EAAc,MAAM,YAAY,CAAC;AACtE,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;;;;;cA4DX,IAAI;;;;;;;AA1DxB,wBA8GE"}

@@ -1,1 +1,1 @@
-{"version":3,"file":"strokeRect.d.ts","sourceRoot":"","sources":["../../src/functions/strokeRect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,aAAa,EAAE,MAAM,YAAY,CAAC;AAC1D,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;;;;;cAoEX,IAAI;;;;;;;AAlExB,wBAwFE"}
+{"version":3,"file":"strokeRect.d.ts","sourceRoot":"","sources":["../../src/functions/strokeRect.ts"],"names":[],"mappings":"AACA,OAAO,EAAiB,aAAa,EAAc,MAAM,YAAY,CAAC;AACtE,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;;;;;cAoEX,IAAI;;;;;;;AAlExB,wBAuHE"}

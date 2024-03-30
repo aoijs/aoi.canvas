@@ -2,6 +2,7 @@
 import { SKRSContext2D } from "@napi-rs/canvas";
 import { CanvasUtil } from "./util";
 export declare const Filters: string[];
+export type RepeatType = "repeat" | "repeat-x" | "repeat-y" | "no-repeat" | null;
 export declare class CanvasBuilder {
     static ctx: SKRSContext2D;
     static gradients: Map<string, CanvasGradient>;

@@ -1,5 +1,4 @@
-// i march through this darkened maze
-import { SKRSContext2D, createCanvas, loadImage } from "@napi-rs/canvas";
+import { SKRSContext2D, createCanvas, loadImage, Image } from "@napi-rs/canvas";
 import { CanvasUtil } from "./util";
 
 // Stuff
@@ -17,7 +16,7 @@ export class CanvasBuilder {
     CanvasBuilder.gradients = new Map()
   }
 
-  public drawImage = async (image: any, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => {
+  public drawImage = async (image: string | Buffer | Uint8Array | Image | ArrayBufferLike | URL, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => {
     image = await loadImage(image)
     width??= image.width as number
     height??= image.height as number

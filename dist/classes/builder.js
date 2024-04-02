@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CanvasBuilder = exports.Filters = void 0;
-// i march through this darkened maze
 const canvas_1 = require("@napi-rs/canvas");
 const util_1 = require("./util");
 // Stuff

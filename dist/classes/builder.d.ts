@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { SKRSContext2D } from "@napi-rs/canvas";
+import { SKRSContext2D, Image } from "@napi-rs/canvas";
 import { CanvasUtil } from "./util";
 export declare const Filters: string[];
 export type RepeatType = "repeat" | "repeat-x" | "repeat-y" | "no-repeat" | null;
@@ -8,7 +8,7 @@ export declare class CanvasBuilder {
     static gradients: Map<string, CanvasGradient>;
     util: typeof CanvasUtil;
     constructor(width: number, height: number);
-    drawImage: (image: any, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => Promise<void>;
+    drawImage: (image: string | Buffer | Uint8Array | Image | ArrayBufferLike | URL, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => Promise<void>;
     fillText: (text: string, x: number, y: number, font: string, color: string | CanvasGradient, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
     strokeText: (text: string, x: number, y: number, font: string, color: string | CanvasGradient, lineWidth?: number, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
     fillRect: (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => void;

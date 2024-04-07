@@ -51,6 +51,7 @@ export class CanvasBuilder {
       ctx.clip();
     };
     ctx.drawImage(image, x, y, width, height)
+    ctx.restore()
 
     return;
   }

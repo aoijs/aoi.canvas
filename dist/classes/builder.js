@@ -44,6 +44,7 @@ class CanvasBuilder {
         }
         ;
         ctx.drawImage(image, x, y, width, height);
+        ctx.restore();
         return;
     };
     fillText = (text, x, y, font, color, maxWidth, textAlign, textBaseline) => {

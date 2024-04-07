@@ -10,6 +10,7 @@ export interface AoiD {
     files: AttachmentBuilder[];
     util: typeof Util;
 }
+export declare const FileParser: (input: string, d: AoiD) => Promise<void | AttachmentBuilder[]>;
 export declare class AoiCanvas {
     constructor(client: AoiClient);
     registerFonts(...fonts: {

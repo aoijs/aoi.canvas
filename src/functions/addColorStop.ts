@@ -50,7 +50,7 @@ export default {
 
         d.data.canvases.get(canvas)?.addColorStop(
             gradient?.trim(),
-            parseFloat(offset),
+            (offset?.endsWith("%") ? parseFloat(offset) / 100 : parseFloat(offset)),
             color
         )
         

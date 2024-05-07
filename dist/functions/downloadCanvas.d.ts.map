@@ -1,1 +1,1 @@
-{"version":3,"file":"downloadCanvas.d.ts","sourceRoot":"","sources":["../../src/functions/downloadCanvas.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,aAAa,EAAE,MAAM,YAAY,CAAC;AAG1D,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;cA6BX,IAAI;;;;;;;AA3BxB,wBA4CE"}
+{"version":3,"file":"downloadCanvas.d.ts","sourceRoot":"","sources":["../../src/functions/downloadCanvas.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,aAAa,EAAE,MAAM,YAAY,CAAC;AAG1D,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;cA6BX,IAAI;;;;;;;;AA3BxB,wBA4CE"}

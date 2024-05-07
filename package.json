@@ -1,6 +1,6 @@
 {
-  "name": "aoi.canvas",
-  "version": "2.0.4",
+  "name": "aoi.canvans",
+  "version": "2.0.5",
   "description": "Aoi.canvas - Create and edit images in aoi.js with ease.",
   "main": "dist/index.js",
   "keywords": [
@@ -26,8 +26,8 @@
     "@napi-rs/canvas": "^0.1.44"
   },
   "devDependencies": {
-    "aoi.js": "^6.6.1",
+    "aoi.js": "^6.7.1",
     "discord.js": "^14.14.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }

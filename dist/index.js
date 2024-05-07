@@ -1,11 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AoiCanvas = exports.FileParser = void 0;
-const aoi_js_1 = require("aoi.js");
+exports.AoiCanvas = void 0;
 const node_fs_1 = require("node:fs");
 const node_path_1 = require("node:path");
-const discord_js_1 = require("discord.js");
-const classes_1 = require("./classes");
 const canvas_1 = require("@napi-rs/canvas");
 const loadFuncs = (client, path) => {
     if (!(0, node_fs_1.existsSync)(path))
@@ -43,101 +40,11 @@ const registerFont = (font) => {
     else
         console.error("[aoi.canvas]: Invalid font source.");
 };
-const mustEscape = (input) => {
-    return input.split("\\[")
-        .join("#RIGHT#")
-        .replace(/\\]/g, "#LEFT#")
-        .replace(/\\;/g, "#SEMI#")
-        .replace(/\\:/g, "#COLON#")
-        .replace(/\\$/g, "#CHAR#")
-        .replace(/\\>/g, "#RIGHT_CLICK#")
-        .replace(/\\</g, "#LEFT_CLICK#")
-        .replace(/\\=/g, "#EQUAL#")
-        .replace(/\\{/g, "#RIGHT_BRACKET#")
-        .replace(/\\}/g, "#LEFT_BRACKET#")
-        .replace(/\\,/g, "#COMMA#")
-        .replace(/\\&&/g, "#AND#")
-        .replaceAll("\\||", "#OR#");
-};
-const escape = (input) => {
-    return input.replace(/#RIGHT#/g, "[")
-        .replace(/#LEFT#/g, "]")
-        .replace(/#SEMI#/g, ";")
-        .replace(/#COLON#/g, ":")
-        .replace(/#CHAR#/g, "$")
-        .replace(/#RIGHT_CLICK#/g, ">")
-        .replace(/#LEFT_CLICK#/g, "<")
-        .replace(/#EQUAL#/g, "=")
-        .replace(/#RIGHT_BRACKET#/g, "{")
-        .replace(/#LEFT_BRACKET#/g, "}")
-        .replace(/#COMMA#/g, ",")
-        .replace(/#LB#/g, "(")
-        .replace(/#RB#/g, ")")
-        .replace(/#AND#/g, "&&")
-        .replace(/#OR#/g, "||");
-};
-const FileParser = async (input, d) => {
-    if (!input)
-        return;
-    input = mustEscape(input);
-    console.log("e");
-    const Checker = (parser) => input.includes("{" + parser + ":");
-    const att = [];
-    if (Checker("attachment")) {
-        const attachments = input
-            ?.split("{attachment:")
-            ?.slice(1)
-            .map((x) => x.trim());
-        for (let attach of attachments) {
-            const insides = attach?.split("}")[0].split(":");
-            let last = insides?.pop();
-            let content = insides?.join(":")?.length > 0 ? escape(insides.join(":").toString()) : undefined;
-            last = last ? escape(last) : "";
-            console.log(content, last);
-            if (content?.[0]?.trim() === "canvas") {
-                let canvas = content?.split(":")?.slice(1)?.join(":");
-                if (typeof canvas === "string" && (!d.data.canvases || !(d.data.canvases instanceof classes_1.CanvasManager) || !d.data.canvases.get(canvas) || !(d.data.canvases.get(canvas) instanceof classes_1.CanvasBuilder)))
-                    return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
-                canvas = d.data.canvases.get(canvas);
-                content = canvas?.render();
-            }
-            try {
-                const attachment = new discord_js_1.AttachmentBuilder(Buffer.isBuffer(content) ? content : last, { name: !Buffer.isBuffer(content) ? content : last ?? "attachment.png" });
-                att.push(attachment);
-            }
-            catch (err) {
-                aoi_js_1.AoiError.fnError(d, "string", {}, "Something went wrong making an attachment.");
-                console.error(err);
-            }
-        }
-    }
-    if (Checker("file")) {
-        const files = input
-            .split("{file:")
-            ?.slice(1)
-            .map((x) => x.trim());
-        for (let file of files) {
-            const insides = file?.split("}")[0].split(":");
-            let last = insides?.pop();
-            last = last ? escape(last) : "";
-            try {
-                const attachment = new discord_js_1.AttachmentBuilder(Buffer.from(last), { name: insides?.join(":")?.length > 0 ? escape(insides.join(":").toString()) : "file.txt" });
-                att.push(attachment);
-            }
-            catch (err) {
-                aoi_js_1.AoiError.fnError(d, "string", {}, "Something went wrong making an attachment.");
-                console.error(err);
-            }
-        }
-    }
-    return att;
-};
-exports.FileParser = FileParser;
 class AoiCanvas {
     constructor(client) {
         loadFuncs(client, (0, node_path_1.join)(__dirname, "./functions")) === "loaded" ?
-            console.log("[aoi.canvas]: Loaded.") :
-            console.error("[aoi.canvas]: Failed to load.");
+            console.log("[\x1b[36maoi.canvas\x1b[0m]: Loaded.") :
+            console.error("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91mFailed to load.\x1b[0m");
     }
     registerFonts(...fonts) {
         for (const font of fonts) {

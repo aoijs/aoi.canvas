@@ -1,1 +1,1 @@
-{"version":3,"file":"createGradient.d.ts","sourceRoot":"","sources":["../../src/functions/createGradient.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,aAAa,EAAE,MAAM,YAAY,CAAC;AAC1D,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;cA0CX,IAAI;;;;;;;AAxCxB,wBAqEE"}
+{"version":3,"file":"createGradient.d.ts","sourceRoot":"","sources":["../../src/functions/createGradient.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,aAAa,EAAE,MAAM,YAAY,CAAC;AAC1D,OAAO,EAAE,IAAI,EAAE,MAAM,UAAU,CAAA;;;;;;;;;;;;;cA0CX,IAAI;;;;;;;;AAxCxB,wBAqEE"}

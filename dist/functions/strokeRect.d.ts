@@ -20,6 +20,7 @@ declare const _default: {
         code: string;
         data: {
             canvases: CanvasManager;
+            interaction: import("discord.js").CommandInteraction<import("discord.js").CacheType>;
         };
     }>;
 };

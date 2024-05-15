@@ -65,9 +65,11 @@ exports.default = {
             return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
         if (!image)
             return d.aoiError.fnError(d, "custom", {}, `No image src provided.`);
+        if (image?.startsWith("https#COLON#//"))
+            image = image.addBrackets();
         if (isNaN(parseFloat(x)) || isNaN(parseFloat(y)))
             return d.aoiError.fnError(d, "custom", {}, `Invalid position parameter. (x/y)`);
-        await d.data.canvases?.get(canvas)?.drawImage(image, parseFloat(x), parseFloat(y), (width ? parseFloat(width) : undefined), (height ? parseFloat(height) : undefined), (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius)));
+        await d.data.canvases?.get(canvas)?.drawImage(image, x, y, width, height, (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius)));
         return {
             code: d.util.setCode(data),
             data: d.data

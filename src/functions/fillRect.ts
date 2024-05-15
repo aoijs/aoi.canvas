@@ -1,5 +1,5 @@
 import { loadImage } from "@napi-rs/canvas";
-import { CanvasBuilder, CanvasManager, RepeatType } from "../classes";
+import { CanvasBuilder, CanvasManager, CanvasUtil, RepeatType } from "../classes";
 import { AoiD } from "../index"
 
 export default {
@@ -91,7 +91,7 @@ export default {
 
                 style = ctx.createPattern(ctx_2.getImageData(0, 0, ctx_2.canvas.width, ctx_2.canvas.height), repeat as RepeatType);
             } else if (typee && typee?.toLowerCase() === "image") {
-                const image = await loadImage(isLastRepeat ? splits?.slice(0, -1)?.join(":") : splits?.join());
+                const image = await loadImage(isLastRepeat ? splits?.slice(0, -1)?.join(":") : splits?.join(), { maxRedirects: 30 });
                 const repeat = isLastRepeat ? splits.pop() : null;
 
                 style = ctx.createPattern(image, repeat as RepeatType);
@@ -100,10 +100,10 @@ export default {
 
         d.data.canvases.get(canvas)?.fillRect(
             style, 
-            parseFloat(x),
-            parseFloat(y),
-            parseFloat(width ?? ctx?.canvas?.width),
-            parseFloat(height ?? ctx?.canvas?.height),
+            x,
+            y,
+            width,
+            height,
             parseFloat(radius)
         )
 

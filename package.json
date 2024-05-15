@@ -1,6 +1,6 @@
 {
-  "name": "aoi.canvans",
-  "version": "2.0.5",
+  "name": "aoi.canvas",
+  "version": "2.0.6",
   "description": "Aoi.canvas - Create and edit images in aoi.js with ease.",
   "main": "dist/index.js",
   "keywords": [

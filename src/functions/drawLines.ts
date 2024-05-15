@@ -90,8 +90,8 @@ export default {
             d.data.canvases?.get(canvas)?.drawLines(
                 parseFloat(type),
                 color,
-                parseFloat(x),
-                parseFloat(y),
+                x,
+                y,
                 lines,
                 parseFloat(strokeWidth)
             );

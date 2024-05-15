@@ -1,9 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AoiCanvas = void 0;
 const node_fs_1 = require("node:fs");
 const node_path_1 = require("node:path");
 const canvas_1 = require("@napi-rs/canvas");
+const package_json_1 = __importDefault(require("../package.json"));
 const loadFuncs = (client, path) => {
     if (!(0, node_fs_1.existsSync)(path))
         return "notfound";
@@ -45,6 +49,21 @@ class AoiCanvas {
         loadFuncs(client, (0, node_path_1.join)(__dirname, "./functions")) === "loaded" ?
             console.log("[\x1b[36maoi.canvas\x1b[0m]: Loaded.") :
             console.error("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91mFailed to load.\x1b[0m");
+        try {
+            (async () => {
+                const res = await (await fetch("https://registry.npmjs.org/aoi.canvas", {
+                    headers: {
+                        "User-Agent": "aoi.canvas",
+                    },
+                })).json();
+                if (!res.versions[package_json_1.default.version])
+                    return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[33mThis is a dev version. Some stuff may be incomplete or unstable.\x1b[0m");
+                if (package_json_1.default.version !== res["dist-tags"].latest)
+                    return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91maoi.canvas is outdated!\x1b[0m");
+            })();
+        }
+        catch (e) { }
+        ;
     }
     registerFonts(...fonts) {
         for (const font of fonts) {

@@ -61,10 +61,10 @@ export default {
             return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
 
         d.data.canvases.get(canvas)?.clearRect(
-            parseFloat(x),
-            parseFloat(y),
-            parseFloat(width),
-            parseFloat(height),
+            x,
+            y,
+            width,
+            height
             (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius))
         )
 

@@ -98,7 +98,7 @@ exports.default = {
             ;
         }
         ;
-        d.data.canvases.get(canvas)?.strokeRect(style, parseFloat(x), parseFloat(y), parseFloat(width ?? ctx?.canvas?.width), parseFloat(height ?? ctx?.canvas?.height), (!isNaN(parseFloat(strokeWidth)) ? parseFloat(strokeWidth) : 10), (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius)));
+        d.data.canvases.get(canvas)?.strokeRect(style, x, y, width, height, (!isNaN(parseFloat(strokeWidth)) ? parseFloat(strokeWidth) : 10), (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius)));
         return {
             code: d.util.setCode(data),
             data: d.data

@@ -61,7 +61,7 @@ exports.default = {
             return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
         if (isNaN(parseFloat(x)) || isNaN(parseFloat(y)))
             return d.aoiError.fnError(d, "custom", {}, `Invalid position parameter. (x/y)`);
-        await d.data.canvases?.get(canvas)?.drawImage(ctx.render(), parseFloat(x), parseFloat(y), (width ? parseFloat(width) : undefined), (height ? parseFloat(height) : undefined), (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius)));
+        await d.data.canvases?.get(canvas)?.drawImage(ctx.render(), x, y, width, height, (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius)));
         return {
             code: d.util.setCode(data),
             data: d.data

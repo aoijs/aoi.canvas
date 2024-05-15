@@ -8,13 +8,13 @@ export declare class CanvasBuilder {
     static gradients: Map<string, CanvasGradient>;
     util: typeof CanvasUtil;
     constructor(width: number, height: number);
-    drawImage: (image: string | Buffer | Uint8Array | Image | ArrayBufferLike | URL, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => Promise<void>;
-    fillText: (text: string, x: number, y: number, font: string, color: string | CanvasGradient, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
-    strokeText: (text: string, x: number, y: number, font: string, color: string | CanvasGradient, lineWidth?: number, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
-    fillRect: (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => void;
-    strokeRect: (style: string | CanvasGradient | CanvasPattern, x: number, y: number, width?: number, height?: number, strokeWidth?: number, radius?: number | number[]) => void;
-    clearRect: (x: number, y: number, width?: number, height?: number, radius?: number[]) => void;
-    drawLines: (type: number, color: string | CanvasGradient, startX: number, startY: number, lines: string[], strokeWidth?: number) => void;
+    drawImage: (image: string | Buffer | Uint8Array | Image | ArrayBufferLike | URL, x: number | string, y: number | string, width?: number | string, height?: number | string, radius?: number | number[]) => Promise<void>;
+    fillText: (text: string, x: number | string, y: number | string, font: string, color: string | CanvasGradient, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
+    strokeText: (text: string, x: number | string, y: number | string, font: string, color: string | CanvasGradient, lineWidth?: number, maxWidth?: number, textAlign?: string, textBaseline?: string) => void;
+    fillRect: (style: string | CanvasGradient | CanvasPattern, x: number | string, y: number | string, width?: number | string, height?: number | string, radius?: number | number[]) => void;
+    strokeRect: (style: string | CanvasGradient | CanvasPattern, x: number | string, y: number | string, width?: number | string, height?: number | string, strokeWidth?: number, radius?: number | number[]) => void;
+    clearRect: (x: number | string, y: number | string, width?: number | string, height?: number | string, radius?: number[]) => void;
+    drawLines: (type: number, color: string | CanvasGradient, startX: number | string, startY: number | string, lines: string[], strokeWidth?: number) => void;
     measureText: (text: string, font: string) => TextMetrics;
     setTextAlign: (align: string) => void;
     filter: (method: string, name?: string, value?: number) => string | {
@@ -27,6 +27,8 @@ export declare class CanvasBuilder {
     setShadow: (blur: number, color: string, offset?: number | number[]) => void;
     rotate: (angle: number) => void;
     trim: () => void;
+    getPixelsColors: (x: number | string, y: number | string, width: number | string, height: number | string) => Promise<string[]>;
+    setPixelsColors: (x: number | string, y: number | string, width: number | string, height: number | string, colors: string[]) => Promise<void>;
     getContext: () => SKRSContext2D;
     getGradient: (name: string) => CanvasGradient | undefined;
     render: () => Buffer;

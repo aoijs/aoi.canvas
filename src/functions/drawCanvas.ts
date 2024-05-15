@@ -69,10 +69,10 @@ export default {
 
         await d.data.canvases?.get(canvas)?.drawImage(
             ctx.render(),
-            parseFloat(x),
-            parseFloat(y),
-            (width ? parseFloat(width) : undefined),
-            (height ? parseFloat(height) : undefined),
+            x,
+            y,
+            width,
+            height,
             (radius?.trim()?.startsWith("[") && radius?.trim().endsWith("]") ? JSON.parse(radius) : parseFloat(radius))
         );
 

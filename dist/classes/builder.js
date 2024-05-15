@@ -15,10 +15,11 @@ class CanvasBuilder {
         CanvasBuilder.gradients = new Map();
     }
     drawImage = async (image, x, y, width, height, radius) => {
-        image = await (0, canvas_1.loadImage)(image);
+        image = await (0, canvas_1.loadImage)(image, { maxRedirects: 30 });
         width ??= image.width;
         height ??= image.height;
         const ctx = CanvasBuilder.ctx;
+        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
         if (radius && !Array.isArray(radius) && radius > 0) {
             ctx.save();
             ctx.beginPath();
@@ -49,6 +50,7 @@ class CanvasBuilder {
     };
     fillText = (text, x, y, font, color, maxWidth, textAlign, textBaseline) => {
         const ctx = CanvasBuilder.ctx;
+        [x, y] = [x, y].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 ? 'width' : 'height'], value));
         const oldfont = ctx.font;
         const oldcolor = ctx.fillStyle;
         const oldalign = ctx.textAlign;
@@ -70,6 +72,7 @@ class CanvasBuilder {
     };
     strokeText = (text, x, y, font, color, lineWidth, maxWidth, textAlign, textBaseline) => {
         const ctx = CanvasBuilder.ctx;
+        [x, y] = [x, y].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 ? 'width' : 'height'], value));
         const oldfont = ctx.font;
         const oldcolor = ctx.strokeStyle;
         const oldwidth = ctx.lineWidth;
@@ -96,6 +99,7 @@ class CanvasBuilder {
         const ctx = CanvasBuilder.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
+        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
         const oldstyle = ctx.fillStyle;
         if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
             style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
@@ -115,6 +119,7 @@ class CanvasBuilder {
         const ctx = CanvasBuilder.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
+        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
         const oldstyle = ctx.strokeStyle;
         const oldwidth = ctx.lineWidth;
         if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
@@ -137,6 +142,7 @@ class CanvasBuilder {
         const ctx = CanvasBuilder.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
+        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
         if (radius && !Array.isArray(radius) && radius > 0) {
             ctx.save();
             ctx.beginPath();
@@ -166,12 +172,13 @@ class CanvasBuilder {
     };
     drawLines = (type, color, startX, startY, lines, strokeWidth) => {
         const ctx = CanvasBuilder.ctx;
+        [startX, startY] = [startX, startY].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 ? 'width' : 'height'], value));
         if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
             color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
         const drawlines = () => {
             ctx.beginPath();
             ctx.moveTo(startX, startY);
-            for (var line of lines) {
+            for (let line of lines) {
                 line = line?.trim();
                 const split = line?.split(":")?.map(x => !isNaN(parseFloat(x)) ? parseFloat(x) : 0);
                 const actions = {
@@ -354,6 +361,36 @@ class CanvasBuilder {
         canvas.width = width;
         canvas.height = height;
         ctx.putImageData(trimmed, 0, 0);
+    };
+    getPixelsColors = async (x, y, width, height) => {
+        const ctx = CanvasBuilder.ctx;
+        width ??= ctx.canvas.width;
+        height ??= ctx.canvas.height;
+        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
+        const data = ctx.getImageData(x, y, width, height).data;
+        const colors = [];
+        for (let i = 0; i < data.length; i += 4) {
+            colors.push(util_1.CanvasUtil.rgbaToHex(data[i], data[i + 1], data[i + 2], data[i + 3] / 255));
+        }
+        ;
+        return colors;
+    };
+    setPixelsColors = async (x, y, width, height, colors) => {
+        const ctx = CanvasBuilder.ctx;
+        width ??= ctx.canvas.width;
+        height ??= ctx.canvas.height;
+        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
+        const data = ctx.createImageData(width, height);
+        colors?.forEach((hex, i) => {
+            const colors = util_1.CanvasUtil.hexToRgba(hex);
+            i = i * 4;
+            data.data[i] = colors.red;
+            data.data[i + 1] = colors.green;
+            data.data[i + 2] = colors.blue;
+            data.data[i + 3] = colors.alpha;
+        });
+        console.log(data.data);
+        return ctx.putImageData(data, x, y);
     };
     getContext = () => CanvasBuilder.ctx;
     getGradient = (name) => CanvasBuilder.gradients.get(name);

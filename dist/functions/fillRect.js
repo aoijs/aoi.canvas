@@ -83,14 +83,14 @@ exports.default = {
                 style = ctx.createPattern(ctx_2.getImageData(0, 0, ctx_2.canvas.width, ctx_2.canvas.height), repeat);
             }
             else if (typee && typee?.toLowerCase() === "image") {
-                const image = await (0, canvas_1.loadImage)(isLastRepeat ? splits?.slice(0, -1)?.join(":") : splits?.join());
+                const image = await (0, canvas_1.loadImage)(isLastRepeat ? splits?.slice(0, -1)?.join(":") : splits?.join(), { maxRedirects: 30 });
                 const repeat = isLastRepeat ? splits.pop() : null;
                 style = ctx.createPattern(image, repeat);
             }
             ;
         }
         ;
-        d.data.canvases.get(canvas)?.fillRect(style, parseFloat(x), parseFloat(y), parseFloat(width ?? ctx?.canvas?.width), parseFloat(height ?? ctx?.canvas?.height), parseFloat(radius));
+        d.data.canvases.get(canvas)?.fillRect(style, x, y, width, height, parseFloat(radius));
         return {
             code: d.util.setCode(data),
             data: d.data

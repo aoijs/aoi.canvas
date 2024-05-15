@@ -84,7 +84,7 @@ exports.default = {
         else if (type?.toLowerCase()?.trim() === "fill")
             type = "0";
         if (lines && lines.length > 0)
-            d.data.canvases?.get(canvas)?.drawLines(parseFloat(type), color, parseFloat(x), parseFloat(y), lines, parseFloat(strokeWidth));
+            d.data.canvases?.get(canvas)?.drawLines(parseFloat(type), color, x, y, lines, parseFloat(strokeWidth));
         return {
             code: d.util.setCode(data),
             data: d.data

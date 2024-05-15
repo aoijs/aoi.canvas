@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { AttachmentBuilder, BaseChannel, CommandInteraction } from "discord.js";
 import { CanvasManager } from "./classes";
 import { GlobalFonts } from "@napi-rs/canvas";
-import { version } from "../package.json";
+import packagejson from "../package.json";
 
 const loadFuncs = (client: AoiClient, path: string) => {
     if (!existsSync(path))
@@ -68,6 +68,22 @@ export class AoiCanvas {
         loadFuncs(client, join(__dirname, "./functions")) === "loaded" ? 
             console.log("[\x1b[36maoi.canvas\x1b[0m]: Loaded.") : 
             console.error("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91mFailed to load.\x1b[0m");
+
+        try {
+            (async () => {
+                const res = await (await fetch("https://registry.npmjs.org/aoi.canvas", {
+                    headers: {
+                        "User-Agent": "aoi.canvas",
+                    },
+                })).json();
+
+                if (!res.versions[packagejson.version])
+                    return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[33mThis is a dev version. Some stuff may be incomplete or unstable.\x1b[0m");
+                
+                if (packagejson.version !== res["dist-tags"].latest)
+                    return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91maoi.canvas is outdated!\x1b[0m");
+            })();
+        } catch (e) {};
     }
 
     registerFonts (...fonts: { src: Buffer | string, name?: string }[]) {

@@ -37,6 +37,6 @@ client.command({
 });
 ```
 
-Feel free to dm me in discord (devlordduck2) if you have any questions or need help, or just ask in the official aoi.js [server](https://discord.com/invite/HMUfMXDQsV).
+If you have any questions or need help, ask in the official aoi.js [server](https://discord.com/invite/HMUfMXDQsV).
 
 Enjoy coding with aoi.canvas! ❤

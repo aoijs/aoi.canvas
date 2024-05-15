@@ -4,55 +4,6 @@ import { AoiD } from "../index"
 
 export default {
     name: "$drawCanvas",
-    info: {
-        description: "Draw a canvas on canvas.",
-        parameters: [
-            {
-                name: "canvas",
-                description: "The canvas name.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "name",
-                description: "The canvas name.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "x",
-                description: "The canvas X position.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "y",
-                description: "The canvas Y position.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "width",
-                description: "The canvas width.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "height",
-                description: "The canvas height.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "radius",
-                description: "The canvas corners radius.",
-                type: "number/array",
-                required: false
-            }
-        ],
-        examples: [
-        ]
-    },
     code: async (d: AoiD) => {
         let data = d.util.aoiFunc(d);
         let [ canvas = "canvas", name, x = "0", y = "0", width = "512", height = "512", radius = "0" ] = data.inside.splits;

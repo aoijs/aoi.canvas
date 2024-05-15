@@ -3,43 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const classes_1 = require("../classes");
 exports.default = {
     name: "$measureText",
-    info: {
-        description: "Measure some text.",
-        parameters: [
-            {
-                name: "canvas",
-                description: "The canvas name.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "text",
-                description: "The text to measure.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "font",
-                description: "The text font.",
-                type: "font",
-                required: false
-            },
-            {
-                name: "property",
-                description: "Property.",
-                type: "string",
-                required: false
-            },
-        ],
-        examples: [
-            {
-                description: "This will make a canvas and then measure text.",
-                code: `$measureText[mycanvas;Hello;15px Arial]
-                       $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
-                images: []
-            }
-        ]
-    },
     code: async (d) => {
         let data = d.util.aoiFunc(d);
         let [canvas = "canvas", text = "Text", font = "15px Arial", property = "json"] = data.inside.splits;

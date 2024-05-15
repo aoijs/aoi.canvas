@@ -5,31 +5,6 @@ const node_fs_1 = require("node:fs");
 const node_path_1 = require("node:path");
 exports.default = {
     name: "$downloadCanvas",
-    info: {
-        description: "Downloads the canvas.",
-        parameters: [
-            {
-                name: "canvas",
-                description: "The canvas name.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "path",
-                description: "The download path. (file name and extension too)",
-                type: "string",
-                required: true
-            }
-        ],
-        examples: [
-        /*{
-            description: "This will make a canvas and then measure text.",
-            code: `$measureText[mycanvas;Hello;15px Arial]
-                   $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
-            images: []
-        }*/
-        ]
-    },
     code: async (d) => {
         let data = d.util.aoiFunc(d);
         let [canvas = "canvas", path = "./{canvas}.png"] = data.inside.splits;

@@ -3,61 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const classes_1 = require("../classes");
 exports.default = {
     name: "$drawImage",
-    info: {
-        description: "Draw an image.",
-        parameters: [
-            {
-                name: "canvas",
-                description: "The canvas name.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "src",
-                description: "The image src.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "x",
-                description: "The image X position.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "y",
-                description: "The image Y position.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "width",
-                description: "The image width.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "height",
-                description: "The image height.",
-                type: "number",
-                required: true
-            },
-            {
-                name: "radius",
-                description: "The image corners radius.",
-                type: "number/array",
-                required: false
-            }
-        ],
-        examples: [
-        /*{
-            description: "This will make a canvas and then measure text.",
-            code: `$measureText[mycanvas;Hello;15px Arial]
-                   $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
-            images: []
-        }*/
-        ]
-    },
     code: async (d) => {
         let data = d.util.aoiFunc(d);
         let [canvas = "canvas", image, x = "0", y = "0", width = "512", height = "512", radius = "0"] = data.inside.splits;

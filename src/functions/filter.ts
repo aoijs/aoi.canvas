@@ -3,43 +3,6 @@ import { AoiD } from "../index"
 
 export default {
     name: "$filter",
-    info: {
-        description: "Use filters in your canvas.",
-        parameters: [
-            {
-                name: "canvas",
-                description: "The canvas name.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "method",
-                description: "The method. (add/set/remove/clear/get/parse)",
-                type: "string",
-                required: true
-            },
-            {
-                name: "name",
-                description: "The filter name.",
-                type: "string",
-                required: false
-            },
-            {
-                name: "value",
-                description: "The filter value.",
-                type: "number",
-                required: false
-            },
-        ],
-        examples: [
-            /*{
-                description: "This will make a canvas and then measure text.",
-                code: `$measureText[mycanvas;Hello;15px Arial]
-                       $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
-                images: []
-            }*/
-        ]
-    },
     code: async (d: AoiD) => {
         let data = d.util.aoiFunc(d);
         let [ canvas = "canvas", method = "get", name, value ] = data.inside.splits;

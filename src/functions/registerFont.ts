@@ -5,31 +5,6 @@ import { AoiD } from "../index"
 
 export default {
     name: "$registerFont",
-    info: {
-        description: "Register a font.",
-        parameters: [
-            {
-                name: "src",
-                description: "The font source.",
-                type: "string",
-                required: true
-            },
-            {
-                name: "name",
-                description: "The font family name.",
-                type: "string",
-                required: false
-            }
-        ],
-        examples: [
-            /*{
-                description: "This will make a canvas and then measure text.",
-                code: `$measureText[mycanvas;Hello;15px Arial]
-                       $createCanvas[mycanvas;300;320]`?.split("\n").map(x => x?.trim()).join("\n"),
-                images: []
-            }*/
-        ]
-    },
     code: async (d: AoiD) => {
         let data = d.util.aoiFunc(d);
         let [ src, name ] = data.inside.splits;

@@ -62,7 +62,9 @@ class AoiCanvas {
                     return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91maoi.canvas is outdated!\x1b[0m");
             })();
         }
-        catch (e) { }
+        catch (e) {
+            console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91mThere was an error fetching aoi.canvas info on npm.\x1b[0m");
+        }
         ;
     }
     registerFonts(...fonts) {

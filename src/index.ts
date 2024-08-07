@@ -1,53 +1,49 @@
 import { AoiClient, Util, AoiError } from "aoi.js";
 import { readdirSync, existsSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { resolve, join } from "node:path";
 import { AttachmentBuilder, BaseChannel, CommandInteraction } from "discord.js";
-import { CanvasManager } from "./classes";
-import { GlobalFonts } from "@napi-rs/canvas";
+import { CanvasBuilder, CanvasManager, GIFManager, GradientManager } from "./classes";
 import packagejson from "../package.json";
+import { AoiFunction } from "./classes/function";
+const gifencoder = require("gif-encoder-2");
 
+let funcs = 0;
+
+export const log = (content: string, type: "log" | "warn"| "error" = "log") => {
+    const color = 
+        (type === "error" 
+            ? "\x1b[91m" 
+            : (type === "warn" ? "\x1b[33m" : ""));
+
+    return console[type](`\x1b[0m[\x1b[36maoi.canvas\x1b[0m]: ${color + content}\x1b[0m`);
+};
 const loadFuncs = (client: AoiClient, path: string) => {
     if (!existsSync(path))
         return "notfound";
 
     readdirSync(path)?.forEach(file => {
-        const fpath = join(path, file)
+        const fpath = resolve(path, file);
 
-        if ((file.endsWith(".ts") || file.endsWith(".js")) && !file.endsWith(".d.ts")) {
-            if (statSync(fpath).isDirectory())
-                loadFuncs(client, path);
+        if (statSync(fpath).isDirectory())
+            loadFuncs(client, fpath);
 
+        if (statSync(fpath).isFile() && (file.endsWith(".ts") || file.endsWith(".js")) && !file.endsWith(".d.ts")) {
             try {
-                let func = require(fpath)
-                func = func.default ?? func
-                
-                if (typeof func !== "object" || !func.name || !func.code || !(typeof func.code === "string" || typeof func.code === "function"))
-                    return console.error(`Something is missing at '${file}'`);
+                let func = require(fpath);
+                func = func.default ?? func;
 
-                func.type = func.type ? func.type : (typeof func.code === "function" ? "djs" : "aoi.js");
-
-                client.functionManager.createFunction(func);
+                if (func instanceof AoiFunction) {
+                    func.register(client);
+                    funcs++;
+                };
             } catch (err) {
-                console.error(`Error loading function at path '${fpath}'\n`, err)
-            }
-        }
-    })
+                log(`Error loading function at path '${fpath}'`, "error");
+            };
+        };
+    });
 
     return "loaded";
-}
-const registerFont = (font: { src: Buffer | string, name?: string }) => {
-    if (typeof font.src === "string" && existsSync(font.src))
-        if (statSync(font.src).isDirectory())
-            GlobalFonts.loadFontsFromDir(font.src);
-        else if (statSync(font.src).isFile())
-            GlobalFonts.registerFromPath(font.src, font.name);
-        else
-            console.error("[aoi.canvas]: Invalid font source.");
-    else if (Buffer.isBuffer(font.src))
-        GlobalFonts.register(font?.src, font?.name);
-    else
-        console.error("[aoi.canvas]: Invalid font source.");
-}
+};
 
 export interface AoiD {
     error: Function;
@@ -56,7 +52,12 @@ export interface AoiD {
     channel: BaseChannel;
     aoiError: typeof AoiError;
     data: {
-        canvases: CanvasManager;
+        canvasManager?: CanvasManager;
+        gifManager?: GIFManager;
+        gradients?: GradientManager;
+        canvas?: CanvasBuilder[];
+        gif?: typeof gifencoder;
+        colorStops?: [number, string][];
         interaction: CommandInteraction;
     },
     files: AttachmentBuilder[],
@@ -66,8 +67,8 @@ export interface AoiD {
 export class AoiCanvas {
     constructor (client: AoiClient) {
         loadFuncs(client, join(__dirname, "./functions")) === "loaded" ? 
-            console.log("[\x1b[36maoi.canvas\x1b[0m]: Loaded.") : 
-            console.error("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91mFailed to load.\x1b[0m");
+            log(`Loaded ${funcs} functions.`) : 
+            log("Failed to load the functions.", "error");
 
         try {
             (async () => {
@@ -78,26 +79,13 @@ export class AoiCanvas {
                 })).json();
 
                 if (!res.versions[packagejson.version])
-                    return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[33mThis is a dev version. Some stuff may be incomplete or unstable.\x1b[0m");
+                    return log("This is a dev version. Some stuff may be incomplete or unstable.", "warn");
                 
                 if (packagejson.version !== res["dist-tags"].latest)
-                    return console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91maoi.canvas is outdated!\x1b[0m");
+                    return log("aoi.canvas is outdated!", "warn");
             })();
         } catch (e) {
-            console.log("[\x1b[36maoi.canvas\x1b[0m]: \x1b[91mThere was an error fetching aoi.canvas info on npm.\x1b[0m");
+            log("There was an error fetching aoi.canvas info on npm.", "error");
         };
     }
-
-    registerFonts (...fonts: { src: Buffer | string, name?: string }[]) {
-        for (const font of fonts) {
-            try {
-                if (typeof font?.src === "string")
-                    font.src = join(process.cwd(), font?.src);
-
-                registerFont(font)
-            } catch (err) {
-                console.error("[aoi.canvas]: Failed to register a font.")
-            }
-        }
-    }
-}
+};

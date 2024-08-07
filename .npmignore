@@ -1,1 +1,4 @@
-docs
+src
+*/__tests__/
+api-gen.js
+functions.json

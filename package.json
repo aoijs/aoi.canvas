@@ -1,5 +1,5 @@
 {
-  "name": "@aoiojs/aoi.canvas",
+  "name": "@aoijs/aoi.canvas",
   "version": "1.0.0",
   "description": "Create and edit images in aoi.js with ease.",
   "main": "dist/index.js",

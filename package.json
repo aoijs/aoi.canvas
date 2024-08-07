@@ -1,7 +1,7 @@
 {
-  "name": "aoi.canvas",
-  "version": "2.0.6",
-  "description": "Aoi.canvas - Create and edit images in aoi.js with ease.",
+  "name": "@aoiojs/aoi.canvas",
+  "version": "1.0.0",
+  "description": "Create and edit images in aoi.js with ease.",
   "main": "dist/index.js",
   "keywords": [
     "canvas",
@@ -16,18 +16,17 @@
     "image"
   ],
   "author": "lordex",
-  "homepage": "https://canvas.aoijs.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
+    "url": "git+https://github.com/aoijs/aoi.canvas.git"
   },
   "license": "MIT",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.44"
   },
   "devDependencies": {
-    "aoi.js": "^6.7.1",
-    "discord.js": "^14.14.1",
+    "aoi.js": "^6.8.5",
+    "discord.js": "^14.15.3",
     "typescript": "^5.4.5"
   }
 }

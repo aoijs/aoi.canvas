@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { SKRSContext2D, Image } from "@napi-rs/canvas";
 import { CanvasUtil } from "./util";
 export declare const Filters: string[];

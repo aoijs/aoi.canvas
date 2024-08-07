@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { AoiClient, Util, AoiError } from "aoi.js";
 import { AttachmentBuilder, BaseChannel, CommandInteraction } from "discord.js";
 import { CanvasManager } from "./classes";

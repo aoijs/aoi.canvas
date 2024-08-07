@@ -72,7 +72,7 @@ export class AoiCanvas {
 
         try {
             (async () => {
-                const res = await (await fetch("https://registry.npmjs.org/aoi.canvas", {
+                const res = await (await fetch("https://registry.npmjs.org/@aoijs/aoi.canvas", {
                     headers: {
                         "User-Agent": "aoi.canvas",
                     },

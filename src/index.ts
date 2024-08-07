@@ -56,7 +56,7 @@ export interface AoiD {
         gifManager?: GIFManager;
         gradients?: GradientManager;
         canvas?: CanvasBuilder[];
-        gif?: typeof gifencoder;
+        gif?: typeof gifencoder[];
         colorStops?: [number, string][];
         interaction: CommandInteraction;
     },

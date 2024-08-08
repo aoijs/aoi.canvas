@@ -1,4 +1,20 @@
-# aoi.canvas
+<p align="center">
+  <a href="https://discord.com/invite/HMUfMXDQsV">
+    <img width="100" src="https://github.com/aoijs/website/blob/master/assets/images/aoicanvas.png?raw=true" alt="aoi.canvas">
+  </a>
+</p>
+
+<h1 align="center">@aoijs/aoi.canvas</h1>
+
+<div align="center">
+
+[![Discord Server](https://img.shields.io/discord/773352845738115102?color=5865F2&logo=discord&logoColor=white)](https://discord.com/invite/HMUfMXDQsV)
+[![NPM Downloads](https://img.shields.io/npm/dt/@aoijs/aoi.canvas.svg?maxAge=3600)](https://www.npmjs.com/package/@aoijs/aoi.canvas)
+[![NPM Version](https://img.shields.io/npm/v/@aoijs/aoi.canvas.svg?maxAge=3600)](https://www.npmjs.com/package/@aoijs/aoi.canvas)
+
+</div>
+
+## About
 
 aoi.canvas is an aoi.js extension that allows you to create and edit images with your aoi.js bot.
 

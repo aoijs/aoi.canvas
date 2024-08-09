@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
-exports.default = new classes_1.AoiFunction({
+const __1 = require("../../");
+exports.default = new __1.AoiFunction({
     name: "$addColorStop",
     description: "Adds a color stop to the gradient.",
     params: [
         {
             name: "gradient",
             description: "Name of the gradient.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.gradients && c.data.gradients instanceof classes_1.GradientManager && c.data.gradients.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.gradients && c.data.gradients instanceof __1.GradientManager && c.data.gradients.get(v)),
             checkError: () => "No canvas with provided name found.",
             optional: true,
         },
@@ -17,12 +17,12 @@ exports.default = new classes_1.AoiFunction({
             name: "offset",
             description: "The color stop offset.",
             check: (v) => v / 100 >= 0 && v / 100 <= 1,
-            type: classes_1.ParamType.Number
+            type: __1.ParamType.Number
         },
         {
             name: "color",
             description: "Color of the stop.",
-            type: classes_1.ParamType.Color
+            type: __1.ParamType.Color
         }
     ],
     code: async (ctx) => {

@@ -1,4 +1,4 @@
-import { AoiFunction, GIFManager, ParamType } from "../../classes";
+import { AoiFunction, GIFManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$setFPS",

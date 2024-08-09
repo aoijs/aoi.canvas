@@ -1,1 +1,1 @@
-{"version":3,"file":"resizeCanvas.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/resizeCanvas.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA2C,MAAM,eAAe,CAAC;;AAErF,wBA0CG"}
+{"version":3,"file":"resizeCanvas.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/resizeCanvas.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA2C,MAAM,QAAQ,CAAC;;AAE9E,wBA0CG"}

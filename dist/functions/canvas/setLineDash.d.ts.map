@@ -1,1 +1,1 @@
-{"version":3,"file":"setLineDash.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/setLineDash.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA2C,MAAM,eAAe,CAAC;;AAErF,wBAuCG"}
+{"version":3,"file":"setLineDash.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/setLineDash.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA2C,MAAM,QAAQ,CAAC;;AAE9E,wBAuCG"}

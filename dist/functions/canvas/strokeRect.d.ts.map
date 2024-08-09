@@ -1,1 +1,1 @@
-{"version":3,"file":"strokeRect.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/strokeRect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,WAAW,EAA4B,MAAM,eAAe,CAAC;;AAErF,wBA0EG"}
+{"version":3,"file":"strokeRect.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/strokeRect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,WAAW,EAA4B,MAAM,QAAQ,CAAC;;AAE9E,wBA0EG"}

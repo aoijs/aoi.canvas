@@ -1,4 +1,4 @@
-import { CanvasBuilder, CanvasManager, AoiFunction, FunctionContext, ParamType } from "../../classes";
+import { CanvasBuilder, CanvasManager, AoiFunction, FunctionContext, ParamType } from '../../';
 import { AttachmentBuilder } from "discord.js";
  
 export default new AoiFunction<"djs">({

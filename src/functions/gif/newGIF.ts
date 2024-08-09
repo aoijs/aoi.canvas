@@ -1,5 +1,5 @@
-import { GIFManager } from "../../classes";
-import { AoiFunction, ParamType } from "../../classes/function";
+import { GIFManager } from '../../';
+import { AoiFunction, ParamType } from '../../';
 const gifencoder = require("gif-encoder-2");
 
 export default new AoiFunction<"djs">({

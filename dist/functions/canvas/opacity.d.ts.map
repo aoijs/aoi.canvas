@@ -1,1 +1,1 @@
-{"version":3,"file":"opacity.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/opacity.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAqD,MAAM,eAAe,CAAC;;AAE/F,wBA2CG"}
+{"version":3,"file":"opacity.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/opacity.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAqD,MAAM,QAAQ,CAAC;;AAExF,wBA0CG"}

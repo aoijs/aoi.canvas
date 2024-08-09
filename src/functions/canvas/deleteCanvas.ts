@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasManager, ParamType } from "../../classes";
+import { AoiFunction, CanvasManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$deleteCanvas",

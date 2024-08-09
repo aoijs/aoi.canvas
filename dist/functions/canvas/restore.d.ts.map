@@ -1,1 +1,1 @@
-{"version":3,"file":"restore.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/restore.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA2C,MAAM,eAAe,CAAC;;AAErF,wBAgCG"}
+{"version":3,"file":"restore.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/restore.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA2C,MAAM,QAAQ,CAAC;;AAE9E,wBAgCG"}

@@ -1,4 +1,4 @@
-import { CanvasBuilder, CanvasManager, AoiFunction, ParamType } from "../../classes";
+import { CanvasBuilder, CanvasManager, AoiFunction, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$lineTo",
@@ -29,8 +29,8 @@ export default new AoiFunction<"djs">({
 
         const canvas = name 
             ? ctx.data.canvasManager?.get(name)?.ctx
-            : !name && ctx.data.canvas && ctx.data.canvas instanceof CanvasBuilder 
-                ? ctx.data.canvas.ctx : null;
+            : !name && ctx.data.canvas && ctx.data.canvas[ctx.data.canvas.length - 1] instanceof CanvasBuilder 
+                ? ctx.data.canvas[ctx.data.canvas.length - 1].ctx : null;
                 
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas.");

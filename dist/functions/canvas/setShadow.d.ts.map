@@ -1,1 +1,1 @@
-{"version":3,"file":"setShadow.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/setShadow.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAuD,MAAM,eAAe,CAAC;;AAEjG,wBAkDG"}
+{"version":3,"file":"setShadow.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/setShadow.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAuD,MAAM,QAAQ,CAAC;;AAE1F,wBAkDG"}

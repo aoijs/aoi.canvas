@@ -1,91 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CanvasBuilder = exports.fillRule = exports.textBaseline = exports.Filters = exports.WidthOrHeight = exports.GetOrSet = exports.GradientType = exports.FilterMethod = exports.MeasureTextProperty = exports.textAlign = void 0;
+exports.CanvasBuilder = void 0;
 const canvas_1 = require("@napi-rs/canvas");
 const util_1 = require("./util");
-// This code sucks, you know it and i know it.
-// Move on and call me an idiot later
-// Enums & Types
-var textAlign;
-(function (textAlign) {
-    textAlign["start"] = "end";
-    textAlign["right"] = "left";
-    textAlign["center"] = "center";
-    textAlign["left"] = "right";
-    textAlign["end"] = "start";
-})(textAlign || (exports.textAlign = textAlign = {}));
-;
-var MeasureTextProperty;
-(function (MeasureTextProperty) {
-    MeasureTextProperty[MeasureTextProperty["actualBoundingBoxAscent"] = 0] = "actualBoundingBoxAscent";
-    MeasureTextProperty[MeasureTextProperty["actualBoundingBoxDescent"] = 1] = "actualBoundingBoxDescent";
-    MeasureTextProperty[MeasureTextProperty["actualBoundingBoxLeft"] = 2] = "actualBoundingBoxLeft";
-    MeasureTextProperty[MeasureTextProperty["actualBoundingBoxRight"] = 3] = "actualBoundingBoxRight";
-    MeasureTextProperty[MeasureTextProperty["fontBoundingBoxAscent"] = 4] = "fontBoundingBoxAscent";
-    MeasureTextProperty[MeasureTextProperty["fontBoundingBoxDescent"] = 5] = "fontBoundingBoxDescent";
-    MeasureTextProperty[MeasureTextProperty["alphabeticBaseline"] = 6] = "alphabeticBaseline";
-    MeasureTextProperty[MeasureTextProperty["emHeightAscent"] = 7] = "emHeightAscent";
-    MeasureTextProperty[MeasureTextProperty["emHeightDescent"] = 8] = "emHeightDescent";
-    MeasureTextProperty[MeasureTextProperty["width"] = 9] = "width";
-})(MeasureTextProperty || (exports.MeasureTextProperty = MeasureTextProperty = {}));
-;
-var FilterMethod;
-(function (FilterMethod) {
-    FilterMethod[FilterMethod["add"] = 0] = "add";
-    FilterMethod[FilterMethod["set"] = 1] = "set";
-    FilterMethod[FilterMethod["remove"] = 2] = "remove";
-    FilterMethod[FilterMethod["clear"] = 3] = "clear";
-    FilterMethod[FilterMethod["get"] = 4] = "get";
-    FilterMethod[FilterMethod["parse"] = 5] = "parse";
-})(FilterMethod || (exports.FilterMethod = FilterMethod = {}));
-;
-var GradientType;
-(function (GradientType) {
-    GradientType[GradientType["linear"] = 0] = "linear";
-    GradientType[GradientType["radial"] = 1] = "radial";
-    GradientType[GradientType["conic"] = 2] = "conic";
-})(GradientType || (exports.GradientType = GradientType = {}));
-;
-var GetOrSet;
-(function (GetOrSet) {
-    GetOrSet[GetOrSet["get"] = 0] = "get";
-    GetOrSet[GetOrSet["set"] = 1] = "set";
-})(GetOrSet || (exports.GetOrSet = GetOrSet = {}));
-;
-var WidthOrHeight;
-(function (WidthOrHeight) {
-    WidthOrHeight[WidthOrHeight["width"] = 0] = "width";
-    WidthOrHeight[WidthOrHeight["height"] = 1] = "height";
-})(WidthOrHeight || (exports.WidthOrHeight = WidthOrHeight = {}));
-;
-var Filters;
-(function (Filters) {
-    Filters[Filters["none"] = 0] = "none";
-    Filters[Filters["blur"] = 1] = "blur";
-    Filters[Filters["sepia"] = 2] = "sepia";
-    Filters[Filters["grayscale"] = 3] = "grayscale";
-    Filters[Filters["brightness"] = 4] = "brightness";
-    Filters[Filters["contrast"] = 5] = "contrast";
-    Filters[Filters["invert"] = 6] = "invert";
-    Filters[Filters["saturate"] = 7] = "saturate";
-})(Filters || (exports.Filters = Filters = {}));
-;
-var textBaseline;
-(function (textBaseline) {
-    textBaseline[textBaseline["top"] = 0] = "top";
-    textBaseline[textBaseline["hanging"] = 1] = "hanging";
-    textBaseline[textBaseline["middle"] = 2] = "middle";
-    textBaseline[textBaseline["alphabetic"] = 3] = "alphabetic";
-    textBaseline[textBaseline["ideographic"] = 4] = "ideographic";
-    textBaseline[textBaseline["bottom"] = 5] = "bottom";
-})(textBaseline || (exports.textBaseline = textBaseline = {}));
-;
-var fillRule;
-(function (fillRule) {
-    fillRule[fillRule["nonzero"] = 0] = "nonzero";
-    fillRule[fillRule["evenodd"] = 1] = "evenodd";
-})(fillRule || (exports.fillRule = fillRule = {}));
-;
+const typings_1 = require("../typings");
 // Builder
 class CanvasBuilder {
     ctx;
@@ -242,25 +160,6 @@ class CanvasBuilder {
         ;
         ctx.clearRect(x, y, width, height);
     };
-    drawLines = (lines) => {
-        const ctx = this.ctx;
-        const drawlines = () => {
-            for (let line of lines) {
-                line = line?.trim();
-                const split = line?.split(":")?.map(x => !isNaN(parseFloat(x)) ? parseFloat(x) : 0);
-                const actions = {
-                    "bezier": () => ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]),
-                    "quadratic": () => ctx.quadraticCurveTo(split[1], split[2], split[3], split[4])
-                };
-                if (actions[line?.trim()?.toLowerCase()?.split(":")[0]])
-                    actions[line?.trim()?.toLowerCase()?.split(":")[0]]();
-                else
-                    ctx.lineTo(split[0], split[1]);
-            }
-            ;
-        };
-        drawlines();
-    };
     measureText = (text, font) => {
         const ctx = this.ctx;
         const oldcolor = ctx.fillStyle, oldfont = ctx.font;
@@ -274,35 +173,35 @@ class CanvasBuilder {
     filter = (method, filter, value) => {
         const ctx = this.ctx;
         if (filter && typeof filter === "string")
-            filter = Filters[filter];
-        if (method === FilterMethod.add) {
+            filter = typings_1.Filters[filter];
+        if (method === typings_1.FilterMethod.add) {
             if (!filter || !value)
                 return;
-            const PxOrPerc = filter === Filters.grayscale || filter === Filters.sepia ? "%" :
-                (filter === Filters.blur ? "px" : "");
-            ctx.filter = util_1.CanvasUtil.parseFilters((ctx.filter === "none" ? "" : ctx.filter) + `${Filters[filter]}(${value + PxOrPerc})`)?.map(x => x?.raw)?.join(" ")?.trim();
+            const PxOrPerc = filter === typings_1.Filters.grayscale || filter === typings_1.Filters.sepia ? "%" :
+                (filter === typings_1.Filters.blur ? "px" : "");
+            ctx.filter = util_1.CanvasUtil.parseFilters((ctx.filter === "none" ? "" : ctx.filter) + `${typings_1.Filters[filter]}(${value + PxOrPerc})`)?.map(x => x?.raw)?.join(" ")?.trim();
         }
-        else if (method === FilterMethod.set) {
+        else if (method === typings_1.FilterMethod.set) {
             if (!filter || !value)
                 return;
-            const PxOrPerc = filter === Filters.grayscale || filter === Filters.sepia ? "%" :
-                (filter === Filters.blur ? "px" : "");
-            ctx.filter = `${Filters[filter]}(${value + PxOrPerc})`;
+            const PxOrPerc = filter === typings_1.Filters.grayscale || filter === typings_1.Filters.sepia ? "%" :
+                (filter === typings_1.Filters.blur ? "px" : "");
+            ctx.filter = `${typings_1.Filters[filter]}(${value + PxOrPerc})`;
         }
-        else if (method === FilterMethod.remove) {
+        else if (method === typings_1.FilterMethod.remove) {
             if (!filter)
                 return;
             let filters = util_1.CanvasUtil.parseFilters(ctx.filter);
-            const index = filters.findIndex((obj) => obj?.filter === Filters[filter]);
+            const index = filters.findIndex((obj) => obj?.filter === typings_1.Filters[filter]);
             if (index !== -1)
                 filters.splice(index, 1);
             ctx.filter = filters.length > 0 ? filters?.map(x => x?.raw)?.join(" ")?.trim() : "none";
         }
-        else if (method === FilterMethod.clear)
+        else if (method === typings_1.FilterMethod.clear)
             ctx.filter = "none";
-        else if (method === FilterMethod.get)
+        else if (method === typings_1.FilterMethod.get)
             return ctx.filter;
-        else if (method === FilterMethod.parse)
+        else if (method === typings_1.FilterMethod.parse)
             return util_1.CanvasUtil.parseFilters(ctx.filter);
     };
     setShadow = (blur, color, offset) => {

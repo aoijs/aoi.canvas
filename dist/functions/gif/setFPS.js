@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
-exports.default = new classes_1.AoiFunction({
+const __1 = require("../../");
+exports.default = new __1.AoiFunction({
     name: "$setFPS",
     description: "Sets the FPS (Frames Per Second) of a GIF.",
     params: [
         {
             name: "gif",
             description: "Name of the GIF.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.gifManager && c.data.gifManager instanceof classes_1.GIFManager && c.data.gifManager.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.gifManager && c.data.gifManager instanceof __1.GIFManager && c.data.gifManager.get(v)),
             checkError: () => "No GIF with provided name found.",
             optional: true
         },
         {
             name: "frames",
             description: "Number of frames per second to display.",
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             optional: true
         }
     ],

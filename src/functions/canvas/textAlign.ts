@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, ParamType, textAlign } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, ParamType, textAlign } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$textAlign",

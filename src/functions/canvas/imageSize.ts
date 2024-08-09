@@ -1,5 +1,5 @@
 import { loadImage } from "@napi-rs/canvas";
-import { AoiFunction, Param, ParamType, WidthOrHeight } from "../../classes";
+import { AoiFunction, Param, ParamType, WidthOrHeight } from '../../';
 import { existsSync } from "node:fs";
 
 export default new AoiFunction<"djs">({
@@ -19,7 +19,6 @@ export default new AoiFunction<"djs">({
             name: "property",
             description: "The image size property to return.",
             type: ParamType.Enum,
-            typename: "\"width\" | \"height\"",
             enum: WidthOrHeight,
             optional: true
         }

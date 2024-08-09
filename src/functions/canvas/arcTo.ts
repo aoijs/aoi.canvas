@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$arcTo",
@@ -52,7 +52,7 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw a circular arc in.");
 
-        canvas.ctx.arcTo(x1, y2, x2, y2, radius);
+        canvas.ctx.arcTo(x1, y1, x2, y2, radius);
 
         return {
             code: ctx.util.setCode(data),

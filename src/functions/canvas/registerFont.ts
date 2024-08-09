@@ -1,5 +1,5 @@
 import { GlobalFonts } from "@napi-rs/canvas";
-import { AoiFunction, ParamType } from "../../classes";
+import { AoiFunction, ParamType } from '../../';
 import { existsSync, statSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 

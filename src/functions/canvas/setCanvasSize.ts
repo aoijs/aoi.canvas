@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$setCanvasSize",

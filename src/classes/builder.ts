@@ -1,37 +1,6 @@
-import { SKRSContext2D, createCanvas, loadImage, Image } from "@napi-rs/canvas";
-import { CanvasUtil } from "./util";
-
-// This code sucks, you know it and i know it.
-// Move on and call me an idiot later
-
-// Enums & Types
-export enum textAlign {
-    start = "end",
-    right = "left",
-    center = "center",
-    left = "right",
-    end = "start"
-};
-export enum MeasureTextProperty {
-  actualBoundingBoxAscent,
-  actualBoundingBoxDescent,
-  actualBoundingBoxLeft, 
-  actualBoundingBoxRight,
-  fontBoundingBoxAscent, 
-  fontBoundingBoxDescent,
-  alphabeticBaseline,
-  emHeightAscent,
-  emHeightDescent,
-  width
-};
-export enum FilterMethod { add, set, remove, clear, get, parse };
-export enum GradientType { linear, radial, conic };
-export enum GetOrSet { get, set };
-export enum WidthOrHeight { width, height };
-export enum Filters { none, blur, sepia, grayscale, brightness, contrast, invert, saturate };
-export enum textBaseline { top, hanging, middle, alphabetic, ideographic, bottom };
-export enum fillRule { nonzero, evenodd };
-export type RepeatType = "repeat" | "repeat-x" | "repeat-y" | "no-repeat" | null;
+import { SKRSContext2D, createCanvas, loadImage, Image } from '@napi-rs/canvas';
+import { CanvasUtil } from './util';
+import { FilterMethod, Filters } from '../typings';
 
 // Builder
 export class CanvasBuilder {
@@ -216,29 +185,6 @@ export class CanvasBuilder {
       ctx.clip();
     };
     ctx.clearRect(x, y, width, height);
-  };
-
-  public drawLines = (lines: string[]) => {
-    const ctx = this.ctx;
-
-    const drawlines = () => {
-      for (let line of lines) {
-        line = line?.trim();
-        const split = line?.split(":")?.map(x => !isNaN(parseFloat(x)) ? parseFloat(x) : 0);
-
-        const actions: Record<string, Function> = {
-          "bezier": () => ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]),
-          "quadratic": () => ctx.quadraticCurveTo(split[1], split[2], split[3], split[4])
-        };
-
-        if (actions[line?.trim()?.toLowerCase()?.split(":")[0]])
-          actions[line?.trim()?.toLowerCase()?.split(":")[0]]();
-        else
-          ctx.lineTo(split[0], split[1]);
-      };
-    };
-
-    drawlines();
   };
 
   public measureText = (text: string, font: string) => {

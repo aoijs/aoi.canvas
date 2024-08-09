@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, MeasureTextProperty, ParamType, WidthOrHeight } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, MeasureTextProperty, ParamType, WidthOrHeight } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$canvasSize",
@@ -46,38 +46,3 @@ export default new AoiFunction<"djs">({
         };
     }    
 });
-
-/*export default {
-    name: "$canvasSize",
-    code: async (d: AoiD) => {
-        let data = d.util.aoiFunc(d);
-        let [ canvas = "canvas", property = "width" ] = data.inside.splits;
-        property = property?.toLowerCase()?.trim();
-
-        if (!d.data.canvasManager || !(d.data.canvasManager instanceof CanvasManager))
-            return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
-
-        let canvs: any = d.data.canvasManager.get(canvas);
-
-        if (!canvs || !(canvs instanceof CanvasBuilder))
-            return d.aoiError.fnError(d, "custom", {}, `No canvas with provided name found.`);
-        canvs = canvs.ctx?.canvas;
-
-        const properties = {
-            width: canvs.width,
-            height: canvs.height,
-            json: JSON.stringify({ width: canvs.width, height: canvs.height }),
-            wxh: canvs.width + "x" + canvs.height
-        } as Record<string, any>;
-
-        if (!properties[property])
-            return d.aoiError.fnError(d, "custom", {}, `Invalid property.`);
-
-        data.result = properties[property];
-
-        return {
-            code: d.util.setCode(data),
-            data: d.data
-        };
-    }
-};*/

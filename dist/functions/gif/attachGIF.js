@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
+const __1 = require("../../");
 const discord_js_1 = require("discord.js");
-exports.default = new classes_1.AoiFunction({
+exports.default = new __1.AoiFunction({
     name: "$attachGIF",
     description: "Attaches the GIF.",
     params: [
         {
             name: "gif",
             description: "Name of the GIF.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.gifManager && c.data.gifManager instanceof classes_1.GIFManager && c.data.gifManager.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.gifManager && c.data.gifManager instanceof __1.GIFManager && c.data.gifManager.get(v)),
             checkError: () => "No GIF with provided name found.",
             optional: true
         },
         {
             name: "name",
             description: "The GIF attachment file name.",
-            type: classes_1.ParamType.String,
+            type: __1.ParamType.String,
             optional: true
         }
     ],

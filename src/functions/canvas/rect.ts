@@ -1,4 +1,4 @@
-import { CanvasManager, AoiFunction, ParamType, CanvasBuilder } from "../../classes";
+import { CanvasManager, AoiFunction, ParamType, CanvasBuilder } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$rect",

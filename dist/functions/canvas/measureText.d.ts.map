@@ -1,1 +1,1 @@
-{"version":3,"file":"measureText.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/measureText.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA4E,MAAM,eAAe,CAAC;;AAEtH,wBAqDG"}
+{"version":3,"file":"measureText.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/measureText.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAA4E,MAAM,QAAQ,CAAC;;AAE/G,wBAqDG"}

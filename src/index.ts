@@ -1,8 +1,6 @@
-import { AoiClient, Util, AoiError } from "aoi.js";
+import { AoiClient } from "aoi.js";
 import { readdirSync, existsSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
-import { AttachmentBuilder, BaseChannel, CommandInteraction } from "discord.js";
-import { CanvasBuilder, CanvasManager, GIFManager, GradientManager } from "./classes";
 import packagejson from "../package.json";
 import { AoiFunction } from "./classes/function";
 const gifencoder = require("gif-encoder-2");
@@ -45,25 +43,6 @@ const loadFuncs = (client: AoiClient, path: string) => {
     return "loaded";
 };
 
-export interface AoiD {
-    error: Function;
-    interpreter: Function;
-    client: AoiClient;
-    channel: BaseChannel;
-    aoiError: typeof AoiError;
-    data: {
-        canvasManager?: CanvasManager;
-        gifManager?: GIFManager;
-        gradients?: GradientManager;
-        canvas?: CanvasBuilder[];
-        gif?: typeof gifencoder[];
-        colorStops?: [number, string][];
-        interaction: CommandInteraction;
-    },
-    files: AttachmentBuilder[],
-    util: typeof Util
-}
-
 export class AoiCanvas {
     constructor (client: AoiClient) {
         loadFuncs(client, join(__dirname, "./functions")) === "loaded" ? 
@@ -89,3 +68,6 @@ export class AoiCanvas {
         };
     }
 };
+
+export * from './typings';
+export * from './classes';

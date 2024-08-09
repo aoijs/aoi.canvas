@@ -1,4 +1,4 @@
-import { CanvasBuilder, GradientType } from "./builder";
+import { CanvasBuilder, GradientType } from '../';
 declare const gifencoder: any;
 export declare class Manager<T extends any> {
     map: Map<string, T>;

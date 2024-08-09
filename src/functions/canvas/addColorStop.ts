@@ -1,4 +1,4 @@
-import { AoiFunction, GradientManager, ParamType } from "../../classes";
+import { AoiFunction, GradientManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$addColorStop",

@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, FilterMethod, Filters, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, FilterMethod, Filters, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$filter",
@@ -15,14 +15,12 @@ export default new AoiFunction<"djs">({
             name: "method",
             description: "Method.",
             type: ParamType.Enum,
-            typename: "\"add\" | \"set\" | \"remove\" | \"clear\" | \"get\" | \"parse\"",
             enum: FilterMethod
         },
         {
             name: "filter",
             description: "Name of the filter.",
             type: ParamType.Enum,
-            typename: "\"none\" | \"blur\" | \"sepia\" | \"grayscale\" | \"brightness\" | \"contrast\" | \"invert\" | \"saturate\"",
             enum: Filters,
             optional: true
         },

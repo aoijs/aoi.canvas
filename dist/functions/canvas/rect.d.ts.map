@@ -1,1 +1,1 @@
-{"version":3,"file":"rect.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/rect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,WAAW,EAA4B,MAAM,eAAe,CAAC;;AAErF,wBAkEG"}
+{"version":3,"file":"rect.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/rect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAiB,WAAW,EAA4B,MAAM,QAAQ,CAAC;;AAE9E,wBAkEG"}

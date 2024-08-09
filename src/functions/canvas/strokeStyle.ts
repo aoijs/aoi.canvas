@@ -1,5 +1,5 @@
 import { Image, loadImage } from "@napi-rs/canvas";
-import { AoiFunction, CanvasBuilder, CanvasManager, ParamType, RepeatType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, ParamType, RepeatType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$strokeStyle",

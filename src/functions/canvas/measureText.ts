@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, MeasureTextProperty, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, MeasureTextProperty, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$measureText",

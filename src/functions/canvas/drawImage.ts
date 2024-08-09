@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, Param, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, Param, ParamType } from '../../';
 import { existsSync } from "node:fs";
 
 export default new AoiFunction<"djs">({

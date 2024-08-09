@@ -1,26 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const canvas_1 = require("@napi-rs/canvas");
-const classes_1 = require("../../classes");
+const __1 = require("../../");
 const node_fs_1 = require("node:fs");
-exports.default = new classes_1.AoiFunction({
+exports.default = new __1.AoiFunction({
     name: "$imageSize",
     description: "Returns an image size.",
     params: [
         {
             name: "src",
             description: "Path or url to the image.",
-            check: async (v, c) => c.checkType(c, { type: classes_1.ParamType.Url }, v)
+            check: async (v, c) => c.checkType(c, { type: __1.ParamType.Url }, v)
                 || await (0, node_fs_1.existsSync)(v),
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             typename: "Path | URL"
         },
         {
             name: "property",
             description: "The image size property to return.",
-            type: classes_1.ParamType.Enum,
-            typename: "\"width\" | \"height\"",
-            enum: classes_1.WidthOrHeight,
+            type: __1.ParamType.Enum,
+            enum: __1.WidthOrHeight,
             optional: true
         }
     ],
@@ -33,7 +32,7 @@ exports.default = new classes_1.AoiFunction({
             height: image.height
         };
         data.result = property
-            ? result[typeof property === "number" ? classes_1.WidthOrHeight[property] : property]
+            ? result[typeof property === "number" ? __1.WidthOrHeight[property] : property]
             : JSON.stringify(result);
         return {
             code: ctx.util.setCode(data),

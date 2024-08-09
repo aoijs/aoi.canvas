@@ -1,4 +1,4 @@
-import { AoiFunction, GradientManager, GradientType, ParamType } from "../../classes";
+import { AoiFunction, GradientManager, GradientType, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$newLinearGradient",

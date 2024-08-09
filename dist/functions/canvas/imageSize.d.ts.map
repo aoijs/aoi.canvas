@@ -1,1 +1,1 @@
-{"version":3,"file":"imageSize.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/imageSize.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAmC,MAAM,eAAe,CAAC;;AAG7E,wBAyCG"}
+{"version":3,"file":"imageSize.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/imageSize.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAmC,MAAM,QAAQ,CAAC;;AAGtE,wBAwCG"}

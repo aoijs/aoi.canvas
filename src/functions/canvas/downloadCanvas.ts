@@ -1,6 +1,6 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$downloadCanvas",

@@ -1,8 +1,8 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
-    name: "$drawLines",
-    description: "Draws lines.",
+    name: "$scale",
+    description: "Adds a scaling transformation to the canvas units horizontally and/or vertically.",
     params: [
         {
             name: "canvas",
@@ -13,16 +13,19 @@ export default new AoiFunction<"djs">({
             optional: true
         },
         {
-            name: "lines",
-            description: "The lines to draw.",
-            type: ParamType.String,
-            typename: "Line | BezierCurve | QuadraticCurve",
-            rest: true
+            name: "x",
+            description: "Scaling factor in the horizontal direction. A value of 1 results in no horizontal scaling.",
+            type: ParamType.Number
+        },
+        {
+            name: "y",
+            description: "Scaling factor in the vertical direction. A value of 1 results in no vertical scaling.",
+            type: ParamType.Number
         }
     ],
     code: async (ctx): Promise<any> => {
         const data = ctx.util.aoiFunc(ctx);
-        const [ name, lines ] = ctx.params;
+        const [ name, x, y ] = ctx.params;
 
         const canvas = name 
             ? ctx.data.canvasManager?.get(name)
@@ -30,9 +33,9 @@ export default new AoiFunction<"djs">({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
 
         if (!canvas)
-            return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw lines on.");
+            return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas.");
 
-        await canvas.drawLines(lines);
+        await canvas.ctx.scale(x, y);
 
         return {
             code: ctx.util.setCode(data),

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
+const __1 = require("../../");
 const node_fs_1 = require("node:fs");
 const gifframes = require("gif-frames");
-exports.default = new classes_1.AoiFunction({
+exports.default = new __1.AoiFunction({
     name: "$getFrames",
     description: "Extracts frames from a gif.",
     params: [
         {
             name: "src",
             description: "The gif.",
-            type: classes_1.ParamType.String,
-            check: async (v, c) => c.checkType(c, { type: classes_1.ParamType.Url }, v)
+            type: __1.ParamType.String,
+            check: async (v, c) => c.checkType(c, { type: __1.ParamType.Url }, v)
                 || await (0, node_fs_1.existsSync)(v) || (v.startsWith("gif:")
-                && c.data.gifManager && c.data.canvasManager instanceof classes_1.GIFManager && c.data.gifManager.get(v.split("gif:").slice(1).join(":"))),
+                && c.data.gifManager && c.data.canvasManager instanceof __1.GIFManager && c.data.gifManager.get(v.split("gif:").slice(1).join(":"))),
             optional: true
         },
         {
             name: "amount",
             description: "The amount of frames to extract.",
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             check: (v) => v > 0,
             optional: true
         }
@@ -34,7 +34,7 @@ exports.default = new classes_1.AoiFunction({
             const data = x.getImage().data;
             const colors = [];
             for (let i = 0; i < data.length; i += 4) {
-                colors.push(classes_1.CanvasUtil.rgbaToHex(data[i] ?? 0, data[i + 1] ?? 0, data[i + 2] ?? 0, (data[i + 3] ?? 0) / 255));
+                colors.push(__1.CanvasUtil.rgbaToHex(data[i] ?? 0, data[i + 1] ?? 0, data[i + 2] ?? 0, (data[i + 3] ?? 0) / 255));
             }
             ;
             return colors;

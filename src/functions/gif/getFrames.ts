@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasUtil, GIFManager, Param, ParamType } from "../../classes";
+import { AoiFunction, CanvasUtil, GIFManager, Param, ParamType } from '../../';
 import { existsSync } from "node:fs";
 const gifframes = require("gif-frames");
 

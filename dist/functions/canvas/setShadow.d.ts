@@ -1,4 +1,4 @@
-import { AoiFunction } from "../../classes";
+import { AoiFunction } from '../../';
 declare const _default: AoiFunction<"djs">;
 export default _default;
 //# sourceMappingURL=setShadow.d.ts.map

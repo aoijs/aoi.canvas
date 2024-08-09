@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
-exports.default = new classes_1.AoiFunction({
+const __1 = require("../../");
+exports.default = new __1.AoiFunction({
     name: "$setLineDash",
     description: "Sets the line dash pattern used when stroking lines. It uses an array of values that specify alternating lengths of lines and gaps which describe the pattern.",
     params: [
         {
             name: "canvas",
             description: "Name of the canvas to set the line dash in.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.canvasManager && c.data.canvasManager instanceof classes_1.CanvasManager && c.data.canvasManager.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.canvasManager && c.data.canvasManager instanceof __1.CanvasManager && c.data.canvasManager.get(v)),
             checkError: () => "No canvas with provided name found.",
             optional: true
         },
         {
             name: "segments",
             description: "An array of numbers that specify distances to alternately draw a line and a gap (in coordinate space units).",
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             rest: true,
             optional: true
         }
@@ -26,7 +26,7 @@ exports.default = new classes_1.AoiFunction({
         let [name, segments] = ctx.params;
         const canvas = name
             ? ctx.data.canvasManager?.get(name)
-            : !name && ctx.data.canvas && ctx.data.canvas[ctx.data.canvas.length - 1] instanceof classes_1.CanvasBuilder
+            : !name && ctx.data.canvas && ctx.data.canvas[ctx.data.canvas.length - 1] instanceof __1.CanvasBuilder
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to set the line dash in.");

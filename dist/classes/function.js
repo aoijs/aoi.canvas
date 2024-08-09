@@ -1,27 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AoiFunction = exports.ParamType = void 0;
+exports.AoiFunction = void 0;
 const util_1 = require("./util");
 const discord_js_1 = require("discord.js");
-var ParamType;
-(function (ParamType) {
-    ParamType[ParamType["String"] = 0] = "String";
-    ParamType[ParamType["Number"] = 1] = "Number";
-    ParamType[ParamType["Boolean"] = 2] = "Boolean";
-    ParamType[ParamType["Url"] = 3] = "Url";
-    ParamType[ParamType["Enum"] = 4] = "Enum";
-    ParamType[ParamType["Color"] = 5] = "Color";
-    ParamType[ParamType["Object"] = 6] = "Object";
-    ParamType[ParamType["Array"] = 7] = "Array";
-    ParamType[ParamType["JSON"] = 8] = "JSON";
-    ParamType[ParamType["User"] = 9] = "User";
-    ParamType[ParamType["Guild"] = 10] = "Guild";
-    ParamType[ParamType["Channel"] = 11] = "Channel";
-    ParamType[ParamType["Permission"] = 12] = "Permission";
-})(ParamType || (exports.ParamType = ParamType = {}));
-;
-;
-;
+const typings_1 = require("../typings");
 const Colors = {
     White: "#ffffff",
     Aqua: "#1abc9c",
@@ -121,27 +103,28 @@ const checkType = async (d, param, value) => {
     const types = {
         "0": () => value,
         "1": () => !isNaN(parseFloat(value)) ? parseFloat(value) : null,
-        "2": () => ["true", "false"].includes(value.toLowerCase()) ? value.toLowerCase() === "true" : null,
-        "3": () => { try {
+        "2": () => Number.isInteger(parseFloat(value)) ? parseInt(value) : null,
+        "3": () => ["true", "false"].includes(value.toLowerCase()) ? value.toLowerCase() === "true" : null,
+        "4": () => { try {
             new URL(value);
             return value;
         }
         catch (e) {
             return undefined;
         } },
-        "4": () => param.enum ? param.enum[value] : undefined,
-        "5": () => /^#?([0-9A-Fa-f]{3,4}){1,2}$/.test(value) ? value
+        "5": () => param.enum ? param.enum[value] : undefined,
+        "6": () => /^#?([0-9A-Fa-f]{3,4}){1,2}$/.test(value) ? value
             : (rgbaRegex.test(value) ? (() => {
                 const match = value.match(rgbaRegex);
                 return util_1.CanvasUtil.rgbaToHex(parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3], 10), match[5] ? parseFloat(match[5]) : undefined);
             })() : Colors[value]),
-        "6": () => isJSON(value, (obj) => !Array.isArray(obj)),
-        "7": () => isJSON(value, (obj) => Array.isArray(obj)),
-        "8": () => isJSON(value),
-        "9": async () => await d.client.users.fetch(value).catch(() => null),
-        "10": async () => await d.client.guilds.fetch(value).catch((e) => null),
-        "11": async () => await d.client.channels.fetch(value).catch((e) => null),
-        "12": () => Permissions[value],
+        "7": () => isJSON(value, (obj) => !Array.isArray(obj)),
+        "8": () => isJSON(value, (obj) => Array.isArray(obj)),
+        "9": () => isJSON(value),
+        "10": async () => await d.client.users.fetch(value).catch(() => null),
+        "11": async () => await d.client.guilds.fetch(value).catch((e) => null),
+        "12": async () => await d.client.channels.fetch(value).catch((e) => null),
+        "13": () => Permissions[value],
     };
     return await types[`${param.type}`]();
 };
@@ -246,9 +229,12 @@ class AoiFunction {
                 return {
                     name: x.name,
                     description: x.description,
-                    type: x.typename ? x.typename : ParamType[x.type],
+                    type: x.typename
+                        ? x.typename
+                        : x.type === typings_1.ParamType.Enum && x.enum
+                            ? Object.values(x.enum).map(y => typeof y === 'string' ? `"${y}"` : y).join(' | ') : typings_1.ParamType[x.type],
                     required: x.optional !== undefined ? !x.optional : true,
-                    enum: x.type === ParamType.Enum && x.enum ? x.enum : undefined
+                    enum: x.type === typings_1.ParamType.Enum && x.enum ? x.enum : undefined
                 };
             }) : []),
             usage: `${name}` +

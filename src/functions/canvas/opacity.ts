@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, GetOrSet, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, GetOrSet, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$opacity",
@@ -15,7 +15,6 @@ export default new AoiFunction<"djs">({
             name: "method",
             description: "Method.",
             type: ParamType.Enum,
-            typename: "\"get\" | \"set\"",
             enum: GetOrSet
         },
         {

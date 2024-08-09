@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const canvas_1 = require("@napi-rs/canvas");
-const function_1 = require("../../classes/function");
-exports.default = new function_1.AoiFunction({
+const __1 = require("../../");
+exports.default = new __1.AoiFunction({
     name: "$fontFamilies",
     description: "Returns a list of fonts you can use.",
     params: [
         {
             name: "separator",
             description: "Font seperator.",
-            type: function_1.ParamType.String,
+            type: __1.ParamType.String,
             optional: true
         }
     ],

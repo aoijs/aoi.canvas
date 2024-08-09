@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
-exports.default = new classes_1.AoiFunction({
+const __1 = require("../../");
+exports.default = new __1.AoiFunction({
     name: "$deleteCanvas",
     description: "Deletes a canvas.",
     params: [
         {
             name: "canvas",
             description: "Name of the canvas to delete.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.canvasManager && c.data.canvasManager instanceof classes_1.CanvasManager && c.data.canvasManager.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.canvasManager && c.data.canvasManager instanceof __1.CanvasManager && c.data.canvasManager.get(v)),
             checkError: () => "No canvas with provided name found."
         }
     ],

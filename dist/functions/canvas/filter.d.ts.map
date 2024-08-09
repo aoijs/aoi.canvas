@@ -1,1 +1,1 @@
-{"version":3,"file":"filter.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/filter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAkE,MAAM,eAAe,CAAC;;AAE5G,wBA8DG"}
+{"version":3,"file":"filter.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/filter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAkE,MAAM,QAAQ,CAAC;;AAErG,wBA4DG"}

@@ -159,6 +159,57 @@
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/beginPath"
   },
   {
+    "name": "$bezierCurveTo",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "startX",
+        "description": "The X coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "startY",
+        "description": "The Y coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "middleX",
+        "description": "The X coordinate of the mid point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "middleY",
+        "description": "The Y coordinate of the mid point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endX",
+        "description": "The X coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endY",
+        "description": "The Y coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$bezierCurveTo[canvas?;startX;startY;middleX;middleY;endX;endY]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/bezierCurveTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/bezierCurveTo"
+  },
+  {
     "name": "$canvasSize",
     "params": [
       {
@@ -170,7 +221,7 @@
       {
         "name": "property",
         "description": "The size property to return.",
-        "type": "Enum",
+        "type": "\"width\" | \"height\" | 0 | 1",
         "required": false,
         "enum": {
           "0": "width",
@@ -257,7 +308,7 @@
       {
         "name": "rule",
         "description": "The fill rule.",
-        "type": "fillRule",
+        "type": "\"nonzero\" | \"evenodd\" | 0 | 1",
         "required": false,
         "enum": {
           "0": "nonzero",
@@ -286,6 +337,81 @@
     "category": "canvas",
     "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/closePath.ts",
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/closePath"
+  },
+  {
+    "name": "$compositeOperation",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "operation",
+        "description": "The new compositing operation.",
+        "type": "CompositingOperation",
+        "required": false,
+        "enum": {
+          "0": "source-over",
+          "1": "source-in",
+          "2": "source-out",
+          "3": "source-atop",
+          "4": "destination-over",
+          "5": "destination-in",
+          "6": "destination-out",
+          "7": "destination-atop",
+          "8": "lighter",
+          "9": "copy",
+          "10": "xor",
+          "11": "multiply",
+          "12": "screen",
+          "13": "overlay",
+          "14": "darken",
+          "15": "lighten",
+          "16": "color-dodge",
+          "17": "color-burn",
+          "18": "hard-light",
+          "19": "soft-light",
+          "20": "difference",
+          "21": "exclusion",
+          "22": "hue",
+          "23": "saturation",
+          "24": "color",
+          "25": "luminosity",
+          "source-over": 0,
+          "source-in": 1,
+          "source-out": 2,
+          "source-atop": 3,
+          "destination-over": 4,
+          "destination-in": 5,
+          "destination-out": 6,
+          "destination-atop": 7,
+          "lighter": 8,
+          "copy": 9,
+          "xor": 10,
+          "multiply": 11,
+          "screen": 12,
+          "overlay": 13,
+          "darken": 14,
+          "lighten": 15,
+          "color-dodge": 16,
+          "color-burn": 17,
+          "hard-light": 18,
+          "soft-light": 19,
+          "difference": 20,
+          "exclusion": 21,
+          "hue": 22,
+          "saturation": 23,
+          "color": 24,
+          "luminosity": 25
+        }
+      }
+    ],
+    "usage": "$compositeOperation[canvas?;operation?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/compositeOperation.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/compositeOperation"
   },
   {
     "name": "$deleteCanvas",
@@ -375,27 +501,6 @@
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/drawImage"
   },
   {
-    "name": "$drawLines",
-    "params": [
-      {
-        "name": "canvas",
-        "description": "Name of the canvas.",
-        "type": "String",
-        "required": false
-      },
-      {
-        "name": "lines",
-        "description": "The lines to draw.",
-        "type": "Line | BezierCurve | QuadraticCurve",
-        "required": true
-      }
-    ],
-    "usage": "$drawLines[canvas?;...lines]",
-    "category": "canvas",
-    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/drawLines.ts",
-    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/drawLines"
-  },
-  {
     "name": "$ellipse",
     "params": [
       {
@@ -470,7 +575,7 @@
       {
         "name": "rule",
         "description": "The fill rule.",
-        "type": "fillRule",
+        "type": "\"nonzero\" | \"evenodd\" | 0 | 1",
         "required": false,
         "enum": {
           "0": "nonzero",
@@ -626,7 +731,7 @@
       {
         "name": "method",
         "description": "Method.",
-        "type": "\"add\" | \"set\" | \"remove\" | \"clear\" | \"get\" | \"parse\"",
+        "type": "\"add\" | \"set\" | \"remove\" | \"clear\" | \"get\" | \"parse\" | 0 | 1 | 2 | 3 | 4 | 5",
         "required": true,
         "enum": {
           "0": "add",
@@ -646,7 +751,7 @@
       {
         "name": "filter",
         "description": "Name of the filter.",
-        "type": "\"none\" | \"blur\" | \"sepia\" | \"grayscale\" | \"brightness\" | \"contrast\" | \"invert\" | \"saturate\"",
+        "type": "\"none\" | \"blur\" | \"sepia\" | \"grayscale\" | \"brightness\" | \"contrast\" | \"invert\" | \"saturate\" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7",
         "required": false,
         "enum": {
           "0": "none",
@@ -760,7 +865,7 @@
       {
         "name": "property",
         "description": "The image size property to return.",
-        "type": "\"width\" | \"height\"",
+        "type": "\"width\" | \"height\" | 0 | 1",
         "required": false,
         "enum": {
           "0": "width",
@@ -795,6 +900,35 @@
     "category": "canvas",
     "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/letterSpacing.ts",
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/letterSpacing"
+  },
+  {
+    "name": "$lineJoin",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "shape",
+        "description": "The new shape.",
+        "type": "\"round\" | \"bevel\" | \"miter\" | 0 | 1 | 2",
+        "required": false,
+        "enum": {
+          "0": "round",
+          "1": "bevel",
+          "2": "miter",
+          "round": 0,
+          "bevel": 1,
+          "miter": 2
+        }
+      }
+    ],
+    "usage": "$lineJoin[canvas?;shape?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/lineJoin.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/lineJoin"
   },
   {
     "name": "$lineTo",
@@ -847,7 +981,7 @@
       {
         "name": "property",
         "description": "The result's property to return.",
-        "type": "Enum",
+        "type": "\"actualBoundingBoxAscent\" | \"actualBoundingBoxDescent\" | \"actualBoundingBoxLeft\" | \"actualBoundingBoxRight\" | \"fontBoundingBoxAscent\" | \"fontBoundingBoxDescent\" | \"alphabeticBaseline\" | \"emHeightAscent\" | \"emHeightDescent\" | \"width\" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9",
         "required": false,
         "enum": {
           "0": "actualBoundingBoxAscent",
@@ -1079,7 +1213,7 @@
       {
         "name": "method",
         "description": "Method.",
-        "type": "\"get\" | \"set\"",
+        "type": "\"get\" | \"set\" | 0 | 1",
         "required": true,
         "enum": {
           "0": "get",
@@ -1144,6 +1278,45 @@
     "category": "canvas",
     "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/putPixelsColors.ts",
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/putPixelsColors"
+  },
+  {
+    "name": "$quadraticCurveTo",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "startX",
+        "description": "The X coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "startY",
+        "description": "The Y coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endX",
+        "description": "The X coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endY",
+        "description": "The Y coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$quadraticCurveTo[canvas?;startX;startY;endX;endY]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/quadraticCurveTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/quadraticCurveTo"
   },
   {
     "name": "$rect",
@@ -1303,6 +1476,33 @@
     "category": "canvas",
     "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/save.ts",
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/save"
+  },
+  {
+    "name": "$scale",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "Scaling factor in the horizontal direction. A value of 1 results in no horizontal scaling.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "Scaling factor in the vertical direction. A value of 1 results in no vertical scaling.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$scale[canvas?;x;y]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/scale.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/scale"
   },
   {
     "name": "$setCanvasSize",
@@ -1604,7 +1804,7 @@
       {
         "name": "align",
         "description": "The text align.",
-        "type": "Enum",
+        "type": "\"end\" | \"left\" | \"center\" | \"right\" | \"start\"",
         "required": true,
         "enum": {
           "start": "end",
@@ -1632,7 +1832,7 @@
       {
         "name": "baseline",
         "description": "The text baseline.",
-        "type": "Enum",
+        "type": "\"top\" | \"hanging\" | \"middle\" | \"alphabetic\" | \"ideographic\" | \"bottom\" | 0 | 1 | 2 | 3 | 4 | 5",
         "required": true,
         "enum": {
           "0": "top",

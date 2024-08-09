@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GIFManager = exports.GradientManager = exports.CanvasManager = exports.Manager = void 0;
 const canvas_1 = require("@napi-rs/canvas");
-const builder_1 = require("./builder");
+const __1 = require("../");
 const gifencoder = require("gif-encoder-2");
 class Manager {
     map;
@@ -18,7 +18,7 @@ class Manager {
 exports.Manager = Manager;
 ;
 class CanvasManager extends Manager {
-    create = (name, width, height) => this.set(name, new builder_1.CanvasBuilder(width, height));
+    create = (name, width, height) => this.set(name, new __1.CanvasBuilder(width, height));
 }
 exports.CanvasManager = CanvasManager;
 ;
@@ -29,9 +29,9 @@ class GradientManager extends Manager {
         this.ctx = (0, canvas_1.createCanvas)(1, 1).getContext("2d");
     }
     ;
-    create = (name, type, options) => this.map.set(name, type === builder_1.GradientType.radial
+    create = (name, type, options) => this.map.set(name, type === __1.GradientType.radial
         ? this.ctx.createRadialGradient(...options)
-        : type === builder_1.GradientType.conic
+        : type === __1.GradientType.conic
             ? this.ctx.createConicGradient(...options)
             : this.ctx.createLinearGradient(...options));
 }

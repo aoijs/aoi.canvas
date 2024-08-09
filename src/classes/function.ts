@@ -1,52 +1,8 @@
-import { AoiClient } from "aoi.js";
-import { AoiD } from "..";
-import { CanvasUtil } from "./util";
-import { PermissionsBitField } from "discord.js";
-
-export enum ParamType {
-    String,
-    Number,
-    Boolean,
-    Url,
-    Enum,
-    Color,
-    Object,
-    Array,
-    JSON,
-    User,
-    Guild,
-    Channel,
-    Permission
-}
-export interface Param {
-    name: string;
-    description: string;
-    type: ParamType;
-    typename?: string;
-    check?: (value: any, ctx: FunctionContext) => boolean | undefined | null | Promise<boolean | undefined | null>;
-    checkError?: (value: any, ctx?: FunctionContext) => string;
-    enum?: { [i: string | number]: string | number };
-    rest?: boolean;
-    default?: (ctx: FunctionContext) => any;
-    optional?: boolean;
-}
-export interface FunctionDoc {
-    category?: string;
-    example?: string;
-    src?: string;
-    docs?: string;
-};
-export interface FunctionContext<T = any[]> extends AoiD {
-    params: T;
-    checkType: (d: AoiD, param: Param, value: string) => any;
-};
-export interface FunctionData<T extends "aoi.js" | "djs"> {
-    name: string;
-    description?: string;
-    docs?: FunctionDoc;
-    params?: Param[];
-    code: { "djs": (ctx: FunctionContext) => {}, "aoi.js": string }[T];
-};
+import { AoiClient } from 'aoi.js';
+import { AoiD } from '..';
+import { CanvasUtil } from './util';
+import { PermissionsBitField } from 'discord.js';
+import { FunctionContext, FunctionData, Param, ParamType } from '../typings';
 
 const Colors: Record<string, string> = {
     White: "#ffffff",
@@ -143,10 +99,11 @@ const checkType = async (d: AoiD, param: Param, value: string) => {
     const types = {
         "0": () => value,
         "1": () => !isNaN(parseFloat(value)) ? parseFloat(value) : null,
-        "2": () => ["true", "false"].includes(value.toLowerCase()) ? value.toLowerCase() === "true" : null,
-        "3": () => {try { new URL(value); return value } catch (e) { return undefined }},
-        "4": () => param.enum ? param.enum[value] : undefined,
-        "5": () => /^#?([0-9A-Fa-f]{3,4}){1,2}$/.test(value) ? value 
+        "2": () => Number.isInteger(parseFloat(value)) ? parseInt(value) : null,
+        "3": () => ["true", "false"].includes(value.toLowerCase()) ? value.toLowerCase() === "true" : null,
+        "4": () => {try { new URL(value); return value } catch (e) { return undefined }},
+        "5": () => param.enum ? param.enum[value] : undefined,
+        "6": () => /^#?([0-9A-Fa-f]{3,4}){1,2}$/.test(value) ? value 
             : (rgbaRegex.test(value) ? (() => {
                 const match = value.match(rgbaRegex) as RegExpMatchArray;
                 return CanvasUtil.rgbaToHex(
@@ -156,13 +113,13 @@ const checkType = async (d: AoiD, param: Param, value: string) => {
                     match[5] ? parseFloat(match[5]) : undefined
                 );
             })() : Colors[value]),
-        "6": () => isJSON(value, (obj: object)=> !Array.isArray(obj)),
-        "7": () => isJSON(value, (obj: object)=> Array.isArray(obj)),
-        "8": () => isJSON(value),
-        "9": async () => await d.client.users.fetch(value).catch(() => null),
-        "10": async () => await d.client.guilds.fetch(value).catch((e) => null),
-        "11": async () => await d.client.channels.fetch(value).catch((e) => null),
-        "12": () => Permissions[value],
+        "7": () => isJSON(value, (obj: object)=> !Array.isArray(obj)),
+        "8": () => isJSON(value, (obj: object)=> Array.isArray(obj)),
+        "9": () => isJSON(value),
+        "10": async () => await d.client.users.fetch(value).catch(() => null),
+        "11": async () => await d.client.guilds.fetch(value).catch((e) => null),
+        "12": async () => await d.client.channels.fetch(value).catch((e) => null),
+        "13": () => Permissions[value],
     };
 
     return await types[`${param.type}`]();
@@ -288,7 +245,12 @@ export class AoiFunction<T extends "aoi.js" | "djs"> {
             params: (params ? params?.map(x => { return {
                 name: x.name,
                 description: x.description,
-                type: x.typename ? x.typename : ParamType[x.type],
+                type: x.typename 
+                        ? x.typename 
+                        : x.type === ParamType.Enum && x.enum
+                            ? Object.values(x.enum).map(y => 
+                                typeof y === 'string' ? `"${y}"` : y
+                            ).join(' | '): ParamType[x.type],
                 required: x.optional !== undefined ? !x.optional : true,
                 enum: x.type === ParamType.Enum && x.enum ? x.enum : undefined
             }}) : []),

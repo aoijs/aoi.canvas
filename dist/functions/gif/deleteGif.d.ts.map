@@ -1,1 +1,1 @@
-{"version":3,"file":"deleteGif.d.ts","sourceRoot":"","sources":["../../../src/functions/gif/deleteGif.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAyB,MAAM,eAAe,CAAC;;AAEnE,wBAuBG"}
+{"version":3,"file":"deleteGif.d.ts","sourceRoot":"","sources":["../../../src/functions/gif/deleteGif.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAyB,MAAM,QAAQ,CAAC;;AAE5D,wBAuBG"}

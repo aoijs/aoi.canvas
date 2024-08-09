@@ -1,5 +1,5 @@
 import { GlobalFonts } from "@napi-rs/canvas";
-import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$strokeText",

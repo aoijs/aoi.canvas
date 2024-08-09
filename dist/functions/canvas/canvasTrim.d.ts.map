@@ -1,1 +1,1 @@
-{"version":3,"file":"canvasTrim.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/canvasTrim.ts"],"names":[],"mappings":"AAAA,OAAO,EAAgC,WAAW,EAAa,MAAM,eAAe,CAAC;;AAErF,wBAgCG"}
+{"version":3,"file":"canvasTrim.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/canvasTrim.ts"],"names":[],"mappings":"AAAA,OAAO,EAAgC,WAAW,EAAa,MAAM,QAAQ,CAAC;;AAE9E,wBAgCG"}

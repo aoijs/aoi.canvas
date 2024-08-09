@@ -1,4 +1,4 @@
-import { AoiFunction, GIFManager, ParamType } from "../../classes";
+import { AoiFunction, GIFManager, ParamType } from '../../';
 import { AttachmentBuilder } from "discord.js";
 
 export default new AoiFunction<"djs">({

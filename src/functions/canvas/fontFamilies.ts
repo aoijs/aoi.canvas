@@ -1,5 +1,5 @@
 import { GlobalFonts } from "@napi-rs/canvas";
-import { AoiFunction, ParamType } from "../../classes/function";
+import { AoiFunction, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$fontFamilies",

@@ -1,57 +1,57 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
+const __1 = require("../../");
 const node_fs_1 = require("node:fs");
-exports.default = new classes_1.AoiFunction({
+exports.default = new __1.AoiFunction({
     name: "$drawImage",
     description: "Draws an image on the canvas.",
     params: [
         {
             name: "canvas",
             description: "Name of the canvas.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.canvasManager && c.data.canvasManager instanceof classes_1.CanvasManager && c.data.canvasManager.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.canvasManager && c.data.canvasManager instanceof __1.CanvasManager && c.data.canvasManager.get(v)),
             checkError: () => "No canvas with provided name found.",
             optional: true
         },
         {
             name: "path",
             description: "Path or url to the image.",
-            type: classes_1.ParamType.String,
+            type: __1.ParamType.String,
             typename: "Path | URL | 'canvas:name'",
-            check: async (v, c) => c.checkType(c, { type: classes_1.ParamType.Url }, v)
+            check: async (v, c) => c.checkType(c, { type: __1.ParamType.Url }, v)
                 || await (0, node_fs_1.existsSync)(v)
                 || (v?.toLowerCase().startsWith('canvas:')
                     ? (c.data.canvasManager
-                        && c.data.canvasManager instanceof classes_1.CanvasManager
+                        && c.data.canvasManager instanceof __1.CanvasManager
                         && c.data.canvasManager.get(v.split(':').slice(1).join())) : undefined),
         },
         {
             name: "x",
             description: "The X coordinate of the image.",
-            type: classes_1.ParamType.Number
+            type: __1.ParamType.Number
         },
         {
             name: "y",
             description: "The Y coordinate of the image.",
-            type: classes_1.ParamType.Number
+            type: __1.ParamType.Number
         },
         {
             name: "width",
             description: "The image width.",
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             optional: true
         },
         {
             name: "height",
             description: "The image height.",
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             optional: true
         },
         {
             name: "radius",
             description: "The image corners radius.",
-            type: classes_1.ParamType.Number,
+            type: __1.ParamType.Number,
             check: (x) => x >= 0,
             checkError: () => "The radius must be positive.",
             rest: true,
@@ -63,7 +63,7 @@ exports.default = new classes_1.AoiFunction({
         let [name, path, x, y, width, height, radius] = ctx.params;
         const canvas = name
             ? ctx.data.canvasManager?.get(name)
-            : !name && ctx.data.canvas && ctx.data.canvas[ctx.data.canvas.length - 1] instanceof classes_1.CanvasBuilder
+            : !name && ctx.data.canvas && ctx.data.canvas[ctx.data.canvas.length - 1] instanceof __1.CanvasBuilder
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw an image on.");

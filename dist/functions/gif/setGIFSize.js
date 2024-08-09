@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const classes_1 = require("../../classes");
+const __1 = require("../../");
 const gifencoder = require("gif-encoder-2");
-exports.default = new classes_1.AoiFunction({
+exports.default = new __1.AoiFunction({
     name: "$setGIFSize",
     description: "Sets the size of the new GIF.",
     params: [
         {
             name: "width",
             description: "Width of the new GIF.",
-            type: classes_1.ParamType.Number
+            type: __1.ParamType.Number
         },
         {
             name: "height",
             description: "Height of the new GIF.",
-            type: classes_1.ParamType.Number
+            type: __1.ParamType.Number
         }
     ],
     code: async (ctx) => {

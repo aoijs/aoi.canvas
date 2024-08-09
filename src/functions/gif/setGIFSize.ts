@@ -1,4 +1,4 @@
-import { AoiFunction, ParamType } from "../../classes";
+import { AoiFunction, ParamType } from '../../';
 const gifencoder = require("gif-encoder-2");
 
 export default new AoiFunction<"djs">({

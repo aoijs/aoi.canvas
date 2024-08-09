@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, fillRule, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, fillRule, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$clip",
@@ -16,7 +16,6 @@ export default new AoiFunction<"djs">({
             name: "rule",
             description: "The fill rule.",
             type: ParamType.Enum,
-            typename: "fillRule",
             enum: fillRule,
             optional: true
         }

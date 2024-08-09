@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const canvas_1 = require("@napi-rs/canvas");
-const classes_1 = require("../../classes");
+const __1 = require("../../");
 const node_fs_1 = require("node:fs");
-exports.default = new classes_1.AoiFunction({
+exports.default = new __1.AoiFunction({
     name: "$addFrame",
     description: "Adds a frame to the GIF.",
     params: [
         {
             name: "gif",
             description: "Name of the GIF.",
-            type: classes_1.ParamType.String,
-            check: (v, c) => !!(c.data.gifManager && c.data.gifManager instanceof classes_1.GIFManager && c.data.gifManager.get(v)),
+            type: __1.ParamType.String,
+            check: (v, c) => !!(c.data.gifManager && c.data.gifManager instanceof __1.GIFManager && c.data.gifManager.get(v)),
             checkError: () => "No GIF with provided name found.",
             optional: true
         },
         {
             name: "frame",
             description: "The frame to add.",
-            type: classes_1.ParamType.String,
+            type: __1.ParamType.String,
             typename: "Path | URL | Canvas",
-            check: async (v, c) => c.checkType(c, { type: classes_1.ParamType.Url }, v)
+            check: async (v, c) => c.checkType(c, { type: __1.ParamType.Url }, v)
                 || await (0, node_fs_1.existsSync)(v) || (v.startsWith("canvas:")
-                && c.data.canvasManager && c.data.canvasManager instanceof classes_1.CanvasManager && c.data.canvasManager.get(v.split("canvas:").slice(1).join(":")))
+                && c.data.canvasManager && c.data.canvasManager instanceof __1.CanvasManager && c.data.canvasManager.get(v.split("canvas:").slice(1).join(":")))
         }
     ],
     code: async (ctx) => {

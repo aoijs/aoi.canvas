@@ -1,5 +1,5 @@
 import { createCanvas, loadImage } from "@napi-rs/canvas";
-import { AoiFunction, CanvasBuilder, CanvasManager, GIFManager, Param, ParamType } from "../../classes";
+import { AoiFunction, CanvasBuilder, CanvasManager, GIFManager, Param, ParamType } from '../../';
 import { existsSync } from "node:fs";
 
 export default new AoiFunction<"djs">({

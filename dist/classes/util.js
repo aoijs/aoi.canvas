@@ -1,21 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CanvasUtil = void 0;
+exports.CanvasUtil = exports.fontRegex = void 0;
 const canvas_1 = require("@napi-rs/canvas");
+exports.fontRegex = /^\s*(?=(?:(?:[-a-z]+\s*){0,2}(italic|oblique))?)(?=(?:(?:[-a-z]+\s*){0,2}(small-caps))?)(?=(?:(?:[-a-z]+\s*){0,2}(bold(?:er)?|lighter|[1-9]00))?)(?:(?:normal|\1|\2|\3)\s*){0,3}((?:xx?-)?(?:small|large)|medium|smaller|larger|[.\d]+(?:\%|in|[cem]m|ex|p[ctx]))(?:\s*\/\s*(normal|[.\d]+(?:\%|in|[cem]m|ex|p[ctx])))?\s*([-,\"\sa-z]+?)\s*$/i;
 class CanvasUtil {
     static isValidFont = (font) => {
         if (!font)
             return false;
-        const regex = /^\d+px\s(?:['"]?([^'"]+)['"]?|[^\s'"]+)$/;
-        if (regex.test(font)) {
-            const res = regex.exec(font);
-            if (res && res[1])
-                return canvas_1.GlobalFonts.has(res[1]);
-            else
-                return false;
-        }
-        else
+        if (exports.fontRegex.test(font)) {
+            const res = exports.fontRegex.exec(font);
+            if (res && res[0]) {
+                const families = res[6].split(',').map(x => x?.trim());
+                if (families) {
+                    for (const family of families) {
+                        if (!canvas_1.GlobalFonts.has(family.replace(/['",]/g, '')))
+                            return false;
+                    }
+                    ;
+                }
+                ;
+                return true;
+            }
+            ;
             return false;
+        }
+        ;
+        return false;
     };
     static parseFilters = (filters) => {
         const result = [];

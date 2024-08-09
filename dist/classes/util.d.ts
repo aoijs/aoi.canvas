@@ -1,3 +1,4 @@
+export declare const fontRegex: RegExp;
 export declare class CanvasUtil {
     static isValidFont: (font: string) => boolean;
     static parseFilters: (filters: string) => {

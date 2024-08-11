@@ -91,7 +91,6 @@ export enum MeasureTextProperty {
 };
 export enum FilterMethod { add, set, remove, clear, get, parse };
 export enum GradientType { linear, radial, conic };
-export enum GetOrSet { get, set };
 export enum WidthOrHeight { width, height };
 export enum Filters { none, blur, sepia, grayscale, brightness, contrast, invert, saturate };
 export enum textBaseline { top, hanging, middle, alphabetic, ideographic, bottom };

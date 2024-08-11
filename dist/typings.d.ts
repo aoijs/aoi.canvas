@@ -102,10 +102,6 @@ export declare enum GradientType {
     radial = 1,
     conic = 2
 }
-export declare enum GetOrSet {
-    get = 0,
-    set = 1
-}
 export declare enum WidthOrHeight {
     width = 0,
     height = 1

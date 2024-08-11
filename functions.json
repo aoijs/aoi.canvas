@@ -881,6 +881,27 @@
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/imageSize"
   },
   {
+    "name": "$imageSmoothing",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "enabled",
+        "description": "Determines whether scaled images are smoothed or not.",
+        "type": "Boolean",
+        "required": false
+      }
+    ],
+    "usage": "$imageSmoothing[canvas?;enabled?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/imageSmoothing.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/imageSmoothing"
+  },
+  {
     "name": "$letterSpacing",
     "params": [
       {
@@ -1211,25 +1232,13 @@
         "required": true
       },
       {
-        "name": "method",
-        "description": "Method.",
-        "type": "\"get\" | \"set\" | 0 | 1",
-        "required": true,
-        "enum": {
-          "0": "get",
-          "1": "set",
-          "get": 0,
-          "set": 1
-        }
-      },
-      {
         "name": "value",
         "description": "New value.",
         "type": "Percentages",
         "required": false
       }
     ],
-    "usage": "$opacity[canvas;method;value?]",
+    "usage": "$opacity[canvas;value?]",
     "category": "canvas",
     "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/opacity.ts",
     "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/opacity"

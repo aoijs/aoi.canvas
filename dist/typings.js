@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.compositingOperation = exports.lineJoinShape = exports.fillRule = exports.textBaseline = exports.Filters = exports.WidthOrHeight = exports.GetOrSet = exports.GradientType = exports.FilterMethod = exports.MeasureTextProperty = exports.textAlign = exports.ParamType = void 0;
+exports.compositingOperation = exports.lineJoinShape = exports.fillRule = exports.textBaseline = exports.Filters = exports.WidthOrHeight = exports.GradientType = exports.FilterMethod = exports.MeasureTextProperty = exports.textAlign = exports.ParamType = void 0;
 const gifencoder = require('gif-encoder-2');
 ;
 ;
@@ -65,12 +65,6 @@ var GradientType;
     GradientType[GradientType["radial"] = 1] = "radial";
     GradientType[GradientType["conic"] = 2] = "conic";
 })(GradientType || (exports.GradientType = GradientType = {}));
-;
-var GetOrSet;
-(function (GetOrSet) {
-    GetOrSet[GetOrSet["get"] = 0] = "get";
-    GetOrSet[GetOrSet["set"] = 1] = "set";
-})(GetOrSet || (exports.GetOrSet = GetOrSet = {}));
 ;
 var WidthOrHeight;
 (function (WidthOrHeight) {

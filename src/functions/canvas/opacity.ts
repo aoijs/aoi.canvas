@@ -1,4 +1,4 @@
-import { AoiFunction, CanvasBuilder, CanvasManager, GetOrSet, ParamType } from '../../';
+import { AoiFunction, CanvasBuilder, CanvasManager, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$opacity",
@@ -12,12 +12,6 @@ export default new AoiFunction<"djs">({
             checkError: () => "No canvas with provided name found."
         },
         {
-            name: "method",
-            description: "Method.",
-            type: ParamType.Enum,
-            enum: GetOrSet
-        },
-        {
             name: "value",
             description: "New value.",
             type: ParamType.Number,
@@ -28,14 +22,20 @@ export default new AoiFunction<"djs">({
     ],
     code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
-        const [ name, method, value = 100 ] = ctx.params;
+        const [ name, value ] = ctx.params;
 
-        const canvas = ctx.data.canvasManager?.get(name) as CanvasBuilder;
+        const canvas = name 
+            ? ctx.data.canvasManager?.get(name)?.ctx
+            : !name && ctx.data.canvas && ctx.data.canvas[ctx.data.canvas.length - 1] instanceof CanvasBuilder 
+                ? ctx.data.canvas[ctx.data.canvas.length - 1].ctx : null;
 
-        if (method === GetOrSet.get)
-            data.result = Math.round(canvas.ctx.globalAlpha * 100);
+        if (!canvas)
+            return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas.");
+
+        if ((value ?? null) !== null)
+            canvas.globalAlpha = value / 100;
         else
-            canvas.ctx.globalAlpha = value / 100;
+            data.result = Math.round(canvas.globalAlpha * 100);
 
         return {
             code: ctx.util.setCode(data),

@@ -40,7 +40,7 @@ export default new AoiFunction<"djs">({
             checkError: () => "The radius must be positive."
         },
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         const [ name, x1, y1, x2, y2, radius ] = ctx.params;
 

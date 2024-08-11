@@ -52,7 +52,7 @@ export default new AoiFunction<"djs">({
             optional: true
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         const [ name, x1, y1, r1, x2, y2, r2 ] = ctx.params;
 

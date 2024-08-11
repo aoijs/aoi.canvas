@@ -24,7 +24,7 @@ export default new AoiFunction<"djs">({
             type: ParamType.Color
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         const [ name, offset, color ] = ctx.params;
 

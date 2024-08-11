@@ -25,7 +25,7 @@ export default new AoiFunction<"djs">({
                     && c.data.canvasManager && c.data.canvasManager instanceof CanvasManager && c.data.canvasManager.get(v.split("canvas:").slice(1).join(":")))
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ name, frame ] = ctx.params;
 

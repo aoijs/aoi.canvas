@@ -38,7 +38,7 @@ export default new AoiFunction<"djs">({
             type: ParamType.Array
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ name, x, y, width, height, pixels ] = ctx.params;
 

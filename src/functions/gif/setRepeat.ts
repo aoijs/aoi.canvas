@@ -19,7 +19,7 @@ export default new AoiFunction<"djs">({
             check: (v) => v >= 0
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ name, loops ] = ctx.params;
 

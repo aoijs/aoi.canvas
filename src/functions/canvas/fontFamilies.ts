@@ -12,7 +12,7 @@ export default new AoiFunction<"djs">({
             optional: true
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
 
         data.result = GlobalFonts.families?.map(x => x.family)?.join(ctx.params[0] ?? ", ");

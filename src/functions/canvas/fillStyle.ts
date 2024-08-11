@@ -20,7 +20,7 @@ export default new AoiFunction<"djs">({
             typename: "Color | Gradient | Pattern"
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ name, style ] = ctx.params;
 

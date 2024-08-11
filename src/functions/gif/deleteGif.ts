@@ -13,7 +13,7 @@ export default new AoiFunction<"djs">({
             optional: true
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
 
         ctx.data.gifManager?.remove(ctx.params[0]);

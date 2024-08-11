@@ -12,7 +12,7 @@ export default new AoiFunction<"djs">({
             checkError: () => "No canvas with provided name found."
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
 
         ctx.data.canvasManager?.remove(ctx.params[0]);

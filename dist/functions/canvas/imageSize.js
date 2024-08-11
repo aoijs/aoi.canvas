@@ -12,7 +12,7 @@ exports.default = new __1.AoiFunction({
             description: "Path or url to the image.",
             check: async (v, c) => c.checkType(c, { type: __1.ParamType.Url }, v)
                 || await (0, node_fs_1.existsSync)(v),
-            type: __1.ParamType.Number,
+            type: __1.ParamType.String,
             typename: "Path | URL"
         },
         {

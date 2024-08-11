@@ -20,7 +20,7 @@ export default new AoiFunction<"djs">({
             optional: true
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ name, att ] = ctx.params;
 

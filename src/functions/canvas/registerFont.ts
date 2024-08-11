@@ -26,7 +26,7 @@ export default new AoiFunction<"djs">({
             optional: true
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ src, name ] = ctx.params;
         src = join(process.cwd(), src);

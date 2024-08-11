@@ -12,7 +12,7 @@ export default new AoiFunction<"djs">({
             check: async (v, c) => 
                 c.checkType(c, { type: ParamType.Url } as Param, v)
                 || await existsSync(v),
-            type: ParamType.Number,
+            type: ParamType.String,
             typename: "Path | URL"
         },
         {
@@ -23,7 +23,7 @@ export default new AoiFunction<"djs">({
             optional: true
         }
     ],
-    code: async (ctx): Promise<any> => {
+    code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ image, property ] = ctx.params;
         image = await loadImage(image, { maxRedirects: 30 });

@@ -1,4 +1,4 @@
-import { CanvasManager, AoiFunction, ParamType, CanvasBuilder } from '../../';
+import { CanvasManager, AoiFunction, ParamType, CanvasBuilder, FillOrStrokeOrClear } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$rect",
@@ -53,7 +53,8 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw an empty rectangle on.");
 
-        await canvas.ctx.roundRect(
+        await canvas.rect(
+            FillOrStrokeOrClear.none,
             x,
             y,
             width,

@@ -68,7 +68,7 @@ exports.default = new __1.AoiFunction({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw an image on.");
         if (path.toLowerCase().startsWith('canvas:'))
-            path = ctx.data.canvasManager?.get(path.split(':').slice(1).join())?.render();
+            path = ctx.data.canvasManager?.get(path.split(':').slice(1).join())?.buffer;
         await canvas.drawImage(path, x, y, width, height, radius);
         return {
             code: ctx.util.setCode(data),

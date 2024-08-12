@@ -1,1 +1,1 @@
-{"version":3,"file":"fillText.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/fillText.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAuD,MAAM,QAAQ,CAAC;;AAE1F,wBAyFG"}
+{"version":3,"file":"fillText.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/fillText.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAA4E,MAAM,QAAQ,CAAC;;AAE/G,wBA0FG"}

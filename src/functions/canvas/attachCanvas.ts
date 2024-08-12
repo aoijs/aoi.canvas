@@ -32,7 +32,7 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to attach.");
 
-        ctx.files.push(new AttachmentBuilder(canvas.render(), {
+        ctx.files.push(new AttachmentBuilder(canvas.buffer, {
             name: (att ?? "{canvas}.png")?.replace(/\{canvas\}/g, name ?? "canvas")
         }));
 

@@ -58,7 +58,7 @@ exports.default = new __1.AoiFunction({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw a stroked rectangle in.");
-        await canvas.strokeRect(x, y, width, height, strokeWidth, radius && radius.length === 1 ? radius[0] : radius);
+        await canvas.rect(__1.FillOrStrokeOrClear.stroke, x, y, width, height, strokeWidth, radius && radius.length === 1 ? radius[0] : radius);
         return {
             code: ctx.util.setCode(data),
             data: ctx.data

@@ -1,4 +1,4 @@
-import { CanvasBuilder, CanvasManager, AoiFunction, ParamType } from '../../';
+import { CanvasBuilder, CanvasManager, AoiFunction, ParamType, FillOrStrokeOrClear } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$clearRect",
@@ -53,7 +53,8 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas.");
 
-        await canvas.clearRect(
+        await canvas.rect(
+            FillOrStrokeOrClear.clear,
             x,
             y,
             width,

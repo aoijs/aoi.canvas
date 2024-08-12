@@ -1,199 +1,121 @@
 import { SKRSContext2D, createCanvas, loadImage, Image } from '@napi-rs/canvas';
-import { CanvasUtil } from './util';
-import { FilterMethod, Filters } from '../typings';
+import { CanvasUtil, fontRegex } from './util';
+import { FillOrStrokeOrClear, FilterMethod, Filters } from '../typings';
 
 // Builder
 export class CanvasBuilder {
   public ctx: SKRSContext2D;
   public util = CanvasUtil;
 
-  public constructor(width: number, height: number) {
-    this.ctx = createCanvas(width, height).getContext("2d");
+  public readonly width: number;
+  public readonly height: number;
+
+  constructor (width: number, height: number) {
+    this.ctx = createCanvas(width, height).getContext('2d');
+    this.width = width;
+    this.height = height;
   };
 
-  public drawImage = async (image: string | Buffer | Uint8Array | Image | ArrayBufferLike | URL, x: number, y: number, width?: number, height?: number, radius?: number | number[]) => {
+  rect (type: FillOrStrokeOrClear.none | FillOrStrokeOrClear.fill | FillOrStrokeOrClear, x: number, y: number, width?: number, height?: number, radius?: number | number[]): void;
+  rect (type: FillOrStrokeOrClear.stroke, x: number, y: number, width?: number, height?: number, lineWidth?: number, radius?: number | number[]): void;
+  public rect (type: FillOrStrokeOrClear, x: number, y: number, width?: number, height?: number, a?: number | number[], b?: number | number[]) {
+    const ctx = this.ctx;
+    width??= ctx.canvas.width;
+    height??= ctx.canvas.height;
+    
+    if (type === FillOrStrokeOrClear.none)
+      return ctx.roundRect(x, y, width, height, a);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(x, y, width, height, type !== FillOrStrokeOrClear.stroke ? a : b);
+    
+    ({
+      [FillOrStrokeOrClear.clear]: () => ctx.clearRect(x, y, width, height),
+      [FillOrStrokeOrClear.fill]: () => ctx.fill(),
+      [FillOrStrokeOrClear.stroke]: () => {
+        ctx.lineWidth = a as number;
+        ctx.stroke();
+      }
+    })[type]();
+
+    ctx.restore();
+  };
+
+  text(type: FillOrStrokeOrClear.fill, text: string, x: number, y: number, font: string, maxWidth?: number, multiline?: boolean, wrap?: boolean, lineOffset?: number): void;
+  text(type: FillOrStrokeOrClear.stroke, text: string, x: number, y: number, font: string, strokeWidth?: number, maxWidth?: number, multiline?: boolean, wrap?: boolean, lineOffset?: number): void;
+  public async text (type: Exclude<Exclude<FillOrStrokeOrClear, FillOrStrokeOrClear.clear>, FillOrStrokeOrClear.none>, text: string, x: number, y: number, font: string, a?: number, b?: number | boolean, c?: boolean, d?: boolean | number, e?: number) {
+    const ctx = this.ctx,
+          optional = [a,b,c,d,e],
+          [
+            strokeWidth,
+            maxWidth,
+            multiline,
+            wrap,
+            lineOffset
+          ] = (type === FillOrStrokeOrClear.fill ? [undefined, ...optional.slice(0, -1)] : optional) as [number?, number?, boolean?, boolean?, number?],
+          oldfont = ctx.font,
+          oldStrokeWidth = ctx.lineWidth,
+          fontsize = parseFloat((fontRegex.exec(font) as RegExpExecArray)[4]),
+          lines = multiline ? text.split('\n') : [text],
+          func = async (text: string, x: number, y: number, maxWidth?: number) =>
+            type === FillOrStrokeOrClear.fill 
+              ? await ctx.fillText(text, x, y, maxWidth)
+              : await ctx.strokeText(text, x, y, maxWidth);
+    let offset = y;
+
+    ctx.lineWidth = strokeWidth ?? oldStrokeWidth;
+    ctx.font = font;
+
+    if (multiline || wrap) {
+      lines.forEach(t => {
+        if (wrap) {
+          let line = '';
+          
+          t.split(' ').forEach((word, i) => {
+            if (maxWidth && ctx.measureText(line + word + ' ').width > maxWidth && i > 0) {
+              func(line, x, offset, maxWidth);
+              line = word + ' ';
+              offset += fontsize + (lineOffset ?? 0);
+            } else line += word + ' ';
+          });
+      
+          func(line, x, offset, maxWidth);
+          offset += fontsize + (lineOffset ?? 0);
+        } else {
+          func(t, x, offset, maxWidth);
+          offset += fontsize + (lineOffset ?? 0);
+        };
+      });
+    } else func(text, x, y, maxWidth);
+
+    ctx.lineWidth = oldStrokeWidth;
+    ctx.font = oldfont;
+  };
+
+  public async drawImage (image: string | Buffer | Uint8Array | Image | ArrayBufferLike | URL, x: number, y: number, width?: number, height?: number, radius?: number | number[]) {
+    const ctx = this.ctx;
     image = await loadImage(image, { maxRedirects: 30 });
     width??= image.width;
     height??= image.height;
 
-    const ctx = this.ctx;
-    
+    if (!radius)
+      return ctx.drawImage(image, x, y, width, height);
+
     ctx.save();
-    if (radius && !Array.isArray(radius) && radius > 0) {
-      ctx.beginPath();
-      ctx.moveTo(x + radius, y);
-      
-      ctx.arcTo(x + width, y, x + width, y + height, radius);
-      ctx.arcTo(x + width, y + height, x, y + height, radius);
-      ctx.arcTo(x, y + height, x, y, radius);
-      ctx.arcTo(x, y, x + width, y, radius);
-      
-      ctx.closePath();
-      ctx.clip();
-    } else if (radius && Array.isArray(radius)) {
-      const [ lTop = 0, rTop = 0, lBottom = 0, rBottom = 0 ] = radius;
-
-      ctx.beginPath();
-      ctx.moveTo(x + lTop, y);
-
-      ctx.arcTo(x + width, y, x + width, y + height, rTop);
-      ctx.arcTo(x + width, y + height, x, y + height, rBottom);
-      ctx.arcTo(x, y + height, x, y, lBottom);
-      ctx.arcTo(x, y, x + width, y, lTop);
-
-      ctx.closePath();
-      ctx.clip();
-    };
+    ctx.beginPath();
+    ctx.roundRect(x, y, width, height, radius);
+    ctx.clip();
     ctx.drawImage(image, x, y, width, height);
     ctx.restore();
   };
 
-  public fillText = (text: string, x: number, y: number, font: string, maxWidth?: number, multiline?: boolean, wrap?: boolean, lineOffset?: number) => {
-    let ctx = this.ctx,
-        oldfont = ctx.font,
-        fontsize = parseInt(font, 10),
-        lines = multiline ? text.split("\n") : [text],
-        offset = y;
-
-    ctx.font = font;
-    lines.forEach(t => {
-      if (wrap) {
-        let line = "";
-        
-        t.split(" ").forEach((word, i) => {
-          if (maxWidth && ctx.measureText(line + word + " ").width > maxWidth && i > 0) {
-            ctx.fillText(line, x, offset, maxWidth);
-            line = word + " ";
-            offset += fontsize + (lineOffset ?? 0);
-          } else line += word + " ";
-        });
-    
-        ctx.fillText(line, x, offset, maxWidth);
-        offset += fontsize + (lineOffset ?? 0);
-      } else {
-        ctx.fillText(t, x, offset, maxWidth);
-        offset += fontsize + (lineOffset ?? 0);
-      };
-    });
-
-    if (!multiline && !wrap)
-      ctx.fillText(text, x, y, maxWidth);
-    
-    ctx.font = oldfont;
-  };
-
-  public strokeText = (text: string, x: number, y: number, font: string, width?: number, maxWidth?: number, multiline?: boolean, wrap?: boolean, lineOffset?: number) => {
-    let ctx = this.ctx,
-        oldfont = ctx.font,
-        oldwidth = ctx.lineWidth,
-        fontsize = parseInt(font, 10),
-        lines = multiline ? text.split("\n") : [text],
-        offset = y;
-
-    ctx.font = font;
-    ctx.lineWidth = width ?? oldwidth;
-    lines.forEach(t => {
-      if (wrap) {
-        let line = "";
-
-        t.split(" ").forEach((word, i) => {
-          if (maxWidth && ctx.measureText(line + word + " ").width > maxWidth && i > 0) {
-            ctx.strokeText(line, x, offset, maxWidth);
-            line = word + " ";
-            offset += fontsize + (lineOffset ?? 0);
-          } else line += word + " ";
-        });
-    
-        ctx.strokeText(line, x, offset, maxWidth);
-        offset += fontsize + (lineOffset ?? 0);
-      } else {
-        ctx.strokeText(t, x, offset, maxWidth);
-        offset += fontsize + (lineOffset ?? 0);
-      };
-    });
-
-    if (!multiline && !wrap) 
-      ctx.strokeText(text, x, y, maxWidth);
-    
-    ctx.font = oldfont;
-    ctx.lineWidth = oldwidth;
-  };
-
-  public fillRect = (x: number, y: number, width?: number, height?: number, radius?: number | number[]) => {
-    const ctx = this.ctx;
-    width??= ctx.canvas.width;
-    height??= ctx.canvas.height;
-   
-    if (radius) {
-      ctx.beginPath();
-      ctx.roundRect(x, y, width, height, radius);
-      ctx.closePath();
-      ctx.fill();
-    } else
-      ctx.fillRect(x, y, width, height);
-  };
-
-  public strokeRect = (x: number, y: number, width?: number, height?: number, strokeWidth?: number, radius?: number | number[]) => {
-    const ctx = this.ctx;
-    width??= ctx.canvas.width;
-    height??= ctx.canvas.height;
-    
-    const oldwidth = ctx.lineWidth;
-
-    ctx.lineWidth = strokeWidth ?? 10;    
-    if (radius) {
-      ctx.beginPath();
-      ctx.roundRect(x, y, width, height, radius);
-      ctx.closePath();
-      ctx.stroke();
-    } else
-      ctx.strokeRect(x, y, width, height);
-
-    ctx.lineWidth = oldwidth;
-  };
-
-  public clearRect = (x: number, y: number, width?: number, height?: number, radius?: number[]) => {
-    const ctx = this.ctx;
-    width??= ctx.canvas.width;
-    height??= ctx.canvas.height;
-   
-    if (radius && !Array.isArray(radius) && radius > 0) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x + radius, y);
-      
-      ctx.arcTo(x + width, y, x + width, y + height, radius);
-      ctx.arcTo(x + width, y + height, x, y + height, radius);
-      ctx.arcTo(x, y + height, x, y, radius);
-      ctx.arcTo(x, y, x + width, y, radius);
-      
-      ctx.closePath();
-      ctx.clip();
-    } else if (radius && Array.isArray(radius)) {
-      const [ lTop = 0, rTop = 0, lBottom = 0, rBottom = 0 ] = radius;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x + lTop, y);
-
-      ctx.arcTo(x + width, y, x + width, y + height, rTop);
-      ctx.arcTo(x + width, y + height, x, y + height, rBottom);
-      ctx.arcTo(x, y + height, x, y, lBottom);
-      ctx.arcTo(x, y, x + width, y, lTop);
-
-      ctx.closePath();
-      ctx.clip();
-    };
-    ctx.clearRect(x, y, width, height);
-  };
-
-  public measureText = (text: string, font: string) => {
-    const ctx = this.ctx
-
-    const oldcolor = ctx.fillStyle,
+  public measureText (text: string, font: string) {
+    const ctx = this.ctx,
+          oldcolor = ctx.fillStyle,
           oldfont = ctx.font;
     
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = '#000000';
     ctx.font = font;
     
     const metrics = ctx.measureText(text);
@@ -204,27 +126,27 @@ export class CanvasBuilder {
     return metrics;
   };
 
-  public filter = (method: FilterMethod, filter?: Filters, value?: number) => {
+  public filter (method: FilterMethod, filter?: Filters, value?: number) {
     const ctx = this.ctx;
 
-    if (filter && typeof filter === "string")
+    if (filter && typeof filter === 'string')
       filter = Filters[filter] as unknown as Filters;
 
     if (method === FilterMethod.add) {
       if (!filter || !value) return;
 
       const PxOrPerc =
-          filter === Filters.grayscale || filter === Filters.sepia ? "%" : 
-            (filter === Filters.blur ? "px" : "");
+          filter === Filters.grayscale || filter === Filters.sepia ? '%' : 
+            (filter === Filters.blur ? 'px' : '');
 
-      ctx.filter = CanvasUtil.parseFilters((ctx.filter === "none" ? "" : ctx.filter) + `${Filters[filter]}(${value + PxOrPerc})`)?.map(x => x?.raw)?.join(" ")?.trim()
+      ctx.filter = CanvasUtil.parseFilters((ctx.filter === 'none' ? '' : ctx.filter) + `${Filters[filter]}(${value + PxOrPerc})`)?.map(x => x?.raw)?.join(' ')?.trim()
     }
     else if (method === FilterMethod.set) {
       if (!filter || !value) return;
 
       const PxOrPerc =
-          filter === Filters.grayscale || filter === Filters.sepia ? "%" : 
-            (filter === Filters.blur ? "px" : "");
+          filter === Filters.grayscale || filter === Filters.sepia ? '%' : 
+            (filter === Filters.blur ? 'px' : '');
 
       ctx.filter = `${Filters[filter]}(${value + PxOrPerc})`
     }
@@ -238,17 +160,17 @@ export class CanvasBuilder {
       if (index !== -1)
         filters.splice(index, 1);
 
-      ctx.filter = filters.length > 0 ? filters?.map(x => x?.raw)?.join(" ")?.trim() : "none"
+      ctx.filter = filters.length > 0 ? filters?.map(x => x?.raw)?.join(' ')?.trim() : 'none'
     }
     else if (method === FilterMethod.clear)
-      ctx.filter = "none";
+      ctx.filter = 'none';
     else if (method === FilterMethod.get)
       return ctx.filter;
     else if (method === FilterMethod.parse)
       return CanvasUtil.parseFilters(ctx.filter);
   };
 
-  public setShadow = (blur: number, color: string, offset?: number | number[]) => {
+  public setShadow (blur: number, color: string, offset?: number | number[]) {
     const ctx = this.ctx;
 
     ctx.shadowBlur = blur;
@@ -265,7 +187,7 @@ export class CanvasBuilder {
     };
   };
 
-  public rotate = (angle: number) => {
+  public rotate (angle: number) {
     const ctx = this.ctx;
 
     const centerX = ctx.canvas.width / 2;
@@ -276,7 +198,7 @@ export class CanvasBuilder {
     ctx.translate(-centerX, -centerY);
   };
 
-  public trim = () => {
+  public trim () {
     let ctx = this.ctx,
         canvas = ctx.canvas,
         pixels = ctx.getImageData(0, 0, canvas.width, canvas.height),
@@ -313,7 +235,7 @@ export class CanvasBuilder {
     ctx.putImageData(trimmed, 0, 0);
   };
 
-  public getPixelColors = async (x: number, y: number, width: number, height: number) => {
+  public getPixelColors (x: number, y: number, width: number, height: number) {
     const ctx = this.ctx;
     width??= ctx.canvas.width;
     height??= ctx.canvas.height;
@@ -333,7 +255,7 @@ export class CanvasBuilder {
     return colors;
   };
 
-  public setPixelsColors = async (x: number, y: number, width: number, height: number, colors: string[]) => {
+  public setPixelsColors (x: number, y: number, width: number, height: number, colors: string[]) {
     const ctx = this.ctx;
     width??= ctx.canvas.width;
     height??= ctx.canvas.height;
@@ -350,10 +272,10 @@ export class CanvasBuilder {
       data.data[i + 3] = colors.alpha ?? 255;
     });
     
-    await ctx.putImageData(data, x, y);
+    ctx.putImageData(data, x, y);
   };
 
-  public resize = async (width: number, height: number) => {
+  public resize (width: number, height: number) {
     const ctx = this.ctx,
           data = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -362,5 +284,5 @@ export class CanvasBuilder {
     ctx.putImageData(data, 0, 0);
   };
 
-  public render = () => this.ctx.canvas.toBuffer("image/png");
+  public get buffer () { return this.ctx.canvas.toBuffer('image/png') };
 };

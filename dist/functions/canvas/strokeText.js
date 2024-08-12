@@ -77,7 +77,7 @@ exports.default = new __1.AoiFunction({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw a circular arc in.");
-        canvas.strokeText(text, x, y, font, width, maxWidth, multiline, wrap, offset);
+        canvas.text(__1.FillOrStrokeOrClear.stroke, text, x, y, font, width, maxWidth, multiline, wrap, offset);
         return {
             code: ctx.util.setCode(data),
             data: ctx.data

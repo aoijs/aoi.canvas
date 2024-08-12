@@ -1,5 +1,5 @@
 import { GlobalFonts } from "@napi-rs/canvas";
-import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, ParamType } from '../../';
+import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, FillOrStrokeOrClear, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$strokeText",
@@ -79,7 +79,8 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw a circular arc in.");
 
-        canvas.strokeText(
+        canvas.text(
+            FillOrStrokeOrClear.stroke,
             text,
             x,
             y,

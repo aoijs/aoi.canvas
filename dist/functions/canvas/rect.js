@@ -51,7 +51,7 @@ exports.default = new __1.AoiFunction({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw an empty rectangle on.");
-        await canvas.ctx.roundRect(x, y, width, height, radius && radius.length === 1 ? radius[0] : radius);
+        await canvas.rect(__1.FillOrStrokeOrClear.none, x, y, width, height, radius && radius.length === 1 ? radius[0] : radius);
         return {
             code: ctx.util.setCode(data),
             data: ctx.data

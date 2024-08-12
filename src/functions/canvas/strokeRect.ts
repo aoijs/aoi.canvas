@@ -1,4 +1,4 @@
-import { CanvasManager, AoiFunction, ParamType, CanvasBuilder } from '../../';
+import { CanvasManager, AoiFunction, ParamType, CanvasBuilder, FillOrStrokeOrClear } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$strokeRect",
@@ -60,7 +60,8 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw a stroked rectangle in.");
 
-        await canvas.strokeRect(
+        await canvas.rect(
+            FillOrStrokeOrClear.stroke,
             x,
             y,
             width,

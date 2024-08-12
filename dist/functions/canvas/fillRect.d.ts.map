@@ -1,1 +1,1 @@
-{"version":3,"file":"fillRect.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/fillRect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAgC,WAAW,EAAa,MAAM,QAAQ,CAAC;;AAE9E,wBAkEG"}
+{"version":3,"file":"fillRect.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/fillRect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAgC,WAAW,EAAkC,MAAM,QAAQ,CAAC;;AAEnG,wBAmEG"}

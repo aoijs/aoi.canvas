@@ -33,7 +33,7 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to download.");
 
-        await writeFileSync(join(process.cwd(), path?.replace(/{canvas}/g, canvas)), canvas.render());
+        await writeFileSync(join(process.cwd(), path?.replace(/{canvas}/g, canvas)), canvas.buffer);
 
         return {
             code: ctx.util.setCode(data),

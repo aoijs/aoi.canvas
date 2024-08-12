@@ -1,1 +1,1 @@
-{"version":3,"file":"strokeText.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/strokeText.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAuD,MAAM,QAAQ,CAAC;;AAE1F,wBA+FG"}
+{"version":3,"file":"strokeText.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/strokeText.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAA4E,MAAM,QAAQ,CAAC;;AAE/G,wBAgGG"}

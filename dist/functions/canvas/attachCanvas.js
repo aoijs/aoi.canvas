@@ -30,7 +30,7 @@ exports.default = new __1.AoiFunction({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to attach.");
-        ctx.files.push(new discord_js_1.AttachmentBuilder(canvas.render(), {
+        ctx.files.push(new discord_js_1.AttachmentBuilder(canvas.buffer, {
             name: (att ?? "{canvas}.png")?.replace(/\{canvas\}/g, name ?? "canvas")
         }));
         return {

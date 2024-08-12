@@ -31,7 +31,7 @@ exports.default = new __1.AoiFunction({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to download.");
-        await (0, node_fs_1.writeFileSync)((0, node_path_1.join)(process.cwd(), path?.replace(/{canvas}/g, canvas)), canvas.render());
+        await (0, node_fs_1.writeFileSync)((0, node_path_1.join)(process.cwd(), path?.replace(/{canvas}/g, canvas)), canvas.buffer);
         return {
             code: ctx.util.setCode(data),
             data: ctx.data

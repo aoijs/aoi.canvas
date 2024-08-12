@@ -1,5 +1,5 @@
 import { GlobalFonts } from "@napi-rs/canvas";
-import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, ParamType } from '../../';
+import { AoiFunction, CanvasBuilder, CanvasManager, CanvasUtil, FillOrStrokeOrClear, ParamType } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$fillText",
@@ -74,7 +74,8 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw text on.");
 
-        await canvas.fillText(
+        await canvas.text(
+            FillOrStrokeOrClear.fill,
             text,
             x,
             y,

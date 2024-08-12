@@ -102,6 +102,12 @@ export declare enum GradientType {
     radial = 1,
     conic = 2
 }
+export declare enum FillOrStrokeOrClear {
+    none = 0,
+    fill = 1,
+    stroke = 2,
+    clear = 3
+}
 export declare enum WidthOrHeight {
     width = 0,
     height = 1

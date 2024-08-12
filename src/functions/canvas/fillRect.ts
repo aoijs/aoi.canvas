@@ -1,4 +1,4 @@
-import { CanvasBuilder, CanvasManager, AoiFunction, ParamType } from '../../';
+import { CanvasBuilder, CanvasManager, AoiFunction, ParamType, FillOrStrokeOrClear } from '../../';
 
 export default new AoiFunction<"djs">({
     name: "$fillRect",
@@ -53,7 +53,8 @@ export default new AoiFunction<"djs">({
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw a filled rectangle on.");
 
-        await canvas.fillRect(
+        await canvas.rect(
+            FillOrStrokeOrClear.fill,
             x,
             y,
             width,

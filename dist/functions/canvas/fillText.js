@@ -72,7 +72,7 @@ exports.default = new __1.AoiFunction({
                 ? ctx.data.canvas[ctx.data.canvas.length - 1] : null;
         if (!canvas)
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw text on.");
-        await canvas.fillText(text, x, y, font, maxWidth, multiline, wrap, offset ?? 0);
+        await canvas.text(__1.FillOrStrokeOrClear.fill, text, x, y, font, maxWidth, multiline, wrap, offset ?? 0);
         return {
             code: ctx.util.setCode(data),
             data: ctx.data

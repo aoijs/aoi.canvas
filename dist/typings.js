@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.compositingOperation = exports.lineJoinShape = exports.fillRule = exports.textBaseline = exports.Filters = exports.WidthOrHeight = exports.GradientType = exports.FilterMethod = exports.MeasureTextProperty = exports.textAlign = exports.ParamType = void 0;
+exports.compositingOperation = exports.lineJoinShape = exports.fillRule = exports.textBaseline = exports.Filters = exports.WidthOrHeight = exports.FillOrStrokeOrClear = exports.GradientType = exports.FilterMethod = exports.MeasureTextProperty = exports.textAlign = exports.ParamType = void 0;
 const gifencoder = require('gif-encoder-2');
 ;
 ;
@@ -65,6 +65,14 @@ var GradientType;
     GradientType[GradientType["radial"] = 1] = "radial";
     GradientType[GradientType["conic"] = 2] = "conic";
 })(GradientType || (exports.GradientType = GradientType = {}));
+;
+var FillOrStrokeOrClear;
+(function (FillOrStrokeOrClear) {
+    FillOrStrokeOrClear[FillOrStrokeOrClear["none"] = 0] = "none";
+    FillOrStrokeOrClear[FillOrStrokeOrClear["fill"] = 1] = "fill";
+    FillOrStrokeOrClear[FillOrStrokeOrClear["stroke"] = 2] = "stroke";
+    FillOrStrokeOrClear[FillOrStrokeOrClear["clear"] = 3] = "clear";
+})(FillOrStrokeOrClear || (exports.FillOrStrokeOrClear = FillOrStrokeOrClear = {}));
 ;
 var WidthOrHeight;
 (function (WidthOrHeight) {

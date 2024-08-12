@@ -73,7 +73,7 @@ export default new AoiFunction<"djs">({
             return ctx.aoiError.fnError(ctx, "custom", {}, "No canvas to draw an image on.");
 
         if (path.toLowerCase().startsWith('canvas:'))
-            path = ctx.data.canvasManager?.get(path.split(':').slice(1).join())?.render() as Buffer;
+            path = ctx.data.canvasManager?.get(path.split(':').slice(1).join())?.buffer as Buffer;
 
         await canvas.drawImage(path, x, y, width, height, radius);
 

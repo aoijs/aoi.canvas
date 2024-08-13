@@ -1,7 +1,7 @@
 {
-  "name": "@aoijs/aoi.canvas",
-  "version": "2.0.0",
-  "description": "aoi.canvas - Create and edit images in aoi.js with ease.",
+  "name": "aoi.canvas",
+  "version": "2.0.7",
+  "description": "Aoi.canvas - Create and edit images in aoi.js with ease.",
   "main": "dist/index.js",
   "keywords": [
     "canvas",
@@ -13,27 +13,17 @@
     "dbd.ts",
     "bdfd.js",
     "@napi-rs/canvas",
-    "image",
-    "gif",
-    "aoi.gif",
-    "aoi.canvas"
+    "image"
   ],
   "author": "lordex",
-  "homepage": "https://aoi.js.org/extensions/aoijs/aoicanvas",
+  "homepage": "https://canvas.aoijs.org/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aoijs/aoi.canvas.git"
+    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
   },
   "license": "MIT",
-  "scripts": {
-    "test": "tsc && echo Done compiling! && node dist/__tests__",
-    "api-gen": "tsc && echo Done compiling! && node api-gen.js && echo API file generated/updated.",
-    "publish": "tsc && echo Done compiling! && node api-gen.js && echo API file generated/updated. && npm publish"
-  },
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.44",
-    "gif-encoder-2": "^1.0.5",
-    "gif-frames": "^1.0.1"
+    "@napi-rs/canvas": "^0.1.44"
   },
   "devDependencies": {
     "aoi.js": "^6.7.1",

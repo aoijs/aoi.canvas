@@ -19,10 +19,10 @@
     "aoi.canvas"
   ],
   "author": "lordex",
-  "homepage": "https://canvas.aoijs.org/",
+  "homepage": "https://aoi.js.org/extensions/aoijs/aoicanvas",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LordexDuck3990/aoi.canvas.git"
+    "url": "git+https://github.com/aoijs/aoi.canvas.git"
   },
   "license": "MIT",
   "scripts": {

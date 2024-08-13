@@ -1,6 +1,7 @@
 [
   {
     "name": "$addColorStop",
+    "description": "Adds a color stop to the gradient.",
     "params": [
       {
         "name": "gradient",
@@ -28,6 +29,7 @@
   },
   {
     "name": "$arc",
+    "description": "Draws a circular arc in the current path.",
     "params": [
       {
         "name": "canvas",
@@ -79,6 +81,7 @@
   },
   {
     "name": "$arcTo",
+    "description": "Adds a circular arc to the current path.",
     "params": [
       {
         "name": "canvas",
@@ -124,6 +127,7 @@
   },
   {
     "name": "$attachCanvas",
+    "description": "Attaches the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -145,6 +149,7 @@
   },
   {
     "name": "$beginPath",
+    "description": "Starts a new path by emptying the list of paths.",
     "params": [
       {
         "name": "canvas",
@@ -160,6 +165,7 @@
   },
   {
     "name": "$bezierCurveTo",
+    "description": "Adds a cubic bezier curve to the currect path.",
     "params": [
       {
         "name": "canvas",
@@ -211,6 +217,7 @@
   },
   {
     "name": "$canvasSize",
+    "description": "Returns the canvas size.",
     "params": [
       {
         "name": "canvas",
@@ -238,6 +245,7 @@
   },
   {
     "name": "$canvasTrim",
+    "description": "Trims the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -253,6 +261,7 @@
   },
   {
     "name": "$clearRect",
+    "description": "Erases pixels in a rect area.",
     "params": [
       {
         "name": "canvas",
@@ -298,6 +307,7 @@
   },
   {
     "name": "$clip",
+    "description": "Turns the current path into the current clipping region.",
     "params": [
       {
         "name": "canvas",
@@ -325,6 +335,7 @@
   },
   {
     "name": "$closePath",
+    "description": "Adds a straight line from the current point to the start of the current path.",
     "params": [
       {
         "name": "canvas",
@@ -340,6 +351,7 @@
   },
   {
     "name": "$compositeOperation",
+    "description": "Sets the type of compositing operation to apply when drawing new shapes.",
     "params": [
       {
         "name": "canvas",
@@ -415,6 +427,7 @@
   },
   {
     "name": "$deleteCanvas",
+    "description": "Deletes a canvas.",
     "params": [
       {
         "name": "canvas",
@@ -430,6 +443,7 @@
   },
   {
     "name": "$downloadCanvas",
+    "description": "Downloads the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -451,6 +465,7 @@
   },
   {
     "name": "$drawImage",
+    "description": "Draws an image on the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -502,6 +517,7 @@
   },
   {
     "name": "$ellipse",
+    "description": "Adds an elliptical arc to the current path.",
     "params": [
       {
         "name": "canvas",
@@ -565,6 +581,7 @@
   },
   {
     "name": "$fill",
+    "description": "Fills the current path.",
     "params": [
       {
         "name": "canvas",
@@ -592,6 +609,7 @@
   },
   {
     "name": "$fillRect",
+    "description": "Draws a filled rectangle.",
     "params": [
       {
         "name": "canvas",
@@ -637,6 +655,7 @@
   },
   {
     "name": "$fillStyle",
+    "description": "Sets the fill style in a canvas.",
     "params": [
       {
         "name": "canvas",
@@ -658,6 +677,7 @@
   },
   {
     "name": "$fillText",
+    "description": "Draws a text.",
     "params": [
       {
         "name": "canvas",
@@ -721,6 +741,7 @@
   },
   {
     "name": "$filter",
+    "description": "Use filters in your canvas.",
     "params": [
       {
         "name": "canvas",
@@ -786,6 +807,7 @@
   },
   {
     "name": "$fontFamilies",
+    "description": "Returns a list of fonts you can use.",
     "params": [
       {
         "name": "separator",
@@ -801,6 +823,7 @@
   },
   {
     "name": "$getLineDash",
+    "description": "Returns the line dash pattern used when stroking lines.",
     "params": [
       {
         "name": "canvas",
@@ -816,6 +839,7 @@
   },
   {
     "name": "$getPixelColors",
+    "description": "Returns an array of pixels. (their colors)",
     "params": [
       {
         "name": "canvas",
@@ -855,6 +879,7 @@
   },
   {
     "name": "$imageSize",
+    "description": "Returns an image size.",
     "params": [
       {
         "name": "src",
@@ -882,6 +907,7 @@
   },
   {
     "name": "$imageSmoothing",
+    "description": "Enables or disables image smoothing.",
     "params": [
       {
         "name": "canvas",
@@ -903,6 +929,7 @@
   },
   {
     "name": "$letterSpacing",
+    "description": "Specifies the spacing between letters when drawing text.",
     "params": [
       {
         "name": "canvas",
@@ -924,6 +951,7 @@
   },
   {
     "name": "$lineJoin",
+    "description": "Sets the shape used to join two line segments where they meet.",
     "params": [
       {
         "name": "canvas",
@@ -953,6 +981,7 @@
   },
   {
     "name": "$lineTo",
+    "description": "Adds a straight line to the current path.",
     "params": [
       {
         "name": "canvas",
@@ -980,6 +1009,7 @@
   },
   {
     "name": "$measureText",
+    "description": "Measures text.",
     "params": [
       {
         "name": "canvas",
@@ -1035,6 +1065,7 @@
   },
   {
     "name": "$moveTo",
+    "description": "Begins a new path at the point specified by the given (x, y) coordinates.",
     "params": [
       {
         "name": "canvas",
@@ -1062,6 +1093,7 @@
   },
   {
     "name": "$newCanvas",
+    "description": "Creates a new canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1083,6 +1115,7 @@
   },
   {
     "name": "$newConicGradient",
+    "description": "Creates a new conic gradient.",
     "params": [
       {
         "name": "gradient",
@@ -1122,6 +1155,7 @@
   },
   {
     "name": "$newLinearGradient",
+    "description": "Creates a new linear gradient.",
     "params": [
       {
         "name": "gradient",
@@ -1167,6 +1201,7 @@
   },
   {
     "name": "$newRadialGradient",
+    "description": "Creates a new radial gradient.",
     "params": [
       {
         "name": "gradient",
@@ -1224,6 +1259,7 @@
   },
   {
     "name": "$opacity",
+    "description": "Gets or sets the opacity in the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1245,6 +1281,7 @@
   },
   {
     "name": "$putPixelsColors",
+    "description": "Places the pixel colors in the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1290,6 +1327,7 @@
   },
   {
     "name": "$quadraticCurveTo",
+    "description": "Adds a quadratic bezier curve to the currect path.",
     "params": [
       {
         "name": "canvas",
@@ -1329,6 +1367,7 @@
   },
   {
     "name": "$rect",
+    "description": "Draws a rectangle in the current path. (not filled or stroked)",
     "params": [
       {
         "name": "canvas",
@@ -1374,6 +1413,7 @@
   },
   {
     "name": "$registerFont",
+    "description": "Registers a font.",
     "params": [
       {
         "name": "src",
@@ -1395,6 +1435,7 @@
   },
   {
     "name": "$resetTransform",
+    "description": "Resets the current transform to the identity matrix.",
     "params": [
       {
         "name": "canvas",
@@ -1410,6 +1451,7 @@
   },
   {
     "name": "$resizeCanvas",
+    "description": "Resizes the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1437,6 +1479,7 @@
   },
   {
     "name": "$restore",
+    "description": "Restores the most recently saved canvas state.",
     "params": [
       {
         "name": "canvas",
@@ -1452,6 +1495,7 @@
   },
   {
     "name": "$rotation",
+    "description": "Sets the rotation in the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1473,6 +1517,7 @@
   },
   {
     "name": "$save",
+    "description": "Saves the entire state of the canvas by pushing the current state onto a stack.",
     "params": [
       {
         "name": "canvas",
@@ -1488,6 +1533,7 @@
   },
   {
     "name": "$scale",
+    "description": "Adds a scaling transformation to the canvas units horizontally and/or vertically.",
     "params": [
       {
         "name": "canvas",
@@ -1515,6 +1561,7 @@
   },
   {
     "name": "$setCanvasSize",
+    "description": "Sets the size of the new canvas.",
     "params": [
       {
         "name": "width",
@@ -1536,6 +1583,7 @@
   },
   {
     "name": "$setLineDash",
+    "description": "Sets the line dash pattern used when stroking lines. It uses an array of values that specify alternating lengths of lines and gaps which describe the pattern.",
     "params": [
       {
         "name": "canvas",
@@ -1557,6 +1605,7 @@
   },
   {
     "name": "$setShadow",
+    "description": "Sets the shadow (blur, style, offset) in a canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1590,6 +1639,7 @@
   },
   {
     "name": "$setTransform",
+    "description": "Resets (overrides) the current transformation to the identity matrix, and then invokes a transformation described by the arguments of this method.",
     "params": [
       {
         "name": "canvas",
@@ -1641,6 +1691,7 @@
   },
   {
     "name": "$stroke",
+    "description": "Strokes (outlines) the current path.",
     "params": [
       {
         "name": "canvas",
@@ -1662,6 +1713,7 @@
   },
   {
     "name": "$strokeRect",
+    "description": "Draws a stroked (outlined) rectangle.",
     "params": [
       {
         "name": "canvas",
@@ -1713,6 +1765,7 @@
   },
   {
     "name": "$strokeStyle",
+    "description": "Sets the stroke style in a canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1734,6 +1787,7 @@
   },
   {
     "name": "$strokeText",
+    "description": "Draws a stroked (outlined) text.",
     "params": [
       {
         "name": "canvas",
@@ -1803,6 +1857,7 @@
   },
   {
     "name": "$textAlign",
+    "description": "Sets the text align in the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1831,6 +1886,7 @@
   },
   {
     "name": "$textBaseline",
+    "description": "Sets the text baseline in the canvas.",
     "params": [
       {
         "name": "canvas",
@@ -1866,6 +1922,7 @@
   },
   {
     "name": "$transform",
+    "description": "Multiplies the current transformation with the matrix described by the arguments of this method.",
     "params": [
       {
         "name": "canvas",
@@ -1917,6 +1974,7 @@
   },
   {
     "name": "$translate",
+    "description": "Adds a translation transformation.",
     "params": [
       {
         "name": "canvas",
@@ -1944,6 +2002,7 @@
   },
   {
     "name": "$wordSpacing",
+    "description": "Specifies the spacing between words when drawing text.",
     "params": [
       {
         "name": "canvas",
@@ -1965,6 +2024,7 @@
   },
   {
     "name": "$addFrame",
+    "description": "Adds a frame to the GIF.",
     "params": [
       {
         "name": "gif",
@@ -1986,6 +2046,7 @@
   },
   {
     "name": "$attachGIF",
+    "description": "Attaches the GIF.",
     "params": [
       {
         "name": "gif",
@@ -2007,6 +2068,7 @@
   },
   {
     "name": "$deleteGIF",
+    "description": "Deletes a GIF.",
     "params": [
       {
         "name": "gif",
@@ -2022,6 +2084,7 @@
   },
   {
     "name": "$getFrames",
+    "description": "Extracts frames from a gif.",
     "params": [
       {
         "name": "src",
@@ -2043,6 +2106,7 @@
   },
   {
     "name": "$gifFinish",
+    "description": "Finishes the gif.",
     "params": [
       {
         "name": "gif",
@@ -2058,6 +2122,7 @@
   },
   {
     "name": "$newGIF",
+    "description": "Creates a new GIF.",
     "params": [
       {
         "name": "canvas",
@@ -2079,6 +2144,7 @@
   },
   {
     "name": "$setDelay",
+    "description": "Sets the GIF display frame delay.",
     "params": [
       {
         "name": "gif",
@@ -2100,6 +2166,7 @@
   },
   {
     "name": "$setFPS",
+    "description": "Sets the FPS (Frames Per Second) of a GIF.",
     "params": [
       {
         "name": "gif",
@@ -2121,6 +2188,7 @@
   },
   {
     "name": "$setGIFSize",
+    "description": "Sets the size of the new GIF.",
     "params": [
       {
         "name": "width",
@@ -2142,6 +2210,7 @@
   },
   {
     "name": "$setQuality",
+    "description": "Sets the GIF color quality.",
     "params": [
       {
         "name": "gif",
@@ -2163,6 +2232,7 @@
   },
   {
     "name": "$setRepeat",
+    "description": "Sets the number of loops GIF does.",
     "params": [
       {
         "name": "gif",
@@ -2184,6 +2254,7 @@
   },
   {
     "name": "$setThreshold",
+    "description": "Sets if the color table should be reused if current frame matches previous frame.",
     "params": [
       {
         "name": "gif",

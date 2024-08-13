@@ -1,316 +1,139 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CanvasBuilder = exports.Filters = void 0;
+exports.CanvasBuilder = void 0;
 const canvas_1 = require("@napi-rs/canvas");
 const util_1 = require("./util");
-// Stuff
-exports.Filters = ["none", "blur", "sepia", "grayscale", "brightness", "contrast", "invert", "saturate"];
+const typings_1 = require("../typings");
 // Builder
 class CanvasBuilder {
-    static ctx;
-    static gradients;
+    ctx;
     util = util_1.CanvasUtil;
+    width;
+    height;
     constructor(width, height) {
-        CanvasBuilder.ctx = (0, canvas_1.createCanvas)(width, height).getContext("2d");
-        CanvasBuilder.gradients = new Map();
+        this.ctx = (0, canvas_1.createCanvas)(width, height).getContext('2d');
+        this.width = width;
+        this.height = height;
     }
-    drawImage = async (image, x, y, width, height, radius) => {
+    ;
+    rect(type, x, y, width, height, a, b) {
+        const ctx = this.ctx;
+        width ??= ctx.canvas.width;
+        height ??= ctx.canvas.height;
+        if (type === typings_1.FillOrStrokeOrClear.none)
+            return ctx.roundRect(x, y, width, height, a);
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(x, y, width, height, type !== typings_1.FillOrStrokeOrClear.stroke ? a : b);
+        ({
+            [typings_1.FillOrStrokeOrClear.clear]: () => ctx.clearRect(x, y, width, height),
+            [typings_1.FillOrStrokeOrClear.fill]: () => ctx.fill(),
+            [typings_1.FillOrStrokeOrClear.stroke]: () => {
+                ctx.lineWidth = a;
+                ctx.stroke();
+            }
+        })[type]();
+        ctx.restore();
+    }
+    ;
+    async text(type, text, x, y, font, a, b, c, d, e) {
+        const ctx = this.ctx, optional = [a, b, c, d, e], [strokeWidth, maxWidth, multiline, wrap, lineOffset] = (type === typings_1.FillOrStrokeOrClear.fill ? [undefined, ...optional.slice(0, -1)] : optional), oldfont = ctx.font, oldStrokeWidth = ctx.lineWidth, fontsize = parseFloat(util_1.fontRegex.exec(font)[4]), lines = multiline ? text.split('\n') : [text], func = async (text, x, y, maxWidth) => type === typings_1.FillOrStrokeOrClear.fill
+            ? await ctx.fillText(text, x, y, maxWidth)
+            : await ctx.strokeText(text, x, y, maxWidth);
+        let offset = y;
+        ctx.lineWidth = strokeWidth ?? oldStrokeWidth;
+        ctx.font = font;
+        if (multiline || wrap) {
+            lines.forEach(t => {
+                if (wrap) {
+                    let line = '';
+                    t.split(' ').forEach((word, i) => {
+                        if (maxWidth && ctx.measureText(line + word + ' ').width > maxWidth && i > 0) {
+                            func(line, x, offset, maxWidth);
+                            line = word + ' ';
+                            offset += fontsize + (lineOffset ?? 0);
+                        }
+                        else
+                            line += word + ' ';
+                    });
+                    func(line, x, offset, maxWidth);
+                    offset += fontsize + (lineOffset ?? 0);
+                }
+                else {
+                    func(t, x, offset, maxWidth);
+                    offset += fontsize + (lineOffset ?? 0);
+                }
+                ;
+            });
+        }
+        else
+            func(text, x, y, maxWidth);
+        ctx.lineWidth = oldStrokeWidth;
+        ctx.font = oldfont;
+    }
+    ;
+    async drawImage(image, x, y, width, height, radius) {
+        const ctx = this.ctx;
         image = await (0, canvas_1.loadImage)(image, { maxRedirects: 30 });
         width ??= image.width;
         height ??= image.height;
-        const ctx = CanvasBuilder.ctx;
-        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
-        if (radius && !Array.isArray(radius) && radius > 0) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(x + radius, y);
-            ctx.arcTo(x + width, y, x + width, y + height, radius);
-            ctx.arcTo(x + width, y + height, x, y + height, radius);
-            ctx.arcTo(x, y + height, x, y, radius);
-            ctx.arcTo(x, y, x + width, y, radius);
-            ctx.closePath();
-            ctx.clip();
-        }
-        else if (radius && Array.isArray(radius)) {
-            const [lTop = 0, rTop = 0, lBottom = 0, rBottom = 0] = radius;
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(x + lTop, y);
-            ctx.arcTo(x + width, y, x + width, y + height, rTop);
-            ctx.arcTo(x + width, y + height, x, y + height, rBottom);
-            ctx.arcTo(x, y + height, x, y, lBottom);
-            ctx.arcTo(x, y, x + width, y, lTop);
-            ctx.closePath();
-            ctx.clip();
-        }
-        ;
+        if (!radius)
+            return ctx.drawImage(image, x, y, width, height);
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(x, y, width, height, radius);
+        ctx.clip();
         ctx.drawImage(image, x, y, width, height);
         ctx.restore();
-        return;
-    };
-    fillText = (text, x, y, font, color, maxWidth, textAlign, textBaseline) => {
-        const ctx = CanvasBuilder.ctx;
-        [x, y] = [x, y].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 ? 'width' : 'height'], value));
-        const oldfont = ctx.font;
-        const oldcolor = ctx.fillStyle;
-        const oldalign = ctx.textAlign;
-        const oldbaseline = ctx.textBaseline;
-        if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-            color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
+    }
+    ;
+    measureText(text, font) {
+        const ctx = this.ctx, oldcolor = ctx.fillStyle, oldfont = ctx.font;
+        ctx.fillStyle = '#000000';
         ctx.font = font;
-        ctx.fillStyle = color;
-        if (textAlign)
-            this.setTextAlign(textAlign);
-        if (textBaseline)
-            ctx.textBaseline = textBaseline;
-        ctx.fillText(text, x, y, maxWidth);
-        ctx.font = oldfont;
-        ctx.fillStyle = oldcolor;
-        ctx.textAlign = oldalign;
-        ctx.textBaseline = oldbaseline;
-        return;
-    };
-    strokeText = (text, x, y, font, color, lineWidth, maxWidth, textAlign, textBaseline) => {
-        const ctx = CanvasBuilder.ctx;
-        [x, y] = [x, y].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 ? 'width' : 'height'], value));
-        const oldfont = ctx.font;
-        const oldcolor = ctx.strokeStyle;
-        const oldwidth = ctx.lineWidth;
-        const oldalign = ctx.textAlign;
-        const oldbaseline = ctx.textBaseline;
-        if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-            color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
-        ctx.font = font;
-        ctx.strokeStyle = color;
-        ctx.lineWidth = lineWidth ?? 10;
-        if (textAlign)
-            this.setTextAlign(textAlign);
-        if (textBaseline)
-            ctx.textBaseline = textBaseline;
-        ctx.strokeText(text, x, y, maxWidth);
-        ctx.font = oldfont;
-        ctx.strokeStyle = oldcolor;
-        ctx.lineWidth = oldwidth;
-        ctx.textAlign = oldalign;
-        ctx.textBaseline = oldbaseline;
-        return;
-    };
-    fillRect = (style, x, y, width, height, radius) => {
-        const ctx = CanvasBuilder.ctx;
-        width ??= ctx.canvas.width;
-        height ??= ctx.canvas.height;
-        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
-        const oldstyle = ctx.fillStyle;
-        if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
-            style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
-        ctx.fillStyle = style;
-        if (radius) {
-            ctx.beginPath();
-            ctx.roundRect(x, y, width, height, radius);
-            ctx.closePath();
-            ctx.fill();
-        }
-        else
-            ctx.fillRect(x, y, width, height);
-        ctx.fillStyle = oldstyle;
-        return;
-    };
-    strokeRect = (style, x, y, width, height, strokeWidth, radius) => {
-        const ctx = CanvasBuilder.ctx;
-        width ??= ctx.canvas.width;
-        height ??= ctx.canvas.height;
-        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
-        const oldstyle = ctx.strokeStyle;
-        const oldwidth = ctx.lineWidth;
-        if (typeof style === "string" && style?.trim()?.startsWith("gradient:"))
-            style = this.getGradient(style?.trim().split(":").slice(1).join(":")) ?? style;
-        ctx.strokeStyle = style;
-        ctx.lineWidth = strokeWidth ?? 10;
-        if (radius) {
-            ctx.beginPath();
-            ctx.roundRect(x, y, width, height, radius);
-            ctx.closePath();
-            ctx.stroke();
-        }
-        else
-            ctx.strokeRect(x, y, width, height);
-        ctx.strokeStyle = oldstyle;
-        ctx.lineWidth = oldwidth;
-        return;
-    };
-    clearRect = (x, y, width, height, radius) => {
-        const ctx = CanvasBuilder.ctx;
-        width ??= ctx.canvas.width;
-        height ??= ctx.canvas.height;
-        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
-        if (radius && !Array.isArray(radius) && radius > 0) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(x + radius, y);
-            ctx.arcTo(x + width, y, x + width, y + height, radius);
-            ctx.arcTo(x + width, y + height, x, y + height, radius);
-            ctx.arcTo(x, y + height, x, y, radius);
-            ctx.arcTo(x, y, x + width, y, radius);
-            ctx.closePath();
-            ctx.clip();
-        }
-        else if (radius && Array.isArray(radius)) {
-            const [lTop = 0, rTop = 0, lBottom = 0, rBottom = 0] = radius;
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(x + lTop, y);
-            ctx.arcTo(x + width, y, x + width, y + height, rTop);
-            ctx.arcTo(x + width, y + height, x, y + height, rBottom);
-            ctx.arcTo(x, y + height, x, y, lBottom);
-            ctx.arcTo(x, y, x + width, y, lTop);
-            ctx.closePath();
-            ctx.clip();
-        }
-        ;
-        ctx.clearRect(x, y, width, height);
-        return;
-    };
-    drawLines = (type, color, startX, startY, lines, strokeWidth) => {
-        const ctx = CanvasBuilder.ctx;
-        [startX, startY] = [startX, startY].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 ? 'width' : 'height'], value));
-        if (typeof color === "string" && color?.trim()?.startsWith("gradient:"))
-            color = this.getGradient(color?.trim().split(":").slice(1).join(":")) ?? color;
-        const drawlines = () => {
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            for (let line of lines) {
-                line = line?.trim();
-                const split = line?.split(":")?.map(x => !isNaN(parseFloat(x)) ? parseFloat(x) : 0);
-                const actions = {
-                    "move": () => ctx.moveTo(split[1], split[2]),
-                    "bezier": () => ctx.bezierCurveTo(split[1], split[2], split[3], split[4], split[5], split[6]),
-                    "quadric": () => ctx.quadraticCurveTo(split[1], split[2], split[3], split[4]),
-                    "setdash": () => {
-                        const segments = line?.split(":")[1];
-                        ctx.setLineDash(JSON.parse(segments));
-                    }
-                };
-                if (actions[line?.trim()?.toLowerCase()?.split(":")[0]])
-                    actions[line?.trim()?.toLowerCase()?.split(":")[0]]();
-                else
-                    ctx.lineTo(split[0], split[1]);
-            }
-            ctx.closePath();
-        };
-        if (type === 0) {
-            const oldcolor = ctx.strokeStyle;
-            ctx.fillStyle = color;
-            ctx.setLineDash([]);
-            drawlines();
-            ctx.fill();
-            ctx.setLineDash([]);
-            ctx.fillStyle = oldcolor;
-        }
-        else if (type === 1) {
-            const oldcolor = ctx.strokeStyle;
-            const oldwidth = ctx.lineWidth;
-            ctx.strokeStyle = color;
-            ctx.lineWidth = strokeWidth ?? 10;
-            ctx.setLineDash([]);
-            drawlines();
-            ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.strokeStyle = oldcolor;
-            ctx.lineWidth = oldwidth;
-        }
-        return;
-    };
-    measureText = (text, font) => {
-        const ctx = CanvasBuilder.ctx;
-        const oldcolor = ctx.fillStyle;
-        const oldfont = ctx.font;
-        ctx.fillStyle = "#000000";
-        ctx.font = font;
-        const res = ctx.measureText(text);
+        const metrics = ctx.measureText(text);
         ctx.fillStyle = oldcolor;
         ctx.font = oldfont;
-        return res;
-    };
-    setTextAlign = (align) => {
-        const ctx = CanvasBuilder.ctx;
-        const aligns = {
-            start: "end",
-            right: "left",
-            center: "center",
-            left: "right",
-            end: "start"
-        };
-        if (aligns[align])
-            ctx.textAlign = align;
-        return;
-    };
-    filter = (method, name, value) => {
-        const ctx = CanvasBuilder.ctx;
-        if (name && !exports.Filters.find(x => x === name))
-            return;
-        if (value && isNaN(value))
-            return;
-        if (method === "add") {
-            if (!name || !value)
+        return metrics;
+    }
+    ;
+    filter(method, filter, value) {
+        const ctx = this.ctx;
+        if (filter && typeof filter === 'string')
+            filter = typings_1.Filters[filter];
+        if (method === typings_1.FilterMethod.add) {
+            if (!filter || !value)
                 return;
-            const PxOrPerc = name === "grayscale" || name === "sepia" ? "%" :
-                (name === "blur" ? "px" : "");
-            ctx.filter = this.util.parseFilters((ctx.filter === "none" ? "" : ctx.filter) + `${name}(${value + PxOrPerc})`)?.map(x => x?.raw)?.join(" ")?.trim();
+            const PxOrPerc = filter === typings_1.Filters.grayscale || filter === typings_1.Filters.sepia ? '%' :
+                (filter === typings_1.Filters.blur ? 'px' : '');
+            ctx.filter = util_1.CanvasUtil.parseFilters((ctx.filter === 'none' ? '' : ctx.filter) + `${typings_1.Filters[filter]}(${value + PxOrPerc})`)?.map(x => x?.raw)?.join(' ')?.trim();
         }
-        else if (method === "set") {
-            if (!name || !value)
+        else if (method === typings_1.FilterMethod.set) {
+            if (!filter || !value)
                 return;
-            const PxOrPerc = name === "grayscale" || name === "sepia" ? "%" :
-                (name === "blur" ? "px" : "");
-            ctx.filter = `${name}(${value + PxOrPerc})`;
+            const PxOrPerc = filter === typings_1.Filters.grayscale || filter === typings_1.Filters.sepia ? '%' :
+                (filter === typings_1.Filters.blur ? 'px' : '');
+            ctx.filter = `${typings_1.Filters[filter]}(${value + PxOrPerc})`;
         }
-        else if (method === "remove") {
-            if (!name)
+        else if (method === typings_1.FilterMethod.remove) {
+            if (!filter)
                 return;
-            let filters = this.util.parseFilters(ctx.filter);
-            const index = filters.findIndex((obj) => obj?.filter === name);
+            let filters = util_1.CanvasUtil.parseFilters(ctx.filter);
+            const index = filters.findIndex((obj) => obj?.filter === typings_1.Filters[filter]);
             if (index !== -1)
                 filters.splice(index, 1);
-            ctx.filter = filters.length > 0 ? filters?.map(x => x?.raw)?.join(" ")?.trim() : "none";
+            ctx.filter = filters.length > 0 ? filters?.map(x => x?.raw)?.join(' ')?.trim() : 'none';
         }
-        else if (method === "clear")
-            ctx.filter = "none";
-        else if (method === "get")
+        else if (method === typings_1.FilterMethod.clear)
+            ctx.filter = 'none';
+        else if (method === typings_1.FilterMethod.get)
             return ctx.filter;
-        else if (method === "parse")
-            return this.util.parseFilters(ctx.filter);
-        return;
-    };
-    createGradient = (name, type, options) => {
-        const ctx = CanvasBuilder.ctx;
-        let gradient;
-        if (type === 0) {
-            if (typeof options[0] !== "number" || typeof options[1] !== "number" || typeof options[2] !== "number" || typeof options[3] !== "number")
-                return;
-            gradient = ctx.createLinearGradient(options[0], options[1], options[2], options[3]);
-        }
-        else if (type === 1) {
-            if (typeof options[0] !== "number" || typeof options[1] !== "number" || typeof options[2] !== "number" || typeof options[3] !== "number" || typeof options[4] !== "number" || typeof options[5] !== "number")
-                return;
-            gradient = ctx.createRadialGradient(options[0], options[1], options[2], options[3], options[4], options[5]);
-        }
-        else if (type === 2) {
-            if (typeof options[0] !== "number" || typeof options[1] !== "number" || typeof options[2] !== "number")
-                return;
-            gradient = ctx.createConicGradient(options[0], options[1], options[2]);
-        }
-        if (gradient)
-            CanvasBuilder.gradients.set(name, gradient);
-        return;
-    };
-    addColorStop = (gradient, offset, color) => {
-        if (!CanvasBuilder.gradients.has(gradient))
-            return;
-        CanvasBuilder.gradients.get(gradient)?.addColorStop(offset, color);
-        return;
-    };
-    setShadow = (blur, color, offset) => {
-        const ctx = CanvasBuilder.ctx;
+        else if (method === typings_1.FilterMethod.parse)
+            return util_1.CanvasUtil.parseFilters(ctx.filter);
+    }
+    ;
+    setShadow(blur, color, offset) {
+        const ctx = this.ctx;
         ctx.shadowBlur = blur;
         ctx.shadowColor = color;
         if (offset && !Array.isArray(offset)) {
@@ -323,19 +146,19 @@ class CanvasBuilder {
             ctx.shadowOffsetY = y;
         }
         ;
-        return;
-    };
-    rotate = (angle) => {
-        const ctx = CanvasBuilder.ctx;
+    }
+    ;
+    rotate(angle) {
+        const ctx = this.ctx;
         const centerX = ctx.canvas.width / 2;
         const centerY = ctx.canvas.height / 2;
         ctx.translate(centerX, centerY);
         ctx.rotate((angle * Math.PI) / 180);
         ctx.translate(-centerX, -centerY);
-        return;
-    };
-    trim = () => {
-        let ctx = CanvasBuilder.ctx, canvas = ctx.canvas, pixels = ctx.getImageData(0, 0, canvas.width, canvas.height), l = pixels.data.length, i, bound = {
+    }
+    ;
+    trim() {
+        let ctx = this.ctx, canvas = ctx.canvas, pixels = ctx.getImageData(0, 0, canvas.width, canvas.height), l = pixels.data.length, i, bound = {
             top: canvas.height,
             left: canvas.width,
             right: 0,
@@ -361,12 +184,12 @@ class CanvasBuilder {
         canvas.width = width;
         canvas.height = height;
         ctx.putImageData(trimmed, 0, 0);
-    };
-    getPixelsColors = async (x, y, width, height) => {
-        const ctx = CanvasBuilder.ctx;
+    }
+    ;
+    getPixelColors(x, y, width, height) {
+        const ctx = this.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
-        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
         const data = ctx.getImageData(x, y, width, height).data;
         const colors = [];
         for (let i = 0; i < data.length; i += 4) {
@@ -374,12 +197,12 @@ class CanvasBuilder {
         }
         ;
         return colors;
-    };
-    setPixelsColors = async (x, y, width, height, colors) => {
-        const ctx = CanvasBuilder.ctx;
+    }
+    ;
+    setPixelsColors(x, y, width, height, colors) {
+        const ctx = this.ctx;
         width ??= ctx.canvas.width;
         height ??= ctx.canvas.height;
-        [x, y, width, height] = [x, y, width, height].map((value, i) => util_1.CanvasUtil.inPercentages(ctx.canvas[i === 0 || i === 2 ? 'width' : 'height'], value));
         const data = ctx.createImageData(width, height);
         colors?.forEach((hex, i) => {
             const colors = util_1.CanvasUtil.hexToRgba(hex);
@@ -387,16 +210,21 @@ class CanvasBuilder {
             data.data[i] = colors.red;
             data.data[i + 1] = colors.green;
             data.data[i + 2] = colors.blue;
-            data.data[i + 3] = colors.alpha;
+            data.data[i + 3] = colors.alpha ?? 255;
         });
-        console.log(data.data);
-        return ctx.putImageData(data, x, y);
-    };
-    getContext = () => CanvasBuilder.ctx;
-    getGradient = (name) => CanvasBuilder.gradients.get(name);
-    render = () => {
-        return CanvasBuilder.ctx.canvas.toBuffer("image/png");
-    };
+        ctx.putImageData(data, x, y);
+    }
+    ;
+    resize(width, height) {
+        const ctx = this.ctx, data = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.canvas.width = width;
+        ctx.canvas.height = height;
+        ctx.putImageData(data, 0, 0);
+    }
+    ;
+    get buffer() { return this.ctx.canvas.toBuffer('image/png'); }
+    ;
 }
 exports.CanvasBuilder = CanvasBuilder;
+;
 //# sourceMappingURL=builder.js.map

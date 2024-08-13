@@ -1,0 +1,2277 @@
+[
+  {
+    "name": "$addColorStop",
+    "description": "Adds a color stop to the gradient.",
+    "params": [
+      {
+        "name": "gradient",
+        "description": "Name of the gradient.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "offset",
+        "description": "The color stop offset.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "color",
+        "description": "Color of the stop.",
+        "type": "Color",
+        "required": true
+      }
+    ],
+    "usage": "$addColorStop[gradient?;offset;color]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/addColorStop.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/addColorStop"
+  },
+  {
+    "name": "$arc",
+    "description": "Draws a circular arc in the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the arc's center.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the arc's center.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radius",
+        "description": "The arc's radius",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "startAngle",
+        "description": "The angle at which the arc starts in radians, measured from the positive x-axis.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endAngle",
+        "description": "The angle at which the arc ends in radians, measured from the positive x-axis.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "counterclockwise",
+        "description": "If true, draws the arc counter-clockwise between the start and end angles.",
+        "type": "Boolean",
+        "required": false
+      }
+    ],
+    "usage": "$arc[canvas?;x;y;radius;startAngle;endAngle;counterclockwise?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/arc.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/arc"
+  },
+  {
+    "name": "$arcTo",
+    "description": "Adds a circular arc to the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x1",
+        "description": "The X coordinate of the first control point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y1",
+        "description": "The Y coordinate of the first control point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "x2",
+        "description": "The X coordinate of the second control point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y2",
+        "description": "The Y coordinate of the second control point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radius",
+        "description": "The arc's radius",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$arcTo[canvas?;x1;y1;x2;y2;radius]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/arcTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/arcTo"
+  },
+  {
+    "name": "$attachCanvas",
+    "description": "Attaches the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The name of the canvas to attach.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "name",
+        "description": "The canvas attachment file name.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$attachCanvas[canvas?;name?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/attachCanvas.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/attachCanvas"
+  },
+  {
+    "name": "$beginPath",
+    "description": "Starts a new path by emptying the list of paths.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$beginPath[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/beginPath.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/beginPath"
+  },
+  {
+    "name": "$bezierCurveTo",
+    "description": "Adds a cubic bezier curve to the currect path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "startX",
+        "description": "The X coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "startY",
+        "description": "The Y coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "middleX",
+        "description": "The X coordinate of the mid point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "middleY",
+        "description": "The Y coordinate of the mid point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endX",
+        "description": "The X coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endY",
+        "description": "The Y coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$bezierCurveTo[canvas?;startX;startY;middleX;middleY;endX;endY]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/bezierCurveTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/bezierCurveTo"
+  },
+  {
+    "name": "$canvasSize",
+    "description": "Returns the canvas size.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "property",
+        "description": "The size property to return.",
+        "type": "\"width\" | \"height\" | 0 | 1",
+        "required": false,
+        "enum": {
+          "0": "width",
+          "1": "height",
+          "width": 0,
+          "height": 1
+        }
+      }
+    ],
+    "usage": "$canvasSize[canvas?;property?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/canvasSize.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/canvasSize"
+  },
+  {
+    "name": "$canvasTrim",
+    "description": "Trims the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to trim.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$canvasTrim[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/canvasTrim.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/canvasTrim"
+  },
+  {
+    "name": "$clearRect",
+    "description": "Erases pixels in a rect area.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The canvas name.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The rect start X coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The rect start Y coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "The rect width.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "The rect height.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radius",
+        "description": "The rect corners radius.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$clearRect[canvas?;x;y;width;height;...radius?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/clearRect.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/clearRect"
+  },
+  {
+    "name": "$clip",
+    "description": "Turns the current path into the current clipping region.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "rule",
+        "description": "The fill rule.",
+        "type": "\"nonzero\" | \"evenodd\" | 0 | 1",
+        "required": false,
+        "enum": {
+          "0": "nonzero",
+          "1": "evenodd",
+          "nonzero": 0,
+          "evenodd": 1
+        }
+      }
+    ],
+    "usage": "$clip[canvas?;rule?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/clip.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/clip"
+  },
+  {
+    "name": "$closePath",
+    "description": "Adds a straight line from the current point to the start of the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$closePath[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/closePath.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/closePath"
+  },
+  {
+    "name": "$compositeOperation",
+    "description": "Sets the type of compositing operation to apply when drawing new shapes.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "operation",
+        "description": "The new compositing operation.",
+        "type": "CompositingOperation",
+        "required": false,
+        "enum": {
+          "0": "source-over",
+          "1": "source-in",
+          "2": "source-out",
+          "3": "source-atop",
+          "4": "destination-over",
+          "5": "destination-in",
+          "6": "destination-out",
+          "7": "destination-atop",
+          "8": "lighter",
+          "9": "copy",
+          "10": "xor",
+          "11": "multiply",
+          "12": "screen",
+          "13": "overlay",
+          "14": "darken",
+          "15": "lighten",
+          "16": "color-dodge",
+          "17": "color-burn",
+          "18": "hard-light",
+          "19": "soft-light",
+          "20": "difference",
+          "21": "exclusion",
+          "22": "hue",
+          "23": "saturation",
+          "24": "color",
+          "25": "luminosity",
+          "source-over": 0,
+          "source-in": 1,
+          "source-out": 2,
+          "source-atop": 3,
+          "destination-over": 4,
+          "destination-in": 5,
+          "destination-out": 6,
+          "destination-atop": 7,
+          "lighter": 8,
+          "copy": 9,
+          "xor": 10,
+          "multiply": 11,
+          "screen": 12,
+          "overlay": 13,
+          "darken": 14,
+          "lighten": 15,
+          "color-dodge": 16,
+          "color-burn": 17,
+          "hard-light": 18,
+          "soft-light": 19,
+          "difference": 20,
+          "exclusion": 21,
+          "hue": 22,
+          "saturation": 23,
+          "color": 24,
+          "luminosity": 25
+        }
+      }
+    ],
+    "usage": "$compositeOperation[canvas?;operation?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/compositeOperation.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/compositeOperation"
+  },
+  {
+    "name": "$deleteCanvas",
+    "description": "Deletes a canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to delete.",
+        "type": "String",
+        "required": true
+      }
+    ],
+    "usage": "$deleteCanvas[canvas]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/deleteCanvas.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/deleteCanvas"
+  },
+  {
+    "name": "$downloadCanvas",
+    "description": "Downloads the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to download.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "path",
+        "description": "The download path. (file name and extension)",
+        "type": "Path",
+        "required": true
+      }
+    ],
+    "usage": "$downloadCanvas[canvas?;path]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/downloadCanvas.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/downloadCanvas"
+  },
+  {
+    "name": "$drawImage",
+    "description": "Draws an image on the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "path",
+        "description": "Path or url to the image.",
+        "type": "Path | URL | 'canvas:name'",
+        "required": true
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the image.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the image.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "The image width.",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "name": "height",
+        "description": "The image height.",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "name": "radius",
+        "description": "The image corners radius.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$drawImage[canvas?;path;x;y;width?;height?;...radius?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/drawImage.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/drawImage"
+  },
+  {
+    "name": "$ellipse",
+    "description": "Adds an elliptical arc to the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the elliptical arc.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the elliptical arc.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radiusX",
+        "description": "The ellipse's major-axis radius.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radiusY",
+        "description": "The ellipse's minor-axis radius.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "rotation",
+        "description": "The rotation of the ellipse, expressed in radians.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "startAngle",
+        "description": "The eccentric angle at which the ellipse starts, measured clockwise from the positive x-axis and expressed in radians.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endAngle",
+        "description": "The eccentric angle at which the ellipse ends, measured clockwise from the positive x-axis and expressed in radians.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "counterclockwise",
+        "description": "If true, draws the ellipse counterclockwise (anticlockwise).",
+        "type": "Boolean",
+        "required": false
+      }
+    ],
+    "usage": "$ellipse[canvas?;x;y;radiusX;radiusY;rotation;startAngle;endAngle;counterclockwise?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/ellipse.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/ellipse"
+  },
+  {
+    "name": "$fill",
+    "description": "Fills the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "rule",
+        "description": "The fill rule.",
+        "type": "\"nonzero\" | \"evenodd\" | 0 | 1",
+        "required": false,
+        "enum": {
+          "0": "nonzero",
+          "1": "evenodd",
+          "nonzero": 0,
+          "evenodd": 1
+        }
+      }
+    ],
+    "usage": "$fill[canvas?;rule?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/fill.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/fill"
+  },
+  {
+    "name": "$fillRect",
+    "description": "Draws a filled rectangle.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The canvas name to draw rect on.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The rect start X coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The rect start Y coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "The rect width.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "The rect height.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radius",
+        "description": "The rect corners radius.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$fillRect[canvas?;x;y;width;height;...radius?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/fillRect.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/fillRect"
+  },
+  {
+    "name": "$fillStyle",
+    "description": "Sets the fill style in a canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the fill style in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "style",
+        "description": "The style.",
+        "type": "Color | Gradient | Pattern",
+        "required": true
+      }
+    ],
+    "usage": "$fillStyle[canvas?;style]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/fillStyle.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/fillStyle"
+  },
+  {
+    "name": "$fillText",
+    "description": "Draws a text.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the fill style in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "text",
+        "description": "The text to draw.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "font",
+        "description": "The text font.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "x",
+        "description": "The text X coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The text Y coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "maxWidth",
+        "description": "Maximum text width.",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "name": "multiline",
+        "description": "Indicates if the text should be drawn in multiple lines if it exceeds the maximum width.",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "name": "wrap",
+        "description": "Wraps the text if true.",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "name": "lineOffset",
+        "description": "The line offset.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$fillText[canvas?;text;font;x;y;maxWidth?;multiline?;wrap?;lineOffset?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/fillText.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/fillText"
+  },
+  {
+    "name": "$filter",
+    "description": "Use filters in your canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The name of the canvas to use filters in.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "method",
+        "description": "Method.",
+        "type": "\"add\" | \"set\" | \"remove\" | \"clear\" | \"get\" | \"parse\" | 0 | 1 | 2 | 3 | 4 | 5",
+        "required": true,
+        "enum": {
+          "0": "add",
+          "1": "set",
+          "2": "remove",
+          "3": "clear",
+          "4": "get",
+          "5": "parse",
+          "add": 0,
+          "set": 1,
+          "remove": 2,
+          "clear": 3,
+          "get": 4,
+          "parse": 5
+        }
+      },
+      {
+        "name": "filter",
+        "description": "Name of the filter.",
+        "type": "\"none\" | \"blur\" | \"sepia\" | \"grayscale\" | \"brightness\" | \"contrast\" | \"invert\" | \"saturate\" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7",
+        "required": false,
+        "enum": {
+          "0": "none",
+          "1": "blur",
+          "2": "sepia",
+          "3": "grayscale",
+          "4": "brightness",
+          "5": "contrast",
+          "6": "invert",
+          "7": "saturate",
+          "none": 0,
+          "blur": 1,
+          "sepia": 2,
+          "grayscale": 3,
+          "brightness": 4,
+          "contrast": 5,
+          "invert": 6,
+          "saturate": 7
+        }
+      },
+      {
+        "name": "value",
+        "description": "Value of the filter.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$filter[canvas;method;filter?;value?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/filter.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/filter"
+  },
+  {
+    "name": "$fontFamilies",
+    "description": "Returns a list of fonts you can use.",
+    "params": [
+      {
+        "name": "separator",
+        "description": "Font seperator.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$fontFamilies[separator?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/fontFamilies.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/fontFamilies"
+  },
+  {
+    "name": "$getLineDash",
+    "description": "Returns the line dash pattern used when stroking lines.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the line dash in.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$getLineDash[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/getLineDash.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/getLineDash"
+  },
+  {
+    "name": "$getPixelColors",
+    "description": "Returns an array of pixels. (their colors)",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to get the pixels from.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the top-left corner of the rectangle from which the pixel colors will be extracted.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the top-left corner of the rectangle from which the pixel colors will be extracted.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "The width of the rectangle from which the pixel colors will be extracted.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "The height of the rectangle from which the pixel colors will be extracted.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$getPixelColors[canvas?;x;y;width;height]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/getPixelColors.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/getPixelColors"
+  },
+  {
+    "name": "$imageSize",
+    "description": "Returns an image size.",
+    "params": [
+      {
+        "name": "src",
+        "description": "Path or url to the image.",
+        "type": "Path | URL",
+        "required": true
+      },
+      {
+        "name": "property",
+        "description": "The image size property to return.",
+        "type": "\"width\" | \"height\" | 0 | 1",
+        "required": false,
+        "enum": {
+          "0": "width",
+          "1": "height",
+          "width": 0,
+          "height": 1
+        }
+      }
+    ],
+    "usage": "$imageSize[src;property?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/imageSize.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/imageSize"
+  },
+  {
+    "name": "$imageSmoothing",
+    "description": "Enables or disables image smoothing.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "enabled",
+        "description": "Determines whether scaled images are smoothed or not.",
+        "type": "Boolean",
+        "required": false
+      }
+    ],
+    "usage": "$imageSmoothing[canvas?;enabled?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/imageSmoothing.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/imageSmoothing"
+  },
+  {
+    "name": "$letterSpacing",
+    "description": "Specifies the spacing between letters when drawing text.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the letter spacing in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "spacing",
+        "description": "The new letter spacing.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$letterSpacing[canvas?;spacing]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/letterSpacing.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/letterSpacing"
+  },
+  {
+    "name": "$lineJoin",
+    "description": "Sets the shape used to join two line segments where they meet.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "shape",
+        "description": "The new shape.",
+        "type": "\"round\" | \"bevel\" | \"miter\" | 0 | 1 | 2",
+        "required": false,
+        "enum": {
+          "0": "round",
+          "1": "bevel",
+          "2": "miter",
+          "round": 0,
+          "bevel": 1,
+          "miter": 2
+        }
+      }
+    ],
+    "usage": "$lineJoin[canvas?;shape?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/lineJoin.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/lineJoin"
+  },
+  {
+    "name": "$lineTo",
+    "description": "Adds a straight line to the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the line's end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the line's end point.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$lineTo[canvas?;x;y]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/lineTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/lineTo"
+  },
+  {
+    "name": "$measureText",
+    "description": "Measures text.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The name of the canvas to measure text in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "text",
+        "description": "The text to measure.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "font",
+        "description": "The text font.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "property",
+        "description": "The result's property to return.",
+        "type": "\"actualBoundingBoxAscent\" | \"actualBoundingBoxDescent\" | \"actualBoundingBoxLeft\" | \"actualBoundingBoxRight\" | \"fontBoundingBoxAscent\" | \"fontBoundingBoxDescent\" | \"alphabeticBaseline\" | \"emHeightAscent\" | \"emHeightDescent\" | \"width\" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9",
+        "required": false,
+        "enum": {
+          "0": "actualBoundingBoxAscent",
+          "1": "actualBoundingBoxDescent",
+          "2": "actualBoundingBoxLeft",
+          "3": "actualBoundingBoxRight",
+          "4": "fontBoundingBoxAscent",
+          "5": "fontBoundingBoxDescent",
+          "6": "alphabeticBaseline",
+          "7": "emHeightAscent",
+          "8": "emHeightDescent",
+          "9": "width",
+          "actualBoundingBoxAscent": 0,
+          "actualBoundingBoxDescent": 1,
+          "actualBoundingBoxLeft": 2,
+          "actualBoundingBoxRight": 3,
+          "fontBoundingBoxAscent": 4,
+          "fontBoundingBoxDescent": 5,
+          "alphabeticBaseline": 6,
+          "emHeightAscent": 7,
+          "emHeightDescent": 8,
+          "width": 9
+        }
+      }
+    ],
+    "usage": "$measureText[canvas?;text;font;property?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/measureText.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/measureText"
+  },
+  {
+    "name": "$moveTo",
+    "description": "Begins a new path at the point specified by the given (x, y) coordinates.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to begin a new path in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$moveTo[canvas?;x;y]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/moveTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/moveTo"
+  },
+  {
+    "name": "$newCanvas",
+    "description": "Creates a new canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to create.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "functions",
+        "description": "Functions.",
+        "type": "Any",
+        "required": false
+      }
+    ],
+    "usage": "$newCanvas[canvas;...functions?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/newCanvas.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/newCanvas"
+  },
+  {
+    "name": "$newConicGradient",
+    "description": "Creates a new conic gradient.",
+    "params": [
+      {
+        "name": "gradient",
+        "description": "Name of the gradient.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "startAngle",
+        "description": "The angle at which to begin the gradient, in radians. The angle starts from a line going horizontally right from the center, and proceeds clockwise.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the center of the gradient.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the center of the gradient.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "stops",
+        "description": "Color stops of the gradient.",
+        "type": "$addColorStop",
+        "required": false
+      }
+    ],
+    "usage": "$newConicGradient[gradient;startAngle;x;y;...stops?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/newConicGradient.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/newConicGradient"
+  },
+  {
+    "name": "$newLinearGradient",
+    "description": "Creates a new linear gradient.",
+    "params": [
+      {
+        "name": "gradient",
+        "description": "Name of the gradient.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "x1",
+        "description": "The X coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y1",
+        "description": "The Y coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "x2",
+        "description": "The X coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y2",
+        "description": "The Y coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "stops",
+        "description": "Color stops of the gradient.",
+        "type": "$addColorStop",
+        "required": false
+      }
+    ],
+    "usage": "$newLinearGradient[gradient;x1;y1;x2;y2;...stops?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/newLinearGradient.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/newLinearGradient"
+  },
+  {
+    "name": "$newRadialGradient",
+    "description": "Creates a new radial gradient.",
+    "params": [
+      {
+        "name": "gradient",
+        "description": "Name of the gradient.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "x1",
+        "description": "The X coordinate of the start circle.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y1",
+        "description": "The Y coordinate of the start circle.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "r1",
+        "description": "The radius of the start circle.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "x2",
+        "description": "The X coordinate of the end circle.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y2",
+        "description": "The Y coordinate of the end circle.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "r2",
+        "description": "The radius of the end circle.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "stops",
+        "description": "Color stops of the gradient.",
+        "type": "$addColorStop",
+        "required": false
+      }
+    ],
+    "usage": "$newRadialGradient[gradient;x1;y1;r1;x2;y2;r2;...stops?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/newRadialGradient.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/newRadialGradient"
+  },
+  {
+    "name": "$opacity",
+    "description": "Gets or sets the opacity in the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The name of the canvas to get or set the opacity in.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "value",
+        "description": "New value.",
+        "type": "Percentages",
+        "required": false
+      }
+    ],
+    "usage": "$opacity[canvas;value?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/opacity.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/opacity"
+  },
+  {
+    "name": "$putPixelsColors",
+    "description": "Places the pixel colors in the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to place the pixels in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate at which to place the pixel colors in the canvas.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate at which to place the pixel colors in the canvas.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "Width of the rectangle to be painted.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "Height of the rectangle to be painted.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "pixels",
+        "description": "The pixel colors.",
+        "type": "Array",
+        "required": true
+      }
+    ],
+    "usage": "$putPixelsColors[canvas?;x;y;width;height;pixels]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/putPixelsColors.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/putPixelsColors"
+  },
+  {
+    "name": "$quadraticCurveTo",
+    "description": "Adds a quadratic bezier curve to the currect path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "startX",
+        "description": "The X coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "startY",
+        "description": "The Y coordinate of the start point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endX",
+        "description": "The X coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "endY",
+        "description": "The Y coordinate of the end point.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$quadraticCurveTo[canvas?;startX;startY;endX;endY]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/quadraticCurveTo.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/quadraticCurveTo"
+  },
+  {
+    "name": "$rect",
+    "description": "Draws a rectangle in the current path. (not filled or stroked)",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The rect start X coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The rect start Y coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "The rect width.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "The rect height.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "radius",
+        "description": "The rect corners radius.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$rect[canvas?;x;y;width;height;...radius?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/rect.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/rect"
+  },
+  {
+    "name": "$registerFont",
+    "description": "Registers a font.",
+    "params": [
+      {
+        "name": "src",
+        "description": "The font source.",
+        "type": "Path | URL",
+        "required": true
+      },
+      {
+        "name": "name",
+        "description": "The font name.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$registerFont[src;...name?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/registerFont.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/registerFont"
+  },
+  {
+    "name": "$resetTransform",
+    "description": "Resets the current transform to the identity matrix.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$resetTransform[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/resetTransform.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/resetTransform"
+  },
+  {
+    "name": "$resizeCanvas",
+    "description": "Resizes the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The name of the canvas to resize.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "width",
+        "description": "New width.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "New height.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$resizeCanvas[canvas?;width;height]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/resizeCanvas.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/resizeCanvas"
+  },
+  {
+    "name": "$restore",
+    "description": "Restores the most recently saved canvas state.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$restore[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/restore.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/restore"
+  },
+  {
+    "name": "$rotation",
+    "description": "Sets the rotation in the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "angle",
+        "description": "The rotation angle.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$rotation[canvas?;angle]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/rotation.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/rotation"
+  },
+  {
+    "name": "$save",
+    "description": "Saves the entire state of the canvas by pushing the current state onto a stack.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$save[canvas?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/save.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/save"
+  },
+  {
+    "name": "$scale",
+    "description": "Adds a scaling transformation to the canvas units horizontally and/or vertically.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "Scaling factor in the horizontal direction. A value of 1 results in no horizontal scaling.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "Scaling factor in the vertical direction. A value of 1 results in no vertical scaling.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$scale[canvas?;x;y]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/scale.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/scale"
+  },
+  {
+    "name": "$setCanvasSize",
+    "description": "Sets the size of the new canvas.",
+    "params": [
+      {
+        "name": "width",
+        "description": "Width of the new canvas.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "Height of the new canvas.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setCanvasSize[width;height]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/setCanvasSize.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/setCanvasSize"
+  },
+  {
+    "name": "$setLineDash",
+    "description": "Sets the line dash pattern used when stroking lines. It uses an array of values that specify alternating lengths of lines and gaps which describe the pattern.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the line dash in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "segments",
+        "description": "An array of numbers that specify distances to alternately draw a line and a gap (in coordinate space units).",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$setLineDash[canvas?;...segments?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/setLineDash.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/setLineDash"
+  },
+  {
+    "name": "$setShadow",
+    "description": "Sets the shadow (blur, style, offset) in a canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the shadow in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "blur",
+        "description": "The shadow blur.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "style",
+        "description": "The shadow style.",
+        "type": "Color",
+        "required": true
+      },
+      {
+        "name": "offset",
+        "description": "The shadow offset",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$setShadow[canvas?;blur;style;...offset?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/setShadow.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/setShadow"
+  },
+  {
+    "name": "$setTransform",
+    "description": "Resets (overrides) the current transformation to the identity matrix, and then invokes a transformation described by the arguments of this method.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the transformation in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "a",
+        "description": "The cell in the first row and first column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "b",
+        "description": "The cell in the second row and first column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "c",
+        "description": "The cell in the first row and second column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "d",
+        "description": "The cell in the second row and second column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "e",
+        "description": "The cell in the first row and third column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "f",
+        "description": "The cell in the second row and third column of the matrix.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setTransform[canvas?;a;b;c;d;e;f]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/setTransform.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/setTransform"
+  },
+  {
+    "name": "$stroke",
+    "description": "Strokes (outlines) the current path.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "width",
+        "description": "The stroke width.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$stroke[canvas?;width?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/stroke.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/stroke"
+  },
+  {
+    "name": "$strokeRect",
+    "description": "Draws a stroked (outlined) rectangle.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "The canvas name to draw rect on.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The rect start X coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The rect start Y coordinate.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "width",
+        "description": "The rect width.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "The rect height.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "strokeWidth",
+        "description": "The stroke (outline) width.",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "name": "radius",
+        "description": "The rect corners radius.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$strokeRect[canvas?;x;y;width;height;strokeWidth?;...radius?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/strokeRect.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/strokeRect"
+  },
+  {
+    "name": "$strokeStyle",
+    "description": "Sets the stroke style in a canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the stroke style in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "style",
+        "description": "The style.",
+        "type": "Color | Gradient | Pattern",
+        "required": true
+      }
+    ],
+    "usage": "$strokeStyle[canvas?;style]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/strokeStyle.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/strokeStyle"
+  },
+  {
+    "name": "$strokeText",
+    "description": "Draws a stroked (outlined) text.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to draw the text on.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "text",
+        "description": "The text to draw.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "font",
+        "description": "The text font.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "The X coordinate of the text.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "The Y coordinate of the text.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "lineWidth",
+        "description": "The stroke (outline) width.",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "name": "maxWidth",
+        "description": "The text max width.",
+        "type": "Number",
+        "required": false
+      },
+      {
+        "name": "multiline",
+        "description": "Indicates if the text should be drawn in multiple lines if it exceeds the maximum width.",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "name": "wrap",
+        "description": "Wraps the text if true.",
+        "type": "Boolean",
+        "required": false
+      },
+      {
+        "name": "lineOffset",
+        "description": "The line offset.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$strokeText[canvas?;text;font?;x;y;lineWidth?;maxWidth?;multiline?;wrap?;lineOffset?]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/strokeText.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/strokeText"
+  },
+  {
+    "name": "$textAlign",
+    "description": "Sets the text align in the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the text align in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "align",
+        "description": "The text align.",
+        "type": "\"end\" | \"left\" | \"center\" | \"right\" | \"start\"",
+        "required": true,
+        "enum": {
+          "start": "end",
+          "right": "left",
+          "center": "center",
+          "left": "right",
+          "end": "start"
+        }
+      }
+    ],
+    "usage": "$textAlign[canvas?;align]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/textAlign.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/textAlign"
+  },
+  {
+    "name": "$textBaseline",
+    "description": "Sets the text baseline in the canvas.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the text baseline in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "baseline",
+        "description": "The text baseline.",
+        "type": "\"top\" | \"hanging\" | \"middle\" | \"alphabetic\" | \"ideographic\" | \"bottom\" | 0 | 1 | 2 | 3 | 4 | 5",
+        "required": true,
+        "enum": {
+          "0": "top",
+          "1": "hanging",
+          "2": "middle",
+          "3": "alphabetic",
+          "4": "ideographic",
+          "5": "bottom",
+          "top": 0,
+          "hanging": 1,
+          "middle": 2,
+          "alphabetic": 3,
+          "ideographic": 4,
+          "bottom": 5
+        }
+      }
+    ],
+    "usage": "$textBaseline[canvas?;baseline]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/textBaseline.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/textBaseline"
+  },
+  {
+    "name": "$transform",
+    "description": "Multiplies the current transformation with the matrix described by the arguments of this method.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to transform.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "a",
+        "description": "The cell in the first row and first column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "b",
+        "description": "The cell in the second row and first column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "c",
+        "description": "The cell in the first row and second column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "d",
+        "description": "The cell in the second row and second column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "e",
+        "description": "The cell in the first row and third column of the matrix.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "f",
+        "description": "The cell in the second row and third column of the matrix.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$transform[canvas?;a;b;c;d;e;f]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/transform.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/transform"
+  },
+  {
+    "name": "$translate",
+    "description": "Adds a translation transformation.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to add a translation transformation in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "x",
+        "description": "Distance to move in the horizontal direction. positive = right, negative = left.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "y",
+        "description": "Distance to move in the vertical direction. positive = right, negative = left.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$translate[canvas?;x;y]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/translate.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/translate"
+  },
+  {
+    "name": "$wordSpacing",
+    "description": "Specifies the spacing between words when drawing text.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the canvas to set the word spacing in.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "spacing",
+        "description": "The new word spacing.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$wordSpacing[canvas?;spacing]",
+    "category": "canvas",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/canvas/wordSpacing.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/canvas/wordSpacing"
+  },
+  {
+    "name": "$addFrame",
+    "description": "Adds a frame to the GIF.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "frame",
+        "description": "The frame to add.",
+        "type": "Path | URL | Canvas",
+        "required": true
+      }
+    ],
+    "usage": "$addFrame[gif?;frame]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/addFrame.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/addFrame"
+  },
+  {
+    "name": "$attachGIF",
+    "description": "Attaches the GIF.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "name",
+        "description": "The GIF attachment file name.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$attachGIF[gif?;name?]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/attachGIF.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/attachGIF"
+  },
+  {
+    "name": "$deleteGIF",
+    "description": "Deletes a GIF.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$deleteGIF[gif?]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/deleteGif.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/deleteGIF"
+  },
+  {
+    "name": "$getFrames",
+    "description": "Extracts frames from a gif.",
+    "params": [
+      {
+        "name": "src",
+        "description": "The gif.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "amount",
+        "description": "The amount of frames to extract.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$getFrames[src?;amount?]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/getFrames.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/getFrames"
+  },
+  {
+    "name": "$gifFinish",
+    "description": "Finishes the gif.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      }
+    ],
+    "usage": "$gifFinish[gif?]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/gifFinish.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/gifFinish"
+  },
+  {
+    "name": "$newGIF",
+    "description": "Creates a new GIF.",
+    "params": [
+      {
+        "name": "canvas",
+        "description": "Name of the GIF to create.",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "functions",
+        "description": "Functions.",
+        "type": "Any",
+        "required": false
+      }
+    ],
+    "usage": "$newGIF[canvas;...functions?]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/newGIF.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/newGIF"
+  },
+  {
+    "name": "$setDelay",
+    "description": "Sets the GIF display frame delay.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "delay",
+        "description": "Number of milliseconds to display frame",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setDelay[gif?;delay]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/setDelay.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/setDelay"
+  },
+  {
+    "name": "$setFPS",
+    "description": "Sets the FPS (Frames Per Second) of a GIF.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "frames",
+        "description": "Number of frames per second to display.",
+        "type": "Number",
+        "required": false
+      }
+    ],
+    "usage": "$setFPS[gif?;frames?]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/setFPS.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/setFPS"
+  },
+  {
+    "name": "$setGIFSize",
+    "description": "Sets the size of the new GIF.",
+    "params": [
+      {
+        "name": "width",
+        "description": "Width of the new GIF.",
+        "type": "Number",
+        "required": true
+      },
+      {
+        "name": "height",
+        "description": "Height of the new GIF.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setGIFSize[width;height]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/setGIFSize.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/setGIFSize"
+  },
+  {
+    "name": "$setQuality",
+    "description": "Sets the GIF color quality.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "quality",
+        "description": "The quality. (0-30)",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setQuality[gif?;quality]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/setQuality.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/setQuality"
+  },
+  {
+    "name": "$setRepeat",
+    "description": "Sets the number of loops GIF does.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "loops",
+        "description": "The number of loops.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setRepeat[gif?;loops]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/setRepeat.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/setRepeat"
+  },
+  {
+    "name": "$setThreshold",
+    "description": "Sets if the color table should be reused if current frame matches previous frame.",
+    "params": [
+      {
+        "name": "gif",
+        "description": "Name of the GIF.",
+        "type": "String",
+        "required": false
+      },
+      {
+        "name": "percentage",
+        "description": "Threshold percentage.",
+        "type": "Number",
+        "required": true
+      }
+    ],
+    "usage": "$setThreshold[gif?;percentage]",
+    "category": "gif",
+    "src": "https://github.com/aoijs/aoi.canvas/tree/v2/src/functions/gif/setThreshold.ts",
+    "docs": "https://aoi.js.org/extensions/aoijs/aoicanvas/functions/gif/setThreshold"
+  }
+]

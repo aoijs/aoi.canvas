@@ -1,24 +1,12 @@
-import { AoiClient, Util, AoiError } from "aoi.js";
-import { AttachmentBuilder, BaseChannel, CommandInteraction } from "discord.js";
-import { CanvasManager } from "./classes";
-export interface AoiD {
-    error: Function;
-    interpreter: Function;
-    client: AoiClient;
-    channel: BaseChannel;
-    aoiError: typeof AoiError;
-    data: {
-        canvases: CanvasManager;
-        interaction: CommandInteraction;
-    };
-    files: AttachmentBuilder[];
-    util: typeof Util;
-}
+import { AoiClient } from 'aoi.js';
+export declare const log: (content: string, type?: 'log' | 'warn' | 'error') => void;
+export declare const registerFonts: (fonts: {
+    name?: string;
+    src: string;
+}[]) => void;
 export declare class AoiCanvas {
     constructor(client: AoiClient);
-    registerFonts(...fonts: {
-        src: Buffer | string;
-        name?: string;
-    }[]): void;
 }
+export * from './typings';
+export * from './classes';
 //# sourceMappingURL=index.d.ts.map

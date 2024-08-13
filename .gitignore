@@ -1,3 +1,4 @@
 node_modules
-.idea
-DS_Store
+database
+src/__tests__
+dist/__tests__

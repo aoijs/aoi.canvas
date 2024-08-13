@@ -1,5 +1,9 @@
-import { AoiClient } from "aoi.js";
-export declare const log: (content: string, type?: "log" | "warn" | "error") => void;
+import { AoiClient } from 'aoi.js';
+export declare const log: (content: string, type?: 'log' | 'warn' | 'error') => void;
+export declare const registerFonts: (fonts: {
+    name?: string;
+    path: string;
+}[]) => void;
 export declare class AoiCanvas {
     constructor(client: AoiClient);
 }

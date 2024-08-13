@@ -24,6 +24,10 @@ aoi.canvas is an aoi.js extension that allows you to create and edit images with
 npm install aoi.canvas
 ```
 
+## Documentation
+
+For detailed documentation, usage examples, and more, please visit the [aoi.canvas documentation](https://aoi.js.org/extensions/aoijs/aoicanvas).
+
 ## Setup
 
 ```js
@@ -64,6 +68,7 @@ client.command({
             $lineTo[250;140]
             $lineTo[150;60]
             $moveTo[50;140]
+            $beginPath
 
             $fillRect[130;190;40;60]
             $strokeRect[75;140;150;110]

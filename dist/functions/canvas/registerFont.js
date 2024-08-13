@@ -13,7 +13,7 @@ exports.default = new __1.AoiFunction({
             description: "The font source.",
             type: __1.ParamType.String,
             check: async (v, c) => await (0, node_fs_1.existsSync)((0, node_path_1.join)(process.cwd(), v)),
-            checkError: () => "Invalid font source.",
+            checkError: (c) => `Invalid font source. ${(0, node_path_1.resolve)(process.cwd(), c.params[0])}`,
             typename: "Path | URL",
         },
         {
@@ -29,15 +29,10 @@ exports.default = new __1.AoiFunction({
     code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [src, name] = ctx.params;
-        src = (0, node_path_1.join)(process.cwd(), src);
-        if (await (0, node_fs_1.statSync)(src).isFile())
-            canvas_1.GlobalFonts.registerFromPath(src, name[0]);
-        else if (await (0, node_fs_1.statSync)(src).isDirectory())
-            await (0, node_fs_1.readdirSync)(src)
-                .filter(x => [".ttf", ".otf", ".woff", ".woff2"].find(y => x?.endsWith(y)))
-                ?.forEach((x, i) => canvas_1.GlobalFonts.registerFromPath((0, node_path_1.join)(src, x), name?.[i]));
-        else
-            return ctx.aoiError.fnError(ctx, "custom", {}, "Invalid font source.");
+        (0, __1.registerFonts)([{
+                src: (0, node_path_1.join)(process.cwd(), src),
+                name
+            }]);
         return {
             code: ctx.util.setCode(data),
             data: ctx.data

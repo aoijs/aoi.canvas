@@ -1,7 +1,7 @@
 import { GlobalFonts } from "@napi-rs/canvas";
-import { AoiFunction, ParamType } from '../../';
+import { AoiFunction, ParamType, registerFonts } from '../../';
 import { existsSync, statSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 export default new AoiFunction<"djs">({
     name: "$registerFont",
@@ -13,7 +13,7 @@ export default new AoiFunction<"djs">({
             type: ParamType.String,
             check: async (v, c) => 
                 await existsSync(join(process.cwd(), v)),
-            checkError: () => "Invalid font source.",
+            checkError: (c) => `Invalid font source. ${resolve(process.cwd(), c.params[0])}`,
             typename: "Path | URL",
         },
         {
@@ -29,15 +29,11 @@ export default new AoiFunction<"djs">({
     code: async (ctx) => {
         const data = ctx.util.aoiFunc(ctx);
         let [ src, name ] = ctx.params;
-        src = join(process.cwd(), src);
 
-        if (await statSync(src).isFile())
-            GlobalFonts.registerFromPath(src, name[0]);
-        else if (await statSync(src).isDirectory())
-            await readdirSync(src)
-                .filter(x => [".ttf", ".otf", ".woff", ".woff2"].find(y => x?.endsWith(y)))
-                ?.forEach((x, i) => GlobalFonts.registerFromPath(join(src, x), name?.[i]));
-        else return ctx.aoiError.fnError(ctx, "custom", {}, "Invalid font source.");
+        registerFonts([{
+            src: join(process.cwd(), src),
+            name
+        }]);
 
         return {
             code: ctx.util.setCode(data),

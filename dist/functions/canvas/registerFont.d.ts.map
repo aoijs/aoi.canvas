@@ -1,1 +1,1 @@
-{"version":3,"file":"registerFont.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/registerFont.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAAa,MAAM,QAAQ,CAAC;;AAIhD,wBAyCG"}
+{"version":3,"file":"registerFont.d.ts","sourceRoot":"","sources":["../../../src/functions/canvas/registerFont.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,WAAW,EAA4B,MAAM,QAAQ,CAAC;;AAI/D,wBAqCG"}

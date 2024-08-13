@@ -59,18 +59,18 @@ const loadFuncs = (client, path) => {
     return 'loaded';
 };
 const registerFonts = (fonts) => fonts.forEach(font => {
-    if (!(0, node_fs_1.existsSync)(font.path))
-        throw Error(`Invalid font path. (${font.path})`);
-    if ((0, node_fs_1.statSync)(font.path).isFile()) {
-        let filename = (0, node_path_1.basename)(font.path);
+    if (!(0, node_fs_1.existsSync)(font.src))
+        throw Error(`Invalid font source. (${font.src})`);
+    if ((0, node_fs_1.statSync)(font.src).isFile()) {
+        let filename = (0, node_path_1.basename)(font.src);
         if (!['ttf', 'otf', 'woff', 'woff2'].find(x => filename.endsWith(`.${x}`)))
             return;
         filename = font.name ?? filename.split('.').slice(0, -1).join('.');
-        canvas_1.GlobalFonts.registerFromPath(font.path, filename);
+        canvas_1.GlobalFonts.registerFromPath(font.src, filename);
         (0, exports.log)(`Registered '${filename}' font.`);
     }
     else
-        return (0, exports.registerFonts)((0, node_fs_1.readdirSync)(font.path).map(x => ({ path: (0, node_path_1.join)(font.path, x) })));
+        return (0, exports.registerFonts)((0, node_fs_1.readdirSync)(font.src).map(x => ({ src: (0, node_path_1.join)(font.src, x) })));
 });
 exports.registerFonts = registerFonts;
 class AoiCanvas {

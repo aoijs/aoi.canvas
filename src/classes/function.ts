@@ -238,10 +238,11 @@ export class AoiFunction<T extends "aoi.js" | "djs"> {
     };
 
     get() {
-        const { name, params, docs } = this.data;
+        const { name, description, params, docs } = this.data;
     
         return {
             name: name,
+            description: description,
             params: (params ? params?.map(x => { return {
                 name: x.name,
                 description: x.description,

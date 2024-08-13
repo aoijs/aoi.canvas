@@ -6,6 +6,7 @@ export declare class AoiFunction<T extends "aoi.js" | "djs"> {
     register(client: AoiClient): void;
     get(): {
         name: string;
+        description: string | undefined;
         params: {
             name: string;
             description: string;
